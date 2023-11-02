@@ -5,5 +5,3 @@ Src/test/
 gradlew
 gradlew.bat
 settings.gradle
-*.properties
-*.yml
