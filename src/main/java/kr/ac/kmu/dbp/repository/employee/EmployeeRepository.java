@@ -5,5 +5,5 @@ import kr.ac.kmu.dbp.entity.employee.Employee;
 
 public interface EmployeeRepository {
     public EmployeeDtoDataBaseRepository create(Employee employee);
-    public Employee readByPid(int pid);
+    public EmployeeDtoDataBaseRepository readByPid(int pid);
 }
