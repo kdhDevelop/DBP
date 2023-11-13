@@ -5,5 +5,5 @@ import kr.ac.kmu.dbp.entity.department.Department;
 
 public interface DepartmentRepository {
     public DepartmentDtoDataBaseRepository create(Department department);
-    public Department readByPid(int pid);
+    public DepartmentDtoDataBaseRepository readByPid(int pid);
 }
