@@ -100,4 +100,26 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public Employee readByPid(int pid) {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    String findQuery = "SELECT * FROM |=TABLE=| WHERE pid = |=PID=|"
+                            .replace("|=TABLE=|", tableName)
+                            .replace("|=PID=|", String.valueOf(pid));
+                    try (ResultSet resultSet = statement.executeQuery(findQuery)) {
+                        if (resultSet.next()) {
+                            return getEmployee(resultSet);
+                        } else {
+                            throw new RuntimeException();
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
 }
