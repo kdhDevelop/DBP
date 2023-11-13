@@ -1,14 +1,9 @@
 package kr.ac.kmu.dbp.repository.employee;
 
-import kr.ac.kmu.dbp.dto.employee.EmployeeDtoDataBaseRepository;
+import kr.ac.kmu.dbp.dto.employee.EmployeeDtoRepository;
 import kr.ac.kmu.dbp.entity.employee.Employee;
-import kr.ac.kmu.dbp.entity.employee.Gender;
-import kr.ac.kmu.dbp.entity.employee.Rank;
-import kr.ac.kmu.dbp.entity.employee.Role;
 import kr.ac.kmu.dbp.repository.DataBaseConnection;
 import kr.ac.kmu.dbp.repository.Table;
-import kr.ac.kmu.dbp.repository.department.DepartmentDataBaseRepository;
-import kr.ac.kmu.dbp.repository.department.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,7 +26,7 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
     }
 
     @Override
-    public EmployeeDtoDataBaseRepository create(Employee employee) {
+    public EmployeeDtoRepository create(Employee employee) {
         String createQuery = "INSERT INTO employee (password, name, gender, residentRegistrationNumber, phoneNumber, zipCode, address1, address2, role, departmentPid, rank) VALUES ('|=PASSWORD=|', '|=NAME=|', '|=GENDER=|', '|=RESIDENT_REGISTRATION_NUMBER=|', '|=PHONE_NUMBER=|', |=ZIP_CODE=|, '|=ADDRESS_1=|', '|=ADDRESS_2=|', '|=ROLE=|', |=DEPARTMENT_PID=|, '|=RANK=|');"
                 .replace("|=PASSWORD=|", employee.getPassword())
                 .replace("|=NAME=|", employee.getName())
@@ -66,7 +61,7 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
                         statement.executeUpdate(setAccountQuery);
                         try (ResultSet resultSet = statement.executeQuery(findQuery)) {
                             if (resultSet.next()) {
-                                return new EmployeeDtoDataBaseRepository(resultSet);
+                                return new EmployeeDtoRepository(resultSet);
                             } else {
                                 throw new RuntimeException();
                             }
@@ -82,7 +77,7 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
     }
 
     @Override
-    public EmployeeDtoDataBaseRepository readByPid(int pid) {
+    public EmployeeDtoRepository readByPid(int pid) {
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
@@ -91,7 +86,7 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
                             .replace("|=PID=|", String.valueOf(pid));
                     try (ResultSet resultSet = statement.executeQuery(findQuery)) {
                         if (resultSet.next()) {
-                            return new EmployeeDtoDataBaseRepository(resultSet);
+                            return new EmployeeDtoRepository(resultSet);
                         } else {
                             throw new RuntimeException();
                         }

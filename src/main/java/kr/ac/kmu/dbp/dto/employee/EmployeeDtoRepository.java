@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Getter
-public class EmployeeDtoDataBaseRepository {
+public class EmployeeDtoRepository {
     private int pid;
 
     private String account;
@@ -26,7 +26,7 @@ public class EmployeeDtoDataBaseRepository {
 
     private int departmentPid;
 
-    public EmployeeDtoDataBaseRepository(ResultSet resultSet) throws SQLException {
+    public EmployeeDtoRepository(ResultSet resultSet) throws SQLException {
         this.pid = resultSet.getInt("pid");
 
         this.account = resultSet.getString("account");
