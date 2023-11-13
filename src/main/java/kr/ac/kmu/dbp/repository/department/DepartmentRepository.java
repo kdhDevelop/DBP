@@ -4,4 +4,5 @@ import kr.ac.kmu.dbp.entity.department.Department;
 
 public interface DepartmentRepository {
     public Department create(Department department);
+    public Department readByPid(String name);
 }
