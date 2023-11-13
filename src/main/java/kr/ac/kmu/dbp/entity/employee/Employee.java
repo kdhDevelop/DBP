@@ -1,5 +1,6 @@
 package kr.ac.kmu.dbp.entity.employee;
 
+import kr.ac.kmu.dbp.entity.department.Department;
 import lombok.Builder;
 import lombok.Data;
 
@@ -23,4 +24,6 @@ public class Employee {
 
     private Role role;
     private Rank rank;
+
+    private Department department;
 }
