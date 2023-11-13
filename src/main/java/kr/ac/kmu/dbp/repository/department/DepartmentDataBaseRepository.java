@@ -27,14 +27,6 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
         this.employeeRepository = employeeRepository;
     }
 
-    private Department getDepartment(ResultSet resultSet) throws SQLException {
-        return Department.builder()
-                .pid(resultSet.getInt("pid"))
-                .name(resultSet.getString("name"))
-                .departmentHead(employeeRepository.readByPid(resultSet.getInt("departmentHeadPid")))
-                .build();
-    }
-
     @Override
     protected String getTableCreateQuery() {
         return "CREATE TABLE department ( pid int NOT NULL AUTO_INCREMENT, name varchar(500) UNIQUE, departmentHeadPid int, PRIMARY KEY(pid) );";
