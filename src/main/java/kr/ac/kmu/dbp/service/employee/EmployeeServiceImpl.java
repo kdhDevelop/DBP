@@ -29,43 +29,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee readByPid(int pid) {
         EmployeeDtoRepository employeeDtoRepository = employeeRepository.readByPid(pid);
-        Employee employee = Employee.builder()
-                .pid(employeeDtoRepository.getPid())
-                .account(employeeDtoRepository.getAccount())
-                .password(employeeDtoRepository.getPassword())
-                .name(employeeDtoRepository.getName())
-                .gender(Gender.valueOf(employeeDtoRepository.getGender()))
-                .residentRegistrationNumber(employeeDtoRepository.getResidentRegistrationNumber())
-                .phoneNumber(employeeDtoRepository.getPhoneNumber())
-                .zipCode(employeeDtoRepository.getZipCode())
-                .address1(employeeDtoRepository.getAddress1())
-                .address2(employeeDtoRepository.getAddress2())
-                .role(Role.valueOf(employeeDtoRepository.getRole()))
-                .rank(Rank.valueOf(employeeDtoRepository.getRank()))
-                .build();
+        Employee employee = new Employee(employeeDtoRepository);
 
         DepartmentDtoRepository departmentDtoRepository = departmentRepository.readByPid(employeeDtoRepository.getDepartmentPid());
-        Department department = Department.builder()
-                .pid(departmentDtoRepository.getPid())
-                .name(departmentDtoRepository.getName())
-                .build();
+        Department department = new Department(departmentDtoRepository);
+
         EmployeeDtoRepository departmentHeadEmployeeDtoRepository = employeeRepository.readByPid(departmentDtoRepository.getPid());
-        Employee departmentHead = Employee.builder()
-                .pid(departmentHeadEmployeeDtoRepository.getPid())
-                .account(departmentHeadEmployeeDtoRepository.getAccount())
-                .password(departmentHeadEmployeeDtoRepository.getPassword())
-                .name(departmentHeadEmployeeDtoRepository.getName())
-                .gender(Gender.valueOf(departmentHeadEmployeeDtoRepository.getGender()))
-                .residentRegistrationNumber(departmentHeadEmployeeDtoRepository.getResidentRegistrationNumber())
-                .phoneNumber(departmentHeadEmployeeDtoRepository.getPhoneNumber())
-                .zipCode(departmentHeadEmployeeDtoRepository.getZipCode())
-                .address1(departmentHeadEmployeeDtoRepository.getAddress1())
-                .address2(departmentHeadEmployeeDtoRepository.getAddress2())
-                .role(Role.valueOf(departmentHeadEmployeeDtoRepository.getRole()))
-                .department(department)
-                .rank(Rank.valueOf(departmentHeadEmployeeDtoRepository.getRank()))
-                .build();
+        Employee departmentHead = new Employee(departmentHeadEmployeeDtoRepository);
+
         department.setDepartmentHead(departmentHead);
+        departmentHead.setDepartment(department);
 
         employee.setDepartment(department);
 
