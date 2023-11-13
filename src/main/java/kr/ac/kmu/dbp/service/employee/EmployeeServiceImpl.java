@@ -44,4 +44,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         return employee;
     }
+
+    @Override
+    public Employee readByAccount(String account) {
+        EmployeeDtoRepository employeeDtoRepository = employeeRepository.readByAccount(account);
+        Employee employee = new Employee(employeeDtoRepository);
+
+        DepartmentDtoRepository departmentDtoRepository = departmentRepository.readByPid(employeeDtoRepository.getDepartmentPid());
+        Department department = new Department(departmentDtoRepository);
+
+        EmployeeDtoRepository departmentHeadEmployeeDtoRepository = employeeRepository.readByPid(departmentDtoRepository.getPid());
+        Employee departmentHead = new Employee(departmentHeadEmployeeDtoRepository);
+
+        department.setDepartmentHead(departmentHead);
+        departmentHead.setDepartment(department);
+
+        employee.setDepartment(department);
+
+        return employee;
+    }
 }
