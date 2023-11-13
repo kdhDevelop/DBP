@@ -1,6 +1,6 @@
 package kr.ac.kmu.dbp.entity.department;
 
-import kr.ac.kmu.dbp.entity.employee.employee;
+import kr.ac.kmu.dbp.entity.employee.Employee;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,5 +9,5 @@ import lombok.Data;
 public class Department {
     private int pid;
     private String name;
-    private employee departmentHead;
+    private Employee departmentHead;
 }
