@@ -1,5 +1,6 @@
 package kr.ac.kmu.dbp.repository.department;
 
+import kr.ac.kmu.dbp.dto.department.DepartmentDtoDataBaseRepository;
 import kr.ac.kmu.dbp.entity.department.Department;
 import kr.ac.kmu.dbp.repository.DataBaseConnection;
 import kr.ac.kmu.dbp.repository.Table;
@@ -40,7 +41,7 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
     }
 
     @Override
-    public Department create(Department department) {
+    public DepartmentDtoDataBaseRepository create(Department department) {
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
@@ -55,7 +56,7 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
                             .replace("|=NAME=|", department.getName());
                     try (ResultSet resultSet = statement.executeQuery(findQuery)) {
                         if (resultSet.next()) {
-                            return getDepartment(resultSet);
+                            return new DepartmentDtoDataBaseRepository(resultSet);
                         } else {
                             throw new RuntimeException();
                         }
