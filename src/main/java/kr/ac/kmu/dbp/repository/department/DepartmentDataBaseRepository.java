@@ -1,11 +1,9 @@
 package kr.ac.kmu.dbp.repository.department;
 
-import kr.ac.kmu.dbp.dto.department.DepartmentDtoDataBaseRepository;
+import kr.ac.kmu.dbp.dto.department.DepartmentDtoRepository;
 import kr.ac.kmu.dbp.entity.department.Department;
 import kr.ac.kmu.dbp.repository.DataBaseConnection;
 import kr.ac.kmu.dbp.repository.Table;
-import kr.ac.kmu.dbp.repository.employee.EmployeeDataBaseRepository;
-import kr.ac.kmu.dbp.repository.employee.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +27,7 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
     }
 
     @Override
-    public DepartmentDtoDataBaseRepository create(Department department) {
+    public DepartmentDtoRepository create(Department department) {
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
@@ -44,7 +42,7 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
                             .replace("|=NAME=|", department.getName());
                     try (ResultSet resultSet = statement.executeQuery(findQuery)) {
                         if (resultSet.next()) {
-                            return new DepartmentDtoDataBaseRepository(resultSet);
+                            return new DepartmentDtoRepository(resultSet);
                         } else {
                             throw new RuntimeException();
                         }
@@ -57,7 +55,7 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
     }
 
     @Override
-    public DepartmentDtoDataBaseRepository readByPid(int pid) {
+    public DepartmentDtoRepository readByPid(int pid) {
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
@@ -66,7 +64,7 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
                             .replace("|=PID=|", String.valueOf(pid));
                     try (ResultSet resultSet = statement.executeQuery(findQuery)) {
                         if (resultSet.next()) {
-                            return new DepartmentDtoDataBaseRepository(resultSet);
+                            return new DepartmentDtoRepository(resultSet);
                         } else {
                             throw new RuntimeException();
                         }
