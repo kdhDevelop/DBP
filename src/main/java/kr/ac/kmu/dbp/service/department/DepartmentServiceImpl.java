@@ -29,29 +29,13 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public Department readByPid(int pid) {
         DepartmentDtoRepository departmentDtoRepository = departmentRepository.readByPid(pid);
-        Department department = Department.builder()
-                .pid(departmentDtoRepository.getPid())
-                .name(departmentDtoRepository.getName())
-                .build();
+        Department department = new Department(departmentDtoRepository);
 
-        EmployeeDtoRepository employeeDtoRepository = employeeRepository.readByPid(departmentDtoRepository.getPid());
-        Employee departmentHead = Employee.builder()
-                .pid(employeeDtoRepository.getPid())
-                .account(employeeDtoRepository.getAccount())
-                .password(employeeDtoRepository.getPassword())
-                .name(employeeDtoRepository.getName())
-                .gender(Gender.valueOf(employeeDtoRepository.getGender()))
-                .residentRegistrationNumber(employeeDtoRepository.getResidentRegistrationNumber())
-                .phoneNumber(employeeDtoRepository.getPhoneNumber())
-                .zipCode(employeeDtoRepository.getZipCode())
-                .address1(employeeDtoRepository.getAddress1())
-                .address2(employeeDtoRepository.getAddress2())
-                .role(Role.valueOf(employeeDtoRepository.getRole()))
-                .department(department)
-                .rank(Rank.valueOf(employeeDtoRepository.getRank()))
-                .build();
+        EmployeeDtoRepository employeeDtoRepository = employeeRepository.readByPid(department.getPid());
+        Employee departmentHead = new Employee(employeeDtoRepository);
 
         department.setDepartmentHead(departmentHead);
+        departmentHead.setDepartment(department);
 
         return department;
     }
