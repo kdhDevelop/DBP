@@ -18,13 +18,9 @@ import java.sql.Statement;
 @Component
 public class DepartmentDataBaseRepository extends Table implements DepartmentRepository {
 
-    private final EmployeeRepository employeeRepository;
-
     @Autowired
-    public DepartmentDataBaseRepository(DataBaseConnection dataBaseConnection, EmployeeDataBaseRepository employeeRepository) {
+    public DepartmentDataBaseRepository(DataBaseConnection dataBaseConnection) {
         super(dataBaseConnection, "department");
-
-        this.employeeRepository = employeeRepository;
     }
 
     @Override
