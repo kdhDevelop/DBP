@@ -1,5 +1,6 @@
 package kr.ac.kmu.dbp.repository.employee;
 
+import kr.ac.kmu.dbp.dto.employee.EmployeeDtoDataBaseRepository;
 import kr.ac.kmu.dbp.entity.employee.Employee;
 import kr.ac.kmu.dbp.entity.employee.Gender;
 import kr.ac.kmu.dbp.entity.employee.Rank;
@@ -51,7 +52,7 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
     }
 
     @Override
-    public Employee create(Employee employee) {
+    public EmployeeDtoDataBaseRepository create(Employee employee) {
         String createQuery = "INSERT INTO employee (password, name, gender, residentRegistrationNumber, phoneNumber, zipCode, address1, address2, role, departmentPid, rank) VALUES ('|=PASSWORD=|', '|=NAME=|', '|=GENDER=|', '|=RESIDENT_REGISTRATION_NUMBER=|', '|=PHONE_NUMBER=|', |=ZIP_CODE=|, '|=ADDRESS_1=|', '|=ADDRESS_2=|', '|=ROLE=|', |=DEPARTMENT_PID=|, '|=RANK=|');"
                 .replace("|=PASSWORD=|", employee.getPassword())
                 .replace("|=NAME=|", employee.getName())
@@ -86,7 +87,7 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
                         statement.executeUpdate(setAccountQuery);
                         try (ResultSet resultSet = statement.executeQuery(findQuery)) {
                             if (resultSet.next()) {
-                                return getEmployee(resultSet);
+                                return new EmployeeDtoDataBaseRepository(resultSet);
                             } else {
                                 throw new RuntimeException();
                             }
