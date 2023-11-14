@@ -2,6 +2,7 @@ package kr.ac.kmu.dbp.controller.api;
 
 import kr.ac.kmu.dbp.dto.employee.EmployeeDtoCreate;
 import kr.ac.kmu.dbp.dto.employee.EmployeeDtoRead;
+import kr.ac.kmu.dbp.dto.employee.EmployeeDtoUpdate;
 import kr.ac.kmu.dbp.entity.employee.customUserDetails.CustomUserDetails;
 import kr.ac.kmu.dbp.service.employee.EmployeeService;
 import kr.ac.kmu.dbp.service.employee.EmployeeServiceImpl;
@@ -27,5 +28,10 @@ public class EmployeeControllerApi {
     @GetMapping("/employee")
     public EmployeeDtoRead info(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         return new EmployeeDtoRead(customUserDetails.getEmployee());
+    }
+
+    @PutMapping("/employee")
+    public void update(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody EmployeeDtoUpdate employeeDtoUpdate) {
+        employeeService.update(customUserDetails.getEmployee().getPid(), employeeDtoUpdate);
     }
 }
