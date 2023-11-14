@@ -1,6 +1,5 @@
 package kr.ac.kmu.dbp.entity.employee;
 
-import kr.ac.kmu.dbp.dto.employee.EmployeeDtoRepository;
 import kr.ac.kmu.dbp.entity.department.Department;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
