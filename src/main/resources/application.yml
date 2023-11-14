@@ -1,2 +1,6 @@
 server:
   port: 8080
+  tomcat:
+    remoteip:
+      host-header: x-forwarded-for
+      protocol-header: x-forwarded-proto
