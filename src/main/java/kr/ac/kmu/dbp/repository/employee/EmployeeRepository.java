@@ -5,6 +5,6 @@ import kr.ac.kmu.dbp.entity.employee.Employee;
 
 public interface EmployeeRepository {
     public Employee create(Employee employee);
-    public EmployeeDtoRepository readByPid(int pid);
+    public Employee readByPid(int pid);
     public EmployeeDtoRepository readByAccount(String account);
 }
