@@ -4,7 +4,7 @@ import kr.ac.kmu.dbp.dto.employee.EmployeeDtoRepository;
 import kr.ac.kmu.dbp.entity.employee.Employee;
 
 public interface EmployeeRepository {
-    public EmployeeDtoRepository create(Employee employee);
+    public Employee create(Employee employee);
     public EmployeeDtoRepository readByPid(int pid);
     public EmployeeDtoRepository readByAccount(String account);
 }
