@@ -6,4 +6,5 @@ public interface EmployeeRepository {
     public Employee create(Employee employee);
     public Employee readByPid(int pid);
     public Employee readByAccount(String account);
+    public Employee update(Employee employee);
 }
