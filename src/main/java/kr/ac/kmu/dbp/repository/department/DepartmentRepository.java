@@ -4,6 +4,6 @@ import kr.ac.kmu.dbp.dto.department.DepartmentDtoRepository;
 import kr.ac.kmu.dbp.entity.department.Department;
 
 public interface DepartmentRepository {
-    public DepartmentDtoRepository create(Department department);
+    public Department create(Department department);
     public DepartmentDtoRepository readByPid(int pid);
 }
