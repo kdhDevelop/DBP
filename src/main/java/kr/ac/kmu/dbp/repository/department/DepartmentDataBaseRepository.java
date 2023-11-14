@@ -33,7 +33,7 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
                 try (Statement statement = connection.createStatement()) {
                     String createQuery = "INSERT INTO |=TABLE=| (name) VALUE ('|=NAME=|');"
                             .replace("|=TABLE=|", tableName)
-                            .replace("|=NAME=|", department.getName())
+                            .replace("|=NAME=|", department.getName());
                     statement.executeUpdate(createQuery);
 
                     String findQuery = "SELECT * FROM |=TABLE=| WHERE name = '|=NAME=|';"
