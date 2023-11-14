@@ -54,7 +54,7 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
     }
 
     @Override
-    public DepartmentDtoRepository readByPid(int pid) {
+    public Department readByPid(int pid) {
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
@@ -63,7 +63,7 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
                             .replace("|=PID=|", String.valueOf(pid));
                     try (ResultSet resultSet = statement.executeQuery(findQuery)) {
                         if (resultSet.next()) {
-                            return new DepartmentDtoRepository(resultSet);
+                            return new Department(resultSet);
                         } else {
                             throw new RuntimeException();
                         }
