@@ -1,6 +1,7 @@
 package kr.ac.kmu.dbp.service.employee;
 
 import kr.ac.kmu.dbp.dto.employee.EmployeeDtoCreate;
+import kr.ac.kmu.dbp.dto.employee.EmployeeDtoUpdate;
 import kr.ac.kmu.dbp.entity.department.Department;
 import kr.ac.kmu.dbp.entity.employee.Employee;
 import kr.ac.kmu.dbp.repository.department.DepartmentDataBaseRepository;
@@ -41,5 +42,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setDepartment(departmentRepository.readByPid(employeeDtoCreate.getDepartmentPid()));
 
         employeeRepository.create(employee);
+    }
+
+    @Override
+    public void update(int pid, EmployeeDtoUpdate employeeDtoUpdate) {
+        employeeRepository.update(new Employee(pid, employeeDtoUpdate));
     }
 }
