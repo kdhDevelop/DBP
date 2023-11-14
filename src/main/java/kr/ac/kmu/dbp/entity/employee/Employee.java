@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -48,5 +51,27 @@ public class Employee {
 
         this.role = Role.valueOf(employeeDtoRepository.getRole());
         this.rank = Rank.valueOf(employeeDtoRepository.getRank());
+    }
+
+    public Employee(ResultSet resultSet) throws SQLException {
+        this.pid = resultSet.getInt("empPid");
+
+        this.account = resultSet.getString("empAccount");
+        this.password = resultSet.getString("empPassword");
+
+        this.name = resultSet.getString("empName");
+        this.gender = Gender.valueOf(resultSet.getString("empGender"));
+
+        this.residentRegistrationNumber = resultSet.getString("empResidentRegistrationNumber");
+        this.phoneNumber = resultSet.getString("empPhoneNumber");
+
+        this.zipCode = resultSet.getLong("empZipCode");
+        this.address1 = resultSet.getString("empAddress1");
+        this.address2 = resultSet.getString("empAddress2");
+
+        this.role = Role.valueOf(resultSet.getString("empRole"));
+        this.rank = Rank.valueOf(resultSet.getString("empRank"));
+
+        this.department = new Department(resultSet);
     }
 }
