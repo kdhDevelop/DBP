@@ -1,6 +1,7 @@
 package kr.ac.kmu.dbp.service.employee;
 
 import kr.ac.kmu.dbp.dto.employee.EmployeeDtoCreate;
+import kr.ac.kmu.dbp.dto.employee.EmployeeDtoUpdate;
 import kr.ac.kmu.dbp.entity.employee.Employee;
 
 public interface EmployeeService {
@@ -9,4 +10,6 @@ public interface EmployeeService {
     public Employee readByAccount(String account);
 
     public void create(EmployeeDtoCreate employeeDtoCreate);
+
+    public void update(int pid, EmployeeDtoUpdate employeeDtoUpdate);
 }
