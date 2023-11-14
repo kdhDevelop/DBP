@@ -37,6 +37,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void create(EmployeeDtoCreate employeeDtoCreate) {
         Employee employee = new Employee(employeeDtoCreate);
+        employee.setPassword(passwordEncoder.encode(employee.getPassword()));
         employee.setDepartment(departmentRepository.readByPid(employeeDtoCreate.getDepartmentPid()));
 
         employeeRepository.create(employee);
