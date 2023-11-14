@@ -23,7 +23,7 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
 
     @Override
     protected String getTableCreateQuery() {
-        return "CREATE TABLE department ( pid int NOT NULL AUTO_INCREMENT, name varchar(500) UNIQUE, departmentHeadPid int, PRIMARY KEY(pid) );";
+        return "CREATE TABLE department ( pid int NOT NULL AUTO_INCREMENT, name varchar(500) UNIQUE, PRIMARY KEY(pid) );";
     }
 
     @Override
@@ -31,10 +31,9 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
-                    String createQuery = "INSERT INTO |=TABLE=| (name, departmentHeadPid) VALUE ('|=NAME=|', |=DEPARTMENT_HEAD_PID=|);"
+                    String createQuery = "INSERT INTO |=TABLE=| (name) VALUE ('|=NAME=|');"
                             .replace("|=TABLE=|", tableName)
                             .replace("|=NAME=|", department.getName())
-                            .replace("|=DEPARTMENT_HEAD_PID=|", String.valueOf(department.getDepartmentHead().getPid()));
                     statement.executeUpdate(createQuery);
 
                     String findQuery = "SELECT * FROM |=TABLE=| WHERE name = '|=NAME=|';"
