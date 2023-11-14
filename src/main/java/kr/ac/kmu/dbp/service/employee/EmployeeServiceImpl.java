@@ -18,12 +18,10 @@ import org.springframework.stereotype.Service;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
-    private final DepartmentRepository departmentRepository;
 
     @Autowired
     public EmployeeServiceImpl(EmployeeDataBaseRepository employeeDataBaseRepository, DepartmentDataBaseRepository departmentDataBaseRepository) {
         this.employeeRepository = employeeDataBaseRepository;
-        this.departmentRepository = departmentDataBaseRepository;
     }
 
     @Override
