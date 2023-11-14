@@ -87,10 +87,10 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
                             }
                         }
                         statement.executeUpdate(setAccountQuery);
-                        findQuery = "";
+                        findQuery = getReadString("residentRegistrationNumber", employee.getResidentRegistrationNumber());
                         try (ResultSet resultSet = statement.executeQuery(findQuery)) {
                             if (resultSet.next()) {
-                                return new EmployeeDtoRepository(resultSet);
+                                return new Employee(resultSet);
                             } else {
                                 throw new RuntimeException();
                             }
