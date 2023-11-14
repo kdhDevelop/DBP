@@ -1,7 +1,11 @@
 package kr.ac.kmu.dbp.dto.employee;
 
 import kr.ac.kmu.dbp.entity.employee.Employee;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class EmployeeDtoRead {
 
     private int pid;
