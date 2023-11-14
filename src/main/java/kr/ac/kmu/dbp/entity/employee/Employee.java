@@ -1,6 +1,7 @@
 package kr.ac.kmu.dbp.entity.employee;
 
 import kr.ac.kmu.dbp.dto.employee.EmployeeDtoCreate;
+import kr.ac.kmu.dbp.dto.employee.EmployeeDtoUpdate;
 import kr.ac.kmu.dbp.entity.department.Department;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -70,5 +71,20 @@ public class Employee {
 
         this.role = Role.valueOf(employeeDtoCreate.getRole());
         this.rank = Rank.valueOf(employeeDtoCreate.getRank());
+    }
+
+    public Employee(int pid, EmployeeDtoUpdate employeeDtoUpdate) {
+        this.pid = pid;
+
+        this.name = employeeDtoUpdate.getName();
+        this.gender = Gender.valueOf(employeeDtoUpdate.getGender());
+        this.phoneNumber = employeeDtoUpdate.getPhoneNumber();
+
+        this.zipCode = employeeDtoUpdate.getZipCode();
+        this.address1 = employeeDtoUpdate.getAddress1();
+        this.address2 = employeeDtoUpdate.getAddress2();
+
+        this.role = Role.valueOf(employeeDtoUpdate.getRole());
+        this.rank = Rank.valueOf(employeeDtoUpdate.getRank());
     }
 }
