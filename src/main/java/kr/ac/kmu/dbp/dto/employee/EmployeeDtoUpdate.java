@@ -20,5 +20,5 @@ public class EmployeeDtoUpdate {
     private String role;
     private String rank;
 
-    private String departmentPid;
+    private int departmentPid;
 }
