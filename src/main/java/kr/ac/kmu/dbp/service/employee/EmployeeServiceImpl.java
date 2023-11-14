@@ -1,7 +1,6 @@
 package kr.ac.kmu.dbp.service.employee;
 
 import kr.ac.kmu.dbp.entity.employee.Employee;
-import kr.ac.kmu.dbp.repository.department.DepartmentDataBaseRepository;
 import kr.ac.kmu.dbp.repository.employee.EmployeeDataBaseRepository;
 import kr.ac.kmu.dbp.repository.employee.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
