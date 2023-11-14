@@ -28,12 +28,11 @@ public class SecurityFilterChainBean {
                 .loginProcessingUrl("/api/login")
                 .usernameParameter("account")
                 .passwordParameter("password")
-                .successForwardUrl("/");
+                .defaultSuccessUrl("/", false);
 
         httpSecurity
                 .logout()
-                .logoutUrl("/api/logout")
-                .logoutSuccessUrl("/");
+                .logoutUrl("/api/logout");
 
         httpSecurity
                 .authorizeHttpRequests()
