@@ -146,4 +146,37 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public Employee update(Employee employee) {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    String updateQuery = "UPDATE employee as emp SET name = '|=NAME=|', gender = '|=GENDER=|', phoneNumber = '|=PHONE_NUMBER=|', zipCode = |=ZIP_CODE=|, address1 = '|=ADDRESS1=|', address2 = '|=ADDRESS2=|', role = '|=ROLE=|', rank = '|=RANK=|', departmentPid = |=DEPARTMENT_PID=| WHERE emp.pid = |=PID=|;"
+                            .replace("|=NAME=|", employee.getName())
+                            .replace("|=GENDER=|", employee.getGender().name())
+                            .replace("|=PHONE_NUMBER=|", employee.getPhoneNumber())
+                            .replace("|=ZIP_CODE=|", String.valueOf(employee.getZipCode()))
+                            .replace("|=ADDRESS1=|", employee.getAddress1())
+                            .replace("|=ADDRESS2=|", employee.getAddress2())
+                            .replace("|=ROLE=|", employee.getRole().name())
+                            .replace("|=RANK=|", employee.getRank().name())
+                            .replace("|=DEPARTMENT_PID=|", String.valueOf(employee.getDepartment().getPid()))
+                            .replace("|=PID=|", String.valueOf(employee.getPid()));
+                    statement.executeUpdate(updateQuery);
+                    String readQuery = "SELECT emp.pid as empPid, emp.account as empAccount, emp.password as empPassword, emp.name as empName, emp.gender as empGender, emp.residentRegistrationNumber as empResidentRegistrationNumber, emp.phoneNumber as empPhoneNumber, emp.zipCode as empZipCode, emp.address1 as empAddress1, emp.address2 as empAddress2, emp.role as empRole, emp.rank as empRank, dep.pid as depPid, dep.name as depName FROM employee as emp, department as dep WHERE emp.departmentPid = dep.pid AND emp.pid = '|=PID=|';"
+                            .replace("|=PID=|", String.valueOf(employee.getPid()));
+                    try (ResultSet resultSet = statement.executeQuery(readQuery)) {
+                        if (resultSet.next()) {
+                            return new Employee(resultSet);
+                        } else {
+                            throw new RuntimeException();
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
 }
