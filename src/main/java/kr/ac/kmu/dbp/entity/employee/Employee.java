@@ -73,9 +73,7 @@ public class Employee {
         this.rank = Rank.valueOf(employeeDtoCreate.getRank());
     }
 
-    public Employee(int pid, EmployeeDtoUpdate employeeDtoUpdate) {
-        this.pid = pid;
-
+    public Employee(EmployeeDtoUpdate employeeDtoUpdate) {
         this.name = employeeDtoUpdate.getName();
         this.gender = Gender.valueOf(employeeDtoUpdate.getGender());
         this.phoneNumber = employeeDtoUpdate.getPhoneNumber();
