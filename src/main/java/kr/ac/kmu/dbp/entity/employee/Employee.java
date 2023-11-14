@@ -2,11 +2,13 @@ package kr.ac.kmu.dbp.entity.employee;
 
 import kr.ac.kmu.dbp.dto.employee.EmployeeDtoRepository;
 import kr.ac.kmu.dbp.entity.department.Department;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
+@AllArgsConstructor
 public class Employee {
     private int pid;
 
