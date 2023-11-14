@@ -41,14 +41,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee readByPid(int pid) {
-        EmployeeDtoRepository employeeDtoRepository = employeeRepository.readByPid(pid);
-        Employee employee = new Employee(employeeDtoRepository);
-
-        Department department = getDepartment(employeeDtoRepository.getDepartmentPid());
-
-        employee.setDepartment(department);
-
-        return employee;
+        return employeeRepository.readByPid(pid);
     }
 
     @Override
