@@ -47,7 +47,7 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
                 "WHERE" +
                 "  emp.departmentPid = dep.pid" +
                 "  AND" +
-                "  emp.|=COLUMN_NAME=| = |=COLUMN=|"
+                "  emp.|=COLUMN_NAME=| = |=COLUMN=|;"
                         .replace("|=COLUMN_NAME=|", columnName)
                         .replace("|=COLUMN=|", column);
     }
@@ -73,20 +73,21 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
                     if (statement.executeUpdate(createQuery) > 0) {
                         String setAccountQuery = "";
                         String findQuery = "";
-                        findQuery = "SELECT id FROM employee WHERE residentRegistrationNumber = '|=RESIDENT_REGISTRATION_NUMBER=|'"
+                        findQuery = "SELECT pid FROM employee WHERE residentRegistrationNumber = '|=RESIDENT_REGISTRATION_NUMBER=|'"
                                 .replace("|=RESIDENT_REGISTRATION_NUMBER=|", employee.getResidentRegistrationNumber());
                         try (ResultSet resultSet = statement.executeQuery(findQuery)) {
                             if (resultSet.next()) {
-                                int id = resultSet.getInt("id");
-                                String account = "E" + String.format("%05d", id);
+                                int pid = resultSet.getInt("pid");
+                                String account = "E" + String.format("%05d", pid);
 
-                                setAccountQuery = "UPDATE employee SET account = '|=ACCOUNT=|' WHERE id = '|=ID=|'"
+                                setAccountQuery = "UPDATE employee SET account = '|=ACCOUNT=|' WHERE pid = '|=PID=|'"
                                         .replace("|=ACCOUNT=|", account)
-                                        .replace("|=ID=|", String.valueOf(id));
+                                        .replace("|=PID=|", String.valueOf(pid));
                             }
                         }
                         statement.executeUpdate(setAccountQuery);
-                        findQuery = getReadString("residentRegistrationNumber", employee.getResidentRegistrationNumber());
+                        findQuery = "SELECT emp.pid as empPid, emp.account as empAccount, emp.password as empPassword, emp.name as empName, emp.gender as empGender, emp.residentRegistrationNumber as empResidentRegistrationNumber, emp.phoneNumber as empPhoneNumber, emp.zipCode as empZipCode, emp.address1 as empAddress1, emp.address2 as empAddress2, emp.role as empRole, emp.rank as empRank, dep.pid as depPid, dep.name as depName FROM employee as emp, department as dep WHERE emp.departmentPid = dep.pid AND emp.residentRegistrationNumber = '|=RESIDENT_REGISTRATION_NUMBER=|';"
+                                .replace("|=RESIDENT_REGISTRATION_NUMBER=|", employee.getResidentRegistrationNumber());
                         try (ResultSet resultSet = statement.executeQuery(findQuery)) {
                             if (resultSet.next()) {
                                 return new Employee(resultSet);
