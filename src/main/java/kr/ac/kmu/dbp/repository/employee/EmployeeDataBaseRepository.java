@@ -126,16 +126,14 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
     }
 
     @Override
-    public EmployeeDtoRepository readByAccount(String account) {
+    public Employee readByAccount(String account) {
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
-                    String findQuery = "SELECT * FROM |=TABLE=| WHERE account = |=ACCOUNT=|"
-                            .replace("|=TABLE=|", tableName)
-                            .replace("|=ACCOUNT=|", String.valueOf(account));
+                    String findQuery = getReadString("account", account);
                     try (ResultSet resultSet = statement.executeQuery(findQuery)) {
                         if (resultSet.next()) {
-                            return new EmployeeDtoRepository(resultSet);
+                            return new Employee(resultSet);
                         } else {
                             throw new RuntimeException();
                         }
