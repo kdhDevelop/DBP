@@ -26,6 +26,19 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.departmentRepository = departmentDataBaseRepository;
     }
 
+    private Department getDepartment(int pid) {
+        DepartmentDtoRepository departmentDtoRepository = departmentRepository.readByPid(pid);
+        Department department = new Department(departmentDtoRepository);
+
+        EmployeeDtoRepository departmentHeadEmployeeDtoRepository = employeeRepository.readByPid(departmentDtoRepository.getPid());
+        Employee departmentHead = new Employee(departmentHeadEmployeeDtoRepository);
+
+        department.setDepartmentHead(departmentHead);
+        departmentHead.setDepartment(department);
+
+        return department;
+    }
+
     @Override
     public Employee readByPid(int pid) {
         EmployeeDtoRepository employeeDtoRepository = employeeRepository.readByPid(pid);
