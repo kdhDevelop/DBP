@@ -12,7 +12,6 @@ import lombok.Data;
 public class Department {
     private int pid;
     private String name;
-    private Employee departmentHead;
 
     public Department(DepartmentDtoRepository departmentDtoRepository) {
         this.pid = departmentDtoRepository.getPid();
