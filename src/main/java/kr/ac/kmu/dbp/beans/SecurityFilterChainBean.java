@@ -16,6 +16,16 @@ public class SecurityFilterChainBean {
                 .csrf().disable();
 
         httpSecurity
+                .formLogin()
+                .loginProcessingUrl("/api/login")
+                .usernameParameter("account")
+                .passwordParameter("password");
+
+        httpSecurity
+                .logout()
+                .logoutUrl("/api/logout");
+
+        httpSecurity
                 .authorizeHttpRequests()
                 .anyRequest().permitAll();
 
