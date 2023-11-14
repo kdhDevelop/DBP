@@ -8,6 +8,7 @@ import kr.ac.kmu.dbp.repository.department.DepartmentRepository;
 import kr.ac.kmu.dbp.repository.employee.EmployeeDataBaseRepository;
 import kr.ac.kmu.dbp.repository.employee.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,11 +16,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
     private final DepartmentRepository departmentRepository;
-
+    private final PasswordEncoder passwordEncoder;
     @Autowired
-    public EmployeeServiceImpl(EmployeeDataBaseRepository employeeDataBaseRepository, DepartmentDataBaseRepository departmentDataBaseRepository) {
+    public EmployeeServiceImpl(EmployeeDataBaseRepository employeeDataBaseRepository, DepartmentDataBaseRepository departmentDataBaseRepository, PasswordEncoder passwordEncoder) {
         this.employeeRepository = employeeDataBaseRepository;
         this.departmentRepository = departmentDataBaseRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
