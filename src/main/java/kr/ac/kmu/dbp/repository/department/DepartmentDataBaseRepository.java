@@ -27,7 +27,7 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
     }
 
     @Override
-    public DepartmentDtoRepository create(Department department) {
+    public Department create(Department department) {
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
@@ -41,7 +41,7 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
                             .replace("|=NAME=|", department.getName());
                     try (ResultSet resultSet = statement.executeQuery(findQuery)) {
                         if (resultSet.next()) {
-                            return new DepartmentDtoRepository(resultSet);
+                            return new Department(resultSet);
                         } else {
                             throw new RuntimeException();
                         }
