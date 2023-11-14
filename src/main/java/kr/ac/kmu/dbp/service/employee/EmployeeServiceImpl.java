@@ -46,13 +46,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee readByAccount(String account) {
-        EmployeeDtoRepository employeeDtoRepository = employeeRepository.readByAccount(account);
-        Employee employee = new Employee(employeeDtoRepository);
-
-        Department department = getDepartment(employeeDtoRepository.getDepartmentPid());
-
-        employee.setDepartment(department);
-
-        return employee;
+        return employeeRepository.readByAccount(account);
     }
 }
