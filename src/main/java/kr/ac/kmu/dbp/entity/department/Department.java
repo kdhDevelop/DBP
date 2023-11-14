@@ -22,7 +22,7 @@ public class Department {
     }
 
     public Department(ResultSet resultSet) throws SQLException {
-        this.pid = resultSet.getInt("pid");
-        this.name = resultSet.getString("name");
+        this.pid = resultSet.getInt("depPid");
+        this.name = resultSet.getString("depName");
     }
 }
