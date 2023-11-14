@@ -48,7 +48,7 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
                 "WHERE" +
                 "  emp.departmentPid = dep.pid" +
                 "  AND" +
-                "  emp.|=COLUMN_NAME=| = '|=COLUMN=|'"
+                "  emp.|=COLUMN_NAME=| = |=COLUMN=|"
                         .replace("|=COLUMN_NAME=|", columnName)
                         .replace("|=COLUMN=|", column);
     }
@@ -130,7 +130,7 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
-                    String findQuery = getReadString("account", account);
+                    String findQuery = getReadString("account", "'" + account + "'");
                     try (ResultSet resultSet = statement.executeQuery(findQuery)) {
                         if (resultSet.next()) {
                             return new Employee(resultSet);
