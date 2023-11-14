@@ -106,16 +106,14 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
     }
 
     @Override
-    public EmployeeDtoRepository readByPid(int pid) {
+    public Employee readByPid(int pid) {
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
-                    String findQuery = "SELECT * FROM |=TABLE=| WHERE pid = |=PID=|"
-                            .replace("|=TABLE=|", tableName)
-                            .replace("|=PID=|", String.valueOf(pid));
+                    String findQuery = getReadString("pid", String.valueOf(pid));
                     try (ResultSet resultSet = statement.executeQuery(findQuery)) {
                         if (resultSet.next()) {
-                            return new EmployeeDtoRepository(resultSet);
+                            return new Employee(resultSet);
                         } else {
                             throw new RuntimeException();
                         }
