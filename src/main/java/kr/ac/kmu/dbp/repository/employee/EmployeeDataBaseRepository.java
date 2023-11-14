@@ -130,7 +130,8 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
-                    String findQuery = getReadString("account", "'" + account + "'");
+                    String findQuery = "SELECT emp.pid as empPid, emp.account as empAccount, emp.password as empPassword, emp.name as empName, emp.gender as empGender, emp.residentRegistrationNumber as empResidentRegistrationNumber, emp.phoneNumber as empPhoneNumber, emp.zipCode as empZipCode, emp.address1 as empAddress1, emp.address2 as empAddress2, emp.role as empRole, emp.rank as empRank, dep.pid as depPid, dep.name as depName FROM employee as emp, department as dep WHERE emp.departmentPid = dep.pid AND emp.account = '|=ACCOUNT=|';"
+                            .replace("|=ACCOUNT=|", account);
                     try (ResultSet resultSet = statement.executeQuery(findQuery)) {
                         if (resultSet.next()) {
                             return new Employee(resultSet);
