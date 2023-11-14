@@ -28,15 +28,6 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Department readByPid(int pid) {
-        DepartmentDtoRepository departmentDtoRepository = departmentRepository.readByPid(pid);
-        Department department = new Department(departmentDtoRepository);
-
-        EmployeeDtoRepository employeeDtoRepository = employeeRepository.readByPid(department.getPid());
-        Employee departmentHead = new Employee(employeeDtoRepository);
-
-        department.setDepartmentHead(departmentHead);
-        departmentHead.setDepartment(department);
-
-        return department;
+        return departmentRepository.readByPid(pid);
     }
 }
