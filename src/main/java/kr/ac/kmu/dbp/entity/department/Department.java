@@ -15,11 +15,6 @@ public class Department {
     private int pid;
     private String name;
 
-    public Department(DepartmentDtoRepository departmentDtoRepository) {
-        this.pid = departmentDtoRepository.getPid();
-        this.name = departmentDtoRepository.getName();
-    }
-
     public Department(ResultSet resultSet) throws SQLException {
         this.pid = resultSet.getInt("depPid");
         this.name = resultSet.getString("depName");
