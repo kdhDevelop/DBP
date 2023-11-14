@@ -35,8 +35,7 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
                             .replace("|=NAME=|", department.getName());
                     statement.executeUpdate(createQuery);
 
-                    String findQuery = "SELECT * FROM |=TABLE=| WHERE name = '|=NAME=|';"
-                            .replace("|=TABLE=|", tableName)
+                    String findQuery = "SELECT dep.pid as depPid, dep.name as depName FROM department as dep WHERE name = '|=NAME=|';"
                             .replace("|=NAME=|", department.getName());
                     try (ResultSet resultSet = statement.executeQuery(findQuery)) {
                         if (resultSet.next()) {
