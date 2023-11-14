@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -16,5 +19,10 @@ public class Department {
     public Department(DepartmentDtoRepository departmentDtoRepository) {
         this.pid = departmentDtoRepository.getPid();
         this.name = departmentDtoRepository.getName();
+    }
+
+    public Department(ResultSet resultSet) throws SQLException {
+        this.pid = resultSet.getInt("pid");
+        this.name = resultSet.getString("name");
     }
 }
