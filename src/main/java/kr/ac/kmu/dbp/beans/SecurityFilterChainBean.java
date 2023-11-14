@@ -19,7 +19,8 @@ public class SecurityFilterChainBean {
                 .formLogin()
                 .loginProcessingUrl("/api/login")
                 .usernameParameter("account")
-                .passwordParameter("password");
+                .passwordParameter("password")
+                .successForwardUrl("/");
 
         httpSecurity
                 .logout()
