@@ -23,7 +23,8 @@ public class SecurityFilterChainBean {
 
         httpSecurity
                 .logout()
-                .logoutUrl("/api/logout");
+                .logoutUrl("/api/logout")
+                .logoutSuccessUrl("/");
 
         httpSecurity
                 .authorizeHttpRequests()
