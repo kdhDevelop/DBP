@@ -1,6 +1,5 @@
 package kr.ac.kmu.dbp.repository.employee;
 
-import kr.ac.kmu.dbp.dto.employee.EmployeeDtoRepository;
 import kr.ac.kmu.dbp.entity.employee.Employee;
 import kr.ac.kmu.dbp.repository.DataBaseConnection;
 import kr.ac.kmu.dbp.repository.Table;
