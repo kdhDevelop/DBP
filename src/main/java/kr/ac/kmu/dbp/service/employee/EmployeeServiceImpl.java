@@ -56,14 +56,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         EmployeeDtoRepository employeeDtoRepository = employeeRepository.readByAccount(account);
         Employee employee = new Employee(employeeDtoRepository);
 
-        DepartmentDtoRepository departmentDtoRepository = departmentRepository.readByPid(employeeDtoRepository.getDepartmentPid());
-        Department department = new Department(departmentDtoRepository);
-
-        EmployeeDtoRepository departmentHeadEmployeeDtoRepository = employeeRepository.readByPid(departmentDtoRepository.getPid());
-        Employee departmentHead = new Employee(departmentHeadEmployeeDtoRepository);
-
-        department.setDepartmentHead(departmentHead);
-        departmentHead.setDepartment(department);
+        Department department = getDepartment(employeeDtoRepository.getDepartmentPid());
 
         employee.setDepartment(department);
 
