@@ -7,4 +7,5 @@ public interface EmployeeRepository {
     public Employee readByPid(int pid);
     public Employee readByAccount(String account);
     public Employee update(Employee employee);
+    public boolean checkExistByResidentRegistrationNumber(String residentRegistrationNumber);
 }
