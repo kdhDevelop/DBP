@@ -1,5 +1,6 @@
 package kr.ac.kmu.dbp.entity.chat.chatRoom;
 
+import kr.ac.kmu.dbp.dto.chat.chatRoom.ChatRoomDtoCreate;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -19,6 +20,10 @@ public class ChatRoom {
 
     public ChatRoom(String name) {
         this.name = name;
+    }
+
+    public ChatRoom(ChatRoomDtoCreate chatRoomDtoCreate) {
+        this.name = chatRoomDtoCreate.getName();
     }
 
     public void addUserPid(int userPid) {
