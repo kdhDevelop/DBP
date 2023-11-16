@@ -21,4 +21,14 @@ public class ChatRoomInMemoryRepository implements ChatRoomRepository {
     public void create(ChatRoom chatRoom) {
         chatRoomList.add(new ChatRoom(chatRoomList.size()+1, chatRoom.getName()));
     }
+
+    @Override
+    public ChatRoom readByPid(int pid) {
+        for (ChatRoom chatRoom : chatRoomList) {
+            if (chatRoom.getPid() == pid) {
+                return chatRoom;
+            }
+        }
+        throw new RuntimeException();
+    }
 }
