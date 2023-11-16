@@ -4,4 +4,5 @@ import kr.ac.kmu.dbp.entity.chat.chatRoom.ChatRoom;
 
 public interface ChatRoomRepository {
     public void create(ChatRoom chatRoom);
+    public ChatRoom readByPid(int pid);
 }
