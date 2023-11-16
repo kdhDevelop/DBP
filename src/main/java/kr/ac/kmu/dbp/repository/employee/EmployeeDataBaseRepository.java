@@ -151,4 +151,21 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public boolean checkExistByResidentRegistrationNumber(String residentRegistrationNumber) {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    String checkExistQuery = "SELECT * FROM employee WHERE residentRegistrationNumber = '|=RESIDENT_REGISTRATION_NUMBER=|';"
+                            .replace("|=RESIDENT_REGISTRATION_NUMBER=|", residentRegistrationNumber);
+                    try (ResultSet resultSet = statement.executeQuery(checkExistQuery)) {
+                        return resultSet.next();
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
 }
