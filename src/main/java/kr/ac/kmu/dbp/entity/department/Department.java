@@ -24,6 +24,10 @@ public class Department {
         this.name = departmentDtoCreate.getName();
     }
 
+    public Department(String departmentName) {
+        this.name = departmentName;
+    }
+
     public Department() {
         this.pid = -1;
         this.name = "무소속";
