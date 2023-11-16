@@ -1,5 +1,7 @@
 package kr.ac.kmu.dbp.service.chat.chatRoom;
 
+import kr.ac.kmu.dbp.dto.chat.chatRoom.ChatRoomDtoCreate;
+import kr.ac.kmu.dbp.entity.chat.chatRoom.ChatRoom;
 import kr.ac.kmu.dbp.repository.chat.chatRoom.ChatRoomInMemoryRepository;
 import kr.ac.kmu.dbp.repository.chat.chatRoom.ChatRoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,4 +17,8 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         this.chatRoomRepository = chatRoomInMemoryRepository;
     }
 
+    @Override
+    public void crate(ChatRoomDtoCreate chatRoomDtoCreate) {
+        chatRoomRepository.create(new ChatRoom(chatRoomDtoCreate));
+    }
 }
