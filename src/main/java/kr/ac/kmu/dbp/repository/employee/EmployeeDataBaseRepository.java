@@ -24,34 +24,6 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
         return "CREATE TABLE employee ( pid int NOT NULL AUTO_INCREMENT, account varchar(100), password varchar(1000), name varchar(50), gender varchar(50), residentRegistrationNumber char(14) UNIQUE, phoneNumber char(14), zipCode int unsigned, address1 varchar(1000), address2 varchar(1000), role varchar(100), departmentPid int, rank varchar(100), PRIMARY KEY(pid) );";
     }
 
-    private static String getReadString(String columnName, String column) {
-        return "" +
-                "SELECT " +
-                "  emp.pid as empPid," +
-                "  emp.account as empPid," +
-                "  emp.password as empPassword," +
-                "  emp.name as empName," +
-                "  emp.gender as empGender," +
-                "  emp.residentRegistrationNumber as empResidentRegistrationNumber," +
-                "  emp.phoneNumber as empPhoneNumber," +
-                "  emp.zipCode as empZipCode," +
-                "  emp.address1 as empAddress1," +
-                "  emp.address2 as empAddress2," +
-                "  emp.role as empRole," +
-                "  emp.rank as empRank," +
-                "  dep.pid as depPid," +
-                "  dep.name as depName" +
-                "FROM" +
-                "  employee as emp," +
-                "  department as dep" +
-                "WHERE" +
-                "  emp.departmentPid = dep.pid" +
-                "  AND" +
-                "  emp.|=COLUMN_NAME=| = |=COLUMN=|;"
-                        .replace("|=COLUMN_NAME=|", columnName)
-                        .replace("|=COLUMN=|", column);
-    }
-
     @Override
     public Employee create(Employee employee) {
         String createQuery = "INSERT INTO employee (password, name, gender, residentRegistrationNumber, phoneNumber, zipCode, address1, address2, role, departmentPid, rank) VALUES ('|=PASSWORD=|', '|=NAME=|', '|=GENDER=|', '|=RESIDENT_REGISTRATION_NUMBER=|', '|=PHONE_NUMBER=|', |=ZIP_CODE=|, '|=ADDRESS_1=|', '|=ADDRESS_2=|', '|=ROLE=|', |=DEPARTMENT_PID=|, '|=RANK=|');"
