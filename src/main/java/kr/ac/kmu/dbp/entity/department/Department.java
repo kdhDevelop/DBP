@@ -23,4 +23,9 @@ public class Department {
     public Department(DepartmentDtoCreate departmentDtoCreate) {
         this.name = departmentDtoCreate.getName();
     }
+
+    public Department() {
+        this.pid = -1;
+        this.name = "무소속";
+    }
 }
