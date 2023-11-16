@@ -21,4 +21,9 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     public void create(ChatRoomDtoCreate chatRoomDtoCreate) {
         chatRoomRepository.create(new ChatRoom(chatRoomDtoCreate));
     }
+
+    @Override
+    public void readByPid(int pid) {
+        chatRoomRepository.readByPid(pid);
+    }
 }
