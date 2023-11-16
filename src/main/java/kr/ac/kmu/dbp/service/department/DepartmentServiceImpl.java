@@ -20,7 +20,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     private void init() {
-        String[] departmentNameList = new String[] {"무소속", "인사", "개발", "영업"};
+        String[] departmentNameList = new String[] {"사장", "무소속", "인사", "개발", "영업"};
 
         for (String departmentName : departmentNameList) {
             if (!departmentRepository.checkExistByName(departmentName)) {
