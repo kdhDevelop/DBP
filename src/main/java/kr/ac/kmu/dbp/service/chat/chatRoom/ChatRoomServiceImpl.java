@@ -18,7 +18,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     }
 
     @Override
-    public void crate(ChatRoomDtoCreate chatRoomDtoCreate) {
+    public void create(ChatRoomDtoCreate chatRoomDtoCreate) {
         chatRoomRepository.create(new ChatRoom(chatRoomDtoCreate));
     }
 }

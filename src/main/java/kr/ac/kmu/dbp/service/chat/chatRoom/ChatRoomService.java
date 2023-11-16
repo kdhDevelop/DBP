@@ -4,5 +4,5 @@ import kr.ac.kmu.dbp.dto.chat.chatRoom.ChatRoomDtoCreate;
 
 
 public interface ChatRoomService {
-    public void crate(ChatRoomDtoCreate chatRoomDtoCreate);
+    public void create(ChatRoomDtoCreate chatRoomDtoCreate);
 }
