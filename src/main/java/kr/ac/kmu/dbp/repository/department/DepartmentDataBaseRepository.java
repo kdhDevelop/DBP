@@ -71,4 +71,21 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public boolean checkExistByName(String name) {
+       try {
+           try (Connection connection = dataBaseConnection.getConnection()) {
+               try (Statement statement = connection.createStatement()) {
+                   String checkExistQuery = "SELECT * FROM department WHERE name = '|=NAME=|';"
+                           .replace("|=NAME=|", name);
+                   try (ResultSet resultSet = statement.executeQuery(checkExistQuery)) {
+                       return resultSet.next();
+                   }
+               }
+           }
+       } catch (SQLException e) {
+           throw new RuntimeException();
+       }
+    }
 }
