@@ -19,6 +19,6 @@ public class ChatRoomInMemoryRepository implements ChatRoomRepository {
 
     @Override
     public void create(ChatRoom chatRoom) {
-        chatRoomList.add(chatRoom);
+        chatRoomList.add(new ChatRoom(chatRoomList.size()+1, chatRoom.getName()));
     }
 }
