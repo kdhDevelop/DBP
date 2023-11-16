@@ -11,14 +11,14 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class ChatRoomInMemoryRepository implements ChatRoomRepository {
 
-    //채팅방(ChatRoom)와 해당 채팅방에 있는 사람들의 목록(Employee - Vector<Employee)
-    private static final ConcurrentHashMap<ChatRoom, Vector<Employee>> chatRoomList = new ConcurrentHashMap<>();
+    //채팅방(ChatRoom)
+    private static final Vector<ChatRoom> chatRoomList = new Vector<>();
 
     //사람(Employee)에 해당하는 연결(WebSocketSession)
     private static final ConcurrentHashMap<Employee, WebSocketSession> userSessionList = new ConcurrentHashMap<>();
 
     @Override
     public void create(ChatRoom chatRoom) {
-        chatRoomList.put(chatRoom, new Vector<>());
+        chatRoomList.add(chatRoom);
     }
 }
