@@ -15,6 +15,18 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Autowired
     public DepartmentServiceImpl(DepartmentDataBaseRepository departmentDataBaseRepository) {
         this.departmentRepository = departmentDataBaseRepository;
+
+        init();
+    }
+
+    private void init() {
+        String[] departmentNameList = new String[] {"무소속", "인사", "개발", "영업"};
+
+        for (String departmentName : departmentNameList) {
+            if (!departmentRepository.checkExistByName(departmentName)) {
+                departmentRepository.create(new Department(departmentName));
+            }
+        }
     }
 
     @Override
