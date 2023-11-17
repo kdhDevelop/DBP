@@ -5,6 +5,7 @@ import kr.ac.kmu.dbp.entity.employee.Employee;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketSession;
 
+import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -28,5 +29,10 @@ public class ChatRoomInMemoryRepository implements ChatRoomRepository {
             }
         }
         throw new RuntimeException();
+    }
+
+    @Override
+    public List<ChatRoom> readAll() {
+        return chatRoomList;
     }
 }
