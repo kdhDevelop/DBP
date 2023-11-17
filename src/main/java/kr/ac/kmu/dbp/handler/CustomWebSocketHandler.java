@@ -52,7 +52,6 @@ public class CustomWebSocketHandler extends TextWebSocketHandler {
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         String receiveMessage = new String(message.asBytes());
-        System.out.println(receiveMessage);
         JSONObject receiveMessageJsonObject = new JSONObject(receiveMessage);
 
         FunctionType functionType = FunctionType.valueOf(receiveMessageJsonObject.getString("function"));
