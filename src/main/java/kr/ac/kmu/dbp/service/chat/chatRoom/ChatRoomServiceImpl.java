@@ -23,7 +23,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     }
 
     @Override
-    public void readByPid(int pid) {
-        chatRoomRepository.readByPid(pid);
+    public ChatRoom readByPid(int pid) {
+        return chatRoomRepository.readByPid(pid);
     }
 }
