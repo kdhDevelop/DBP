@@ -14,8 +14,6 @@ public class ChatRoomInMemoryRepository implements ChatRoomRepository {
     //채팅방(ChatRoom)
     private static final Vector<ChatRoom> chatRoomList = new Vector<>();
 
-    //사람(Employee)에 해당하는 연결(WebSocketSession)
-    private static final ConcurrentHashMap<Employee, WebSocketSession> userSessionList = new ConcurrentHashMap<>();
 
     @Override
     public void create(ChatRoom chatRoom) {
