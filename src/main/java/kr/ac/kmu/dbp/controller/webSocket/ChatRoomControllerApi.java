@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class ChatControllerApi {
+public class ChatRoomControllerApi {
 
     private final ChatRoomService chatRoomService;
 
     @Autowired
-    public ChatControllerApi(ChatRoomServiceImpl chatRoomServiceImpl) {
+    public ChatRoomControllerApi(ChatRoomServiceImpl chatRoomServiceImpl) {
         this.chatRoomService = chatRoomServiceImpl;
     }
 
