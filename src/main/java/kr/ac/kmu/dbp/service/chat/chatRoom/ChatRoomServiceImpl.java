@@ -7,6 +7,8 @@ import kr.ac.kmu.dbp.repository.chat.chatRoom.ChatRoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ChatRoomServiceImpl implements ChatRoomService {
 
@@ -25,5 +27,10 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     @Override
     public ChatRoom readByPid(int pid) {
         return chatRoomRepository.readByPid(pid);
+    }
+
+    @Override
+    public List<ChatRoom> readAll() {
+        return chatRoomRepository.readAll();
     }
 }
