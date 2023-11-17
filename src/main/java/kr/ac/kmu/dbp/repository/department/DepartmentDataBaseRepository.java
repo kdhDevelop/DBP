@@ -53,6 +53,10 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
 
     @Override
     public Department readByPid(int pid) {
+        if (pid < 2) {
+            throw new RuntimeException();
+        }
+
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
@@ -91,9 +95,8 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
 
     @Override
     public void delete(Department department) {
-
         if (department.getPid() < 2) {
-            return;
+            throw new RuntimeException();
         }
 
         try {
