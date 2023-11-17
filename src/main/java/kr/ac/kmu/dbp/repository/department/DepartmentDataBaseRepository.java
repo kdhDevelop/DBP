@@ -88,4 +88,27 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
            throw new RuntimeException();
        }
     }
+
+    @Override
+    public void delete(Department department) {
+
+        if (department.getPid() < 2) {
+            return;
+        }
+
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    String deleteQuery = "DELETE FROM department WHERE pid = |=DEPARTMENT_PID=|"
+                            .replace("|=DEPARTMENT_PID=|", String.valueOf(department.getPid()));
+                    statement.executeUpdate(deleteQuery);
+                    String updateQuery = "UPDATE employee departmentPid = 1 WHERE departmentPid = |=DEPARTMENT_PID=|"
+                            .replace("|=DEPARTMENT_PID=|", String.valueOf(department.getPid()));
+                    statement.executeUpdate(updateQuery);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
 }
