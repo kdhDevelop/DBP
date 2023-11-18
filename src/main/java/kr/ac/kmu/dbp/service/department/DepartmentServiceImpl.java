@@ -9,6 +9,8 @@ import kr.ac.kmu.dbp.repository.department.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
 
@@ -49,5 +51,10 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public void update(DepartmentDtoUpdate departmentDtoUpdate) {
         departmentRepository.update(new Department(departmentDtoUpdate));
+    }
+
+    @Override
+    public List<Department> readAll() {
+        return departmentRepository.readAll();
     }
 }
