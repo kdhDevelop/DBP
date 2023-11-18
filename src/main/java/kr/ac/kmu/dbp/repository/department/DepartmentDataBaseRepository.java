@@ -114,4 +114,24 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public void update(Department department) {
+        if (department.getPid() < 2) {
+            throw new RuntimeException();
+        }
+
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    String updateQuery = "UPDATE department SET name = '|=NAME=|' WHERE pid = |=PID=|"
+                            .replace("|=NAME=|", department.getName())
+                            .replace("|=PID=|", String.valueOf(department.getPid()));
+                    statement.executeUpdate(updateQuery);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
 }
