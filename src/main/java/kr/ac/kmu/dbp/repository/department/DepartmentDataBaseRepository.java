@@ -55,7 +55,7 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
 
     @Override
     public Department readByPid(int pid) {
-        if (pid < 2) {
+        if (pid < 3) {
             throw new RuntimeException();
         }
 
@@ -97,7 +97,7 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
 
     @Override
     public void delete(Department department) {
-        if (department.getPid() < 2) {
+        if (department.getPid() < 3) {
             throw new RuntimeException();
         }
 
@@ -119,7 +119,7 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
 
     @Override
     public void update(Department department) {
-        if (department.getPid() < 2) {
+        if (department.getPid() < 3) {
             throw new RuntimeException();
         }
 
@@ -143,7 +143,7 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
                     List<Department> result = new ArrayList<>();
-                    String readQuery = "SELECT * FROM department WHERE pid > 1;";
+                    String readQuery = "SELECT * FROM department WHERE pid > 2;";
                     try (ResultSet resultSet = statement.executeQuery(readQuery)) {
                         while (resultSet.next()) {
                             result.add(new Department(resultSet));
