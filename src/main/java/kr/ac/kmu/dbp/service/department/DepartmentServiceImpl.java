@@ -1,7 +1,6 @@
 package kr.ac.kmu.dbp.service.department;
 
 import kr.ac.kmu.dbp.dto.department.DepartmentDtoCreate;
-import kr.ac.kmu.dbp.dto.department.DepartmentDtoDelete;
 import kr.ac.kmu.dbp.dto.department.DepartmentDtoUpdate;
 import kr.ac.kmu.dbp.entity.department.Department;
 import kr.ac.kmu.dbp.repository.department.DepartmentDataBaseRepository;

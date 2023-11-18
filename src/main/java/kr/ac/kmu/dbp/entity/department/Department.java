@@ -1,7 +1,6 @@
 package kr.ac.kmu.dbp.entity.department;
 
 import kr.ac.kmu.dbp.dto.department.DepartmentDtoCreate;
-import kr.ac.kmu.dbp.dto.department.DepartmentDtoDelete;
 import kr.ac.kmu.dbp.dto.department.DepartmentDtoUpdate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,11 +31,6 @@ public class Department {
 
     public Department(int pid) {
         this.pid = pid;
-    }
-
-    public Department(DepartmentDtoDelete departmentDtoDelete) {
-        this.pid = departmentDtoDelete.getPid();
-        this.name = "삭제 예정";
     }
 
     public Department(DepartmentDtoUpdate departmentDtoUpdate) {
