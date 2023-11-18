@@ -7,4 +7,5 @@ public interface DepartmentRepository {
     public Department readByPid(int pid);
     public boolean checkExistByName(String name);
     public void delete(Department department);
+    public void update(Department department);
 }
