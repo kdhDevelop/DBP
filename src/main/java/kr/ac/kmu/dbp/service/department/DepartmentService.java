@@ -11,7 +11,7 @@ public interface DepartmentService {
 
     public Department readByPid(int pid);
     public void create(DepartmentDtoCreate departmentDtoCreate);
-    public void delete(DepartmentDtoDelete departmentDtoDelete);
+    public void delete(int pid);
     public void update(DepartmentDtoUpdate departmentDtoUpdate);
     public List<Department> readAll();
 }
