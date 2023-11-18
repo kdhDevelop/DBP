@@ -20,6 +20,10 @@ public class DepartmentControllerApi {
         this.departmentService = departmentServiceImpl;
     }
 
+    @GetMapping("/department/{pid}")
+    public Department read(@PathVariable("pid") String pid) {
+        return departmentService.readByPid(Integer.parseInt(pid));
+    }
     @PostMapping("/department")
     public void create(@RequestBody DepartmentDtoCreate departmentDtoCreate) {
         departmentService.create(departmentDtoCreate);
