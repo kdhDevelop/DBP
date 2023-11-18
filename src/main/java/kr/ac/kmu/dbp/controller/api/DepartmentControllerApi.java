@@ -38,4 +38,9 @@ public class DepartmentControllerApi {
     public List<Department> readAll() {
         return departmentService.readAll();
     }
+
+    @DeleteMapping("/department/{pid}")
+    public void delete(@PathVariable("pid") int pid) {
+        departmentService.delete(pid);
+    }
 }
