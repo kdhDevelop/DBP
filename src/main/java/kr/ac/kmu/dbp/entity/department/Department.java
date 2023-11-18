@@ -30,6 +30,10 @@ public class Department {
         this.name = departmentName;
     }
 
+    public Department(int pid) {
+        this.pid = pid;
+    }
+
     public Department(DepartmentDtoDelete departmentDtoDelete) {
         this.pid = departmentDtoDelete.getPid();
         this.name = "삭제 예정";
