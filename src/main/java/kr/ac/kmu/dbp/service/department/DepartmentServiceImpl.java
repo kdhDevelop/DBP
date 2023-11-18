@@ -44,8 +44,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public void delete(DepartmentDtoDelete departmentDtoDelete) {
-        departmentRepository.delete(new Department(departmentDtoDelete));
+    public void delete(int pid) {
+        departmentRepository.delete(new Department(pid));
     }
 
     @Override
