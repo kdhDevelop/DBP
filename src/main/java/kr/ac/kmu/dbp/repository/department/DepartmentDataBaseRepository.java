@@ -104,10 +104,10 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
-                    String deleteQuery = "DELETE FROM department WHERE pid = |=DEPARTMENT_PID=|"
+                    String deleteQuery = "DELETE FROM department WHERE pid = |=DEPARTMENT_PID=|;"
                             .replace("|=DEPARTMENT_PID=|", String.valueOf(department.getPid()));
                     statement.executeUpdate(deleteQuery);
-                    String updateQuery = "UPDATE employee departmentPid = 1 WHERE departmentPid = |=DEPARTMENT_PID=|"
+                    String updateQuery = "UPDATE employee SET departmentPid = 2 WHERE departmentPid = |=DEPARTMENT_PID=|;"
                             .replace("|=DEPARTMENT_PID=|", String.valueOf(department.getPid()));
                     statement.executeUpdate(updateQuery);
                 }
