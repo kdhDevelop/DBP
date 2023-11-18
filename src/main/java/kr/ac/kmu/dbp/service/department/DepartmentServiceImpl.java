@@ -1,6 +1,7 @@
 package kr.ac.kmu.dbp.service.department;
 
 import kr.ac.kmu.dbp.dto.department.DepartmentDtoCreate;
+import kr.ac.kmu.dbp.dto.department.DepartmentDtoDelete;
 import kr.ac.kmu.dbp.entity.department.Department;
 import kr.ac.kmu.dbp.repository.department.DepartmentDataBaseRepository;
 import kr.ac.kmu.dbp.repository.department.DepartmentRepository;
@@ -37,5 +38,10 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public void create(DepartmentDtoCreate departmentDtoCreate) {
         departmentRepository.create(new Department(departmentDtoCreate));
+    }
+
+    @Override
+    public void delete(DepartmentDtoDelete departmentDtoDelete) {
+        departmentRepository.delete(new Department(departmentDtoDelete));
     }
 }
