@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Component
@@ -128,6 +130,26 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
                             .replace("|=NAME=|", department.getName())
                             .replace("|=PID=|", String.valueOf(department.getPid()));
                     statement.executeUpdate(updateQuery);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public List<Department> readAll() {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    List<Department> result = new ArrayList<>();
+                    String readQuery = "SELECT * FROM department WHERE pid > 1;";
+                    try (ResultSet resultSet = statement.executeQuery(readQuery)) {
+                        while (resultSet.next()) {
+                            result.add(new Department(resultSet));
+                        }
+                    }
+                    return result;
                 }
             }
         } catch (SQLException e) {
