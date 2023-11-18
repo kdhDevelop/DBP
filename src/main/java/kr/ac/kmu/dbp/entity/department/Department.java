@@ -29,11 +29,6 @@ public class Department {
         this.name = departmentName;
     }
 
-    public Department() {
-        this.pid = -1;
-        this.name = "무소속";
-    }
-
     public Department(DepartmentDtoDelete departmentDtoDelete) {
         this.pid = departmentDtoDelete.getPid();
         this.name = "삭제 예정";
