@@ -143,7 +143,7 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
                     List<Department> result = new ArrayList<>();
-                    String readQuery = "SELECT * FROM department WHERE pid > 2;";
+                    String readQuery = "SELECT dep.pid as depPid, dep.name as depName FROM department as dep WHERE pid > 2;";
                     try (ResultSet resultSet = statement.executeQuery(readQuery)) {
                         while (resultSet.next()) {
                             result.add(new Department(resultSet));
