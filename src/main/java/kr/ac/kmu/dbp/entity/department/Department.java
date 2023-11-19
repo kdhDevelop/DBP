@@ -16,9 +16,9 @@ public class Department {
     private int pid;
     private String name;
 
-    public Department(ResultSet resultSet) throws SQLException {
-        this.pid = resultSet.getInt("depPid");
-        this.name = resultSet.getString("depName");
+    public Department(ResultSet resultSet, String prefix) throws SQLException {
+        this.pid = resultSet.getInt(prefix + "pid");
+        this.name = resultSet.getString(prefix + "name");
     }
 
     public Department(DepartmentDtoCreate departmentDtoCreate) {
