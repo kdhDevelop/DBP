@@ -66,4 +66,9 @@ public class MailServiceImpl implements MailService {
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public boolean checkNewMail(Employee employee) {
+        return mailRepository.checkNewMail(employee);
+    }
 }
