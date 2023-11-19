@@ -33,6 +33,7 @@ public class MailServiceImpl implements MailService {
                 .sender(sender)
                 .sendDate(new Date(System.currentTimeMillis()))
                 .receiver(receiver)
+                .title(mailDtoCreate.getTitle())
                 .content(mailDtoCreate.getContent())
                 .build();
 
