@@ -37,11 +37,11 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
                             .replace("|=NAME=|", department.getName());
                     statement.executeUpdate(createQuery);
 
-                    String findQuery = "SELECT dep.pid as depPid, dep.name as depName FROM department as dep WHERE name = '|=NAME=|';"
+                    String findQuery = "SELECT dep.pid as dep_pid, dep.name as dep_name FROM department as dep WHERE name = '|=NAME=|';"
                             .replace("|=NAME=|", department.getName());
                     try (ResultSet resultSet = statement.executeQuery(findQuery)) {
                         if (resultSet.next()) {
-                            return new Department(resultSet);
+                            return new Department(resultSet, "dep_");
                         } else {
                             throw new RuntimeException();
                         }
@@ -62,11 +62,11 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
-                    String findQuery = "SELECT dep.pid as depPid, dep.name as depName FROM department as dep WHERE pid = '|=PID=|';"
+                    String findQuery = "SELECT dep.pid as dep_pid, dep.name as dep_name FROM department as dep WHERE pid = '|=PID=|';"
                             .replace("|=PID=|", String.valueOf(pid));
                     try (ResultSet resultSet = statement.executeQuery(findQuery)) {
                         if (resultSet.next()) {
-                            return new Department(resultSet);
+                            return new Department(resultSet, "dep_");
                         } else {
                             throw new RuntimeException();
                         }
@@ -143,10 +143,10 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
                     List<Department> result = new ArrayList<>();
-                    String readQuery = "SELECT dep.pid as depPid, dep.name as depName FROM department as dep WHERE pid > 2;";
+                    String readQuery = "SELECT dep.pid as dep_pid, dep.name as dep_name FROM department as dep WHERE pid > 2;";
                     try (ResultSet resultSet = statement.executeQuery(readQuery)) {
                         while (resultSet.next()) {
-                            result.add(new Department(resultSet));
+                            result.add(new Department(resultSet, "dep_"));
                         }
                     }
                     return result;
