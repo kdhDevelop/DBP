@@ -12,7 +12,6 @@ import kr.ac.kmu.dbp.repository.mail.MailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +58,9 @@ public class MailServiceImpl implements MailService {
     public MailDtoRead readByPid(Employee employee, int pid) {
         Mail mail = mailRepository.readByPid(pid);
         if (mail.getReceiver().getPid() == employee.getPid()) {
+            if (!mail.isReceipt()) {
+                mailRepository.updateReceipt(pid);
+            }
             return new MailDtoRead(mail);
         } else {
             throw new RuntimeException();
