@@ -83,4 +83,15 @@ public class MailServiceImpl implements MailService {
     public boolean checkNewMail(Employee employee) {
         return mailRepository.checkNewMail(employee);
     }
+
+    @Override
+    public List<MailDtoReadReceiveInfo> searchReceive(Employee employee, int senderPid, String title, String content) {
+        List<MailDtoReadReceiveInfo> result = new ArrayList<>();
+
+        for (Mail mail : mailRepository.searchReceive(employee, senderPid, title, content)) {
+            result.add(new MailDtoReadReceiveInfo(mail));
+        }
+
+        return result;
+    }
 }
