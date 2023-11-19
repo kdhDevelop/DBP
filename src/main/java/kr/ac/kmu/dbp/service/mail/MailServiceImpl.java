@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 @Service
 public class MailServiceImpl implements MailService {
@@ -30,7 +31,7 @@ public class MailServiceImpl implements MailService {
 
         Mail mail = Mail.builder()
                 .sender(sender)
-                .sendDate(new Date(System.currentTimeMillis()))
+                .sendDate(new Timestamp(System.currentTimeMillis()))
                 .receiver(receiver)
                 .title(mailDtoCreate.getTitle())
                 .content(mailDtoCreate.getContent())
