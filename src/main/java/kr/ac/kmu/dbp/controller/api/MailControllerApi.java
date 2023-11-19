@@ -47,4 +47,9 @@ public class MailControllerApi {
     public boolean checkNewMail(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         return mailService.checkNewMail(customUserDetails.getEmployee());
     }
+
+    @GetMapping("/mail/receive/search")
+    public List<MailDtoReadReceiveInfo> searchReceive(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestParam String senderPid, @RequestParam String title, @RequestParam String content) {
+        return mailService.searchReceive(customUserDetails.getEmployee(), Integer.parseInt(senderPid), title, content);
+    }
 }
