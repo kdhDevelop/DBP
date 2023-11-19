@@ -3,6 +3,7 @@ package kr.ac.kmu.dbp.service.mail;
 import kr.ac.kmu.dbp.dto.mail.MailDtoCreate;
 import kr.ac.kmu.dbp.dto.mail.MailDtoRead;
 import kr.ac.kmu.dbp.dto.mail.MailDtoReadReceiveInfo;
+import kr.ac.kmu.dbp.dto.mail.MailDtoReadSendInfo;
 import kr.ac.kmu.dbp.entity.employee.Employee;
 import kr.ac.kmu.dbp.entity.mail.Mail;
 import kr.ac.kmu.dbp.repository.employee.EmployeeDataBaseRepository;
@@ -54,6 +55,16 @@ public class MailServiceImpl implements MailService {
         return result;
     }
 
+    @Override
+    public List<MailDtoReadSendInfo> readAllSendInfo(Employee employee) {
+        List<MailDtoReadSendInfo> result = new ArrayList<>();
+
+        for (Mail mail : mailRepository.readAllSend(employee)) {
+            result.add(new MailDtoReadSendInfo(mail));
+        }
+
+        return result;
+    }
 
     @Override
     public MailDtoRead readByPid(Employee employee, int pid) {
