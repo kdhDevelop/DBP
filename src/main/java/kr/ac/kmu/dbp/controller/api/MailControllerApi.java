@@ -37,4 +37,9 @@ public class MailControllerApi {
     public MailDtoRead readByPid(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable("pid") String pid) {
         return mailService.readByPid(customUserDetails.getEmployee(), Integer.parseInt(pid));
     }
+
+    @GetMapping("/mail/check")
+    public boolean checkNewMail(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        return mailService.checkNewMail(customUserDetails.getEmployee());
+    }
 }
