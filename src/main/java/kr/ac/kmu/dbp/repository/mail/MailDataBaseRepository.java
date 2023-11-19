@@ -7,10 +7,7 @@ import kr.ac.kmu.dbp.repository.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,6 +81,22 @@ public class MailDataBaseRepository extends Table implements MailRepository {
                             throw new RuntimeException();
                         }
                     }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public void updateReceipt(int pid) {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    String updateQuery = "UPDATE mail SET receipt = 1, receiptDate = '|=DATE=|' WHERE pid = |=PID=|;"
+                            .replace("|=DATE=|", new Timestamp(System.currentTimeMillis()).toString())
+                            .replace("|=PID=|", String.valueOf(pid));
+                    statement.executeUpdate(updateQuery);
                 }
             }
         } catch (SQLException e) {
