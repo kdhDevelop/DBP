@@ -47,12 +47,13 @@ public class MailServiceImpl implements MailService {
     public List<MailDtoReadReceiveInfo> readAllReceiveInfo(Employee employee) {
         List<MailDtoReadReceiveInfo> result = new ArrayList<>();
 
-        for (Mail mail : mailRepository.readAll(employee)) {
+        for (Mail mail : mailRepository.readAllReceive(employee)) {
             result.add(new MailDtoReadReceiveInfo(mail));
         }
 
         return result;
     }
+
 
     @Override
     public MailDtoRead readByPid(Employee employee, int pid) {

@@ -46,7 +46,7 @@ public class MailDataBaseRepository extends Table implements MailRepository {
     }
 
     @Override
-    public List<Mail> readAll(Employee employee) {
+    public List<Mail> readAllReceive(Employee employee) {
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
