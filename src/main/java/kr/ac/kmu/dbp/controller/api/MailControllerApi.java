@@ -3,6 +3,7 @@ package kr.ac.kmu.dbp.controller.api;
 import kr.ac.kmu.dbp.dto.mail.MailDtoCreate;
 import kr.ac.kmu.dbp.dto.mail.MailDtoRead;
 import kr.ac.kmu.dbp.dto.mail.MailDtoReadReceiveInfo;
+import kr.ac.kmu.dbp.dto.mail.MailDtoReadSendInfo;
 import kr.ac.kmu.dbp.entity.employee.customUserDetails.CustomUserDetails;
 import kr.ac.kmu.dbp.service.mail.MailService;
 import kr.ac.kmu.dbp.service.mail.MailServiceImpl;
@@ -30,6 +31,11 @@ public class MailControllerApi {
     @GetMapping("/mail/receive")
     public List<MailDtoReadReceiveInfo> readAllReceiveInfo(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         return mailService.readAllReceiveInfo(customUserDetails.getEmployee());
+    }
+
+    @GetMapping("/mail/send")
+    public List<MailDtoReadSendInfo> readAllSendInfo(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        return mailService.readAllSendInfo(customUserDetails.getEmployee());
     }
 
     @GetMapping("/mail/{pid}")
