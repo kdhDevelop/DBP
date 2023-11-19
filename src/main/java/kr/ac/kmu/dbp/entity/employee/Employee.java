@@ -34,26 +34,26 @@ public class Employee {
 
     private Department department;
 
-    public Employee(ResultSet resultSet) throws SQLException {
-        this.pid = resultSet.getInt("empPid");
+    public Employee(ResultSet resultSet, String employeePreFix, String departmentPreFix) throws SQLException {
+        this.pid = resultSet.getInt(employeePreFix + "pid");
 
-        this.account = resultSet.getString("empAccount");
-        this.password = resultSet.getString("empPassword");
+        this.account = resultSet.getString(employeePreFix + "account");
+        this.password = resultSet.getString(employeePreFix + "password");
 
-        this.name = resultSet.getString("empName");
-        this.gender = Gender.valueOf(resultSet.getString("empGender"));
+        this.name = resultSet.getString(employeePreFix + "name");
+        this.gender = Gender.valueOf(resultSet.getString(employeePreFix + "gender"));
 
-        this.residentRegistrationNumber = resultSet.getString("empResidentRegistrationNumber");
-        this.phoneNumber = resultSet.getString("empPhoneNumber");
+        this.residentRegistrationNumber = resultSet.getString(employeePreFix + "residentRegistrationNumber");
+        this.phoneNumber = resultSet.getString(employeePreFix + "phoneNumber");
 
-        this.zipCode = resultSet.getLong("empZipCode");
-        this.address1 = resultSet.getString("empAddress1");
-        this.address2 = resultSet.getString("empAddress2");
+        this.zipCode = resultSet.getLong(employeePreFix + "zipCode");
+        this.address1 = resultSet.getString(employeePreFix + "address1");
+        this.address2 = resultSet.getString(employeePreFix + "address2");
 
-        this.role = Role.valueOf(resultSet.getString("empRole"));
-        this.rank = Rank.valueOf(resultSet.getString("empRank"));
+        this.role = Role.valueOf(resultSet.getString(employeePreFix + "role"));
+        this.rank = Rank.valueOf(resultSet.getString(employeePreFix + "rank"));
 
-        this.department = new Department(resultSet);
+        this.department = new Department(resultSet, departmentPreFix);
     }
 
     public Employee(EmployeeDtoCreate employeeDtoCreate) {
