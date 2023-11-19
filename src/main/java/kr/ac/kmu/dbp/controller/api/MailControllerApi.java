@@ -1,6 +1,7 @@
 package kr.ac.kmu.dbp.controller.api;
 
 import kr.ac.kmu.dbp.dto.mail.MailDtoCreate;
+import kr.ac.kmu.dbp.dto.mail.MailDtoRead;
 import kr.ac.kmu.dbp.dto.mail.MailDtoReadInfo;
 import kr.ac.kmu.dbp.entity.employee.customUserDetails.CustomUserDetails;
 import kr.ac.kmu.dbp.entity.mail.Mail;
@@ -30,5 +31,10 @@ public class MailControllerApi {
     @GetMapping("/mail")
     public List<MailDtoReadInfo> readAllInfo(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         return mailService.readAllInfo(customUserDetails.getEmployee());
+    }
+
+    @GetMapping("/mail/{pid}")
+    public MailDtoRead readByPid(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable("pid") String pid) {
+        return mailService.readByPid(customUserDetails.getEmployee(), Integer.parseInt(pid));
     }
 }
