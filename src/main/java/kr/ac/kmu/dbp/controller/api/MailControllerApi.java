@@ -2,9 +2,8 @@ package kr.ac.kmu.dbp.controller.api;
 
 import kr.ac.kmu.dbp.dto.mail.MailDtoCreate;
 import kr.ac.kmu.dbp.dto.mail.MailDtoRead;
-import kr.ac.kmu.dbp.dto.mail.MailDtoReadInfo;
+import kr.ac.kmu.dbp.dto.mail.MailDtoReadReceiveInfo;
 import kr.ac.kmu.dbp.entity.employee.customUserDetails.CustomUserDetails;
-import kr.ac.kmu.dbp.entity.mail.Mail;
 import kr.ac.kmu.dbp.service.mail.MailService;
 import kr.ac.kmu.dbp.service.mail.MailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,7 @@ public class MailControllerApi {
     }
 
     @GetMapping("/mail/receive")
-    public List<MailDtoReadInfo> readAllInfo(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    public List<MailDtoReadReceiveInfo> readAllInfo(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         return mailService.readAllInfo(customUserDetails.getEmployee());
     }
 

@@ -8,13 +8,13 @@ import java.sql.Timestamp;
 
 @Getter
 @Setter
-public class MailDtoReadInfo {
+public class MailDtoReadReceiveInfo {
     private int pid;
     private int senderPid;
     private Timestamp sendDate;
     private String title;
 
-    public MailDtoReadInfo(Mail mail) {
+    public MailDtoReadReceiveInfo(Mail mail) {
         this.pid = mail.getPid();
         this.senderPid = mail.getSender().getPid();
         this.sendDate = mail.getSendDate();
