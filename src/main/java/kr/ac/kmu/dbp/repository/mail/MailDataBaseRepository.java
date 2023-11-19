@@ -1,5 +1,6 @@
 package kr.ac.kmu.dbp.repository.mail;
 
+import kr.ac.kmu.dbp.entity.employee.Employee;
 import kr.ac.kmu.dbp.entity.mail.Mail;
 import kr.ac.kmu.dbp.repository.DataBaseConnection;
 import kr.ac.kmu.dbp.repository.Table;
@@ -7,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class MailDataBaseRepository extends Table implements MailRepository {
@@ -37,6 +41,28 @@ public class MailDataBaseRepository extends Table implements MailRepository {
                             .replace("|=CONTENT=|", mail.getContent());
 
                     statement.executeUpdate(createQuery);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public List<Mail> readAll(Employee employee) {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    List<Mail> result = new ArrayList<>();
+                    String readQuery = "SELECT  mail.pid as mail_pid, mail.sendDate as mail_sendDate, mail.receipt as mail_receipt, mail.receiptDate as mail_receiptDate, mail.title as mail_title, mail.content as mail_content, senderEmp.pid as senderEmp_pid, senderEmp.account as senderEmp_account, senderEmp.password as senderEmp_password, senderEmp.name as senderEmp_name, senderEmp.gender as senderEmp_gender, senderEmp.residentRegistrationNumber as senderEmp_residentRegistrationNumber, senderEmp.phoneNumber as senderEmp_phoneNumber, senderEmp.zipCode as senderEmp_zipCode, senderEmp.address1 as senderEmp_address1, senderEmp.address2 as senderEmp_address2, senderEmp.role as senderEmp_role, senderEmp.rank as senderEmp_rank, senderDep.pid as senderDep_pid, senderDep.name as senderDep_name, receiverEmp.pid as receiverEmp_pid, receiverEmp.account as receiverEmp_account, receiverEmp.password as receiverEmp_password, receiverEmp.name as receiverEmp_name, receiverEmp.gender as receiverEmp_gender, receiverEmp.residentRegistrationNumber as receiverEmp_residentRegistrationNumber, receiverEmp.phoneNumber as receiverEmp_phoneNumber, receiverEmp.zipCode as receiverEmp_zipCode, receiverEmp.address1 as receiverEmp_address1, receiverEmp.address2 as receiverEmp_address2, receiverEmp.role as receiverEmp_role, receiverEmp.rank as receiverEmp_rank, receiverDep.pid as receiverDep_pid, receiverDep.name as receiverDep_name FROM  employee as senderEmp, employee as receiverEmp, department as senderDep, department as receiverDep, mail as mail WHERE senderEmp.departmentPid = senderDep.pid AND senderEmp.pid = mail.senderPid AND receiverEmp.departmentPid = receiverDep.pid AND receiverEmp.pid = mail.receiverPid AND mail.receiverPid = 2;"
+                            .replace("|=RECEIVER_PID=|", String.valueOf(employee.getPid()));
+                    System.out.println("READ QUERY : " + readQuery);
+                    try (ResultSet resultSet= statement.executeQuery(readQuery)) {
+                        while (resultSet.next()) {
+                            result.add(new Mail(resultSet, "mail_", "senderEmp_", "senderDep_", "receiverEmp_", "receiverDep_"));
+                        }
+                    }
+                    return result;
                 }
             }
         } catch (SQLException e) {
