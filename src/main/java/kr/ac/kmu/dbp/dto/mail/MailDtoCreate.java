@@ -6,5 +6,6 @@ import lombok.Getter;
 public class MailDtoCreate {
     private int senderPid;
     private int receiverPid;
+    private String title;
     private String content;
 }
