@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 @Data
 @Builder
@@ -14,11 +14,11 @@ public class Mail {
     private int pid;
 
     private Employee sender;
-    private Date sendDate;
+    private Timestamp sendDate;
 
     private Employee receiver;
     private boolean receipt;
-    private Date receiptDate;
+    private Timestamp receiptDate;
 
     private String title;
     private String content;
