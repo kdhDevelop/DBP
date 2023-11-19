@@ -9,4 +9,5 @@ public interface MailRepository {
     public void create(Mail mail);
     public List<Mail> readAll(Employee employee);
     public Mail readByPid(int pid);
+    public void updateReceipt(int pid);
 }
