@@ -28,7 +28,7 @@ public class MailControllerApi {
         mailService.create(customUserDetails.getEmployee(), mailDtoCreate);
     }
 
-    @GetMapping("/mail")
+    @GetMapping("/mail/receive")
     public List<MailDtoReadInfo> readAllInfo(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         return mailService.readAllInfo(customUserDetails.getEmployee());
     }
