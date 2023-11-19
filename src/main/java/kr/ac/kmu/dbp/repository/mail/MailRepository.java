@@ -8,6 +8,7 @@ import java.util.List;
 public interface MailRepository {
     public void create(Mail mail);
     public List<Mail> readAllReceive(Employee employee);
+    public List<Mail> readAllSend(Employee employee);
     public Mail readByPid(int pid);
     public void updateReceipt(int pid);
     public boolean checkNewMail(Employee employee);
