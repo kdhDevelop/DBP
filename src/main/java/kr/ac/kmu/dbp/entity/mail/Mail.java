@@ -20,5 +20,6 @@ public class Mail {
     private boolean receipt;
     private Date receiptDate;
 
+    private String title;
     private String content;
 }
