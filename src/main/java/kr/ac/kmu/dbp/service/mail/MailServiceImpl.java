@@ -1,6 +1,7 @@
 package kr.ac.kmu.dbp.service.mail;
 
 import kr.ac.kmu.dbp.dto.mail.MailDtoCreate;
+import kr.ac.kmu.dbp.dto.mail.MailDtoReadInfo;
 import kr.ac.kmu.dbp.entity.employee.Employee;
 import kr.ac.kmu.dbp.entity.mail.Mail;
 import kr.ac.kmu.dbp.repository.employee.EmployeeDataBaseRepository;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class MailServiceImpl implements MailService {
@@ -38,5 +41,16 @@ public class MailServiceImpl implements MailService {
                 .build();
 
         mailRepository.create(mail);
+    }
+
+    @Override
+    public List<MailDtoReadInfo> readAllInfo(Employee employee) {
+        List<MailDtoReadInfo> result = new ArrayList<>();
+
+        for (Mail mail : mailRepository.readAll(employee)) {
+            result.add(new MailDtoReadInfo(mail));
+        }
+
+        return result;
     }
 }
