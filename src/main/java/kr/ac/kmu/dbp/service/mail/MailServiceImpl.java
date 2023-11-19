@@ -44,7 +44,7 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public List<MailDtoReadReceiveInfo> readAllInfo(Employee employee) {
+    public List<MailDtoReadReceiveInfo> readAllReceiveInfo(Employee employee) {
         List<MailDtoReadReceiveInfo> result = new ArrayList<>();
 
         for (Mail mail : mailRepository.readAll(employee)) {

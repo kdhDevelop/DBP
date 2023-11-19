@@ -28,8 +28,8 @@ public class MailControllerApi {
     }
 
     @GetMapping("/mail/receive")
-    public List<MailDtoReadReceiveInfo> readAllInfo(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        return mailService.readAllInfo(customUserDetails.getEmployee());
+    public List<MailDtoReadReceiveInfo> readAllReceiveInfo(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        return mailService.readAllReceiveInfo(customUserDetails.getEmployee());
     }
 
     @GetMapping("/mail/{pid}")

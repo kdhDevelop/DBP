@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface MailService {
     public void create(Employee sender, MailDtoCreate mailDtoCreate);
-    public List<MailDtoReadReceiveInfo> readAllInfo(Employee employee);
+    public List<MailDtoReadReceiveInfo> readAllReceiveInfo(Employee employee);
     public MailDtoRead readByPid(Employee employee, int pid);
     public boolean checkNewMail(Employee employee);
 }
