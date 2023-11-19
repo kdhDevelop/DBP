@@ -10,4 +10,5 @@ public interface MailRepository {
     public List<Mail> readAll(Employee employee);
     public Mail readByPid(int pid);
     public void updateReceipt(int pid);
+    public boolean checkNewMail(Employee employee);
 }
