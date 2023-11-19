@@ -14,4 +14,5 @@ public interface MailService {
     public List<MailDtoReadSendInfo> readAllSendInfo(Employee employee);
     public MailDtoRead readByPid(Employee employee, int pid);
     public boolean checkNewMail(Employee employee);
+    public List<MailDtoReadReceiveInfo> searchReceive(Employee employee, int senderPid, String title, String content);
 }
