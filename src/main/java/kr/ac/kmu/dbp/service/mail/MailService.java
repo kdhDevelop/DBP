@@ -11,4 +11,5 @@ public interface MailService {
     public void create(Employee sender, MailDtoCreate mailDtoCreate);
     public List<MailDtoReadInfo> readAllInfo(Employee employee);
     public MailDtoRead readByPid(Employee employee, int pid);
+    public boolean checkNewMail(Employee employee);
 }
