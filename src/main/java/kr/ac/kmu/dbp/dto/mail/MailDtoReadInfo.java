@@ -1,9 +1,13 @@
 package kr.ac.kmu.dbp.dto.mail;
 
 import kr.ac.kmu.dbp.entity.mail.Mail;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Timestamp;
 
+@Getter
+@Setter
 public class MailDtoReadInfo {
     private int pid;
     private int senderPid;
