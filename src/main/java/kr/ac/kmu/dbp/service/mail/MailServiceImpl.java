@@ -1,6 +1,7 @@
 package kr.ac.kmu.dbp.service.mail;
 
 import kr.ac.kmu.dbp.dto.mail.MailDtoCreate;
+import kr.ac.kmu.dbp.dto.mail.MailDtoRead;
 import kr.ac.kmu.dbp.dto.mail.MailDtoReadInfo;
 import kr.ac.kmu.dbp.entity.employee.Employee;
 import kr.ac.kmu.dbp.entity.mail.Mail;
@@ -52,5 +53,15 @@ public class MailServiceImpl implements MailService {
         }
 
         return result;
+    }
+
+    @Override
+    public MailDtoRead readByPid(Employee employee, int pid) {
+        Mail mail = mailRepository.readByPid(pid);
+        if (mail.getReceiver().getPid() == employee.getPid()) {
+            return new MailDtoRead(mail);
+        } else {
+            throw new RuntimeException();
+        }
     }
 }
