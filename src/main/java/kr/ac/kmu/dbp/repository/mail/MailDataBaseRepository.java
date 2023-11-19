@@ -103,4 +103,25 @@ public class MailDataBaseRepository extends Table implements MailRepository {
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public boolean checkNewMail(Employee employee) {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    String readQuery = "SELECT COUNT(*) as count FROM mail WHERE receiverPid = |=PID=| AND receipt = 0;"
+                            .replace("|=PID=|", String.valueOf(employee.getPid()));
+                    try (ResultSet resultSet = statement.executeQuery(readQuery)) {
+                        if (resultSet.next()) {
+                            return resultSet.getInt("count") > 0;
+                        } else {
+                            throw new RuntimeException();
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
 }
