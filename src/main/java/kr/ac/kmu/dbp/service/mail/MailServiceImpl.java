@@ -25,8 +25,7 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void create(MailDtoCreate mailDtoCreate) {
-        Employee sender = employeeRepository.readByPid(mailDtoCreate.getSenderPid());
+    public void create(Employee sender, MailDtoCreate mailDtoCreate) {
         Employee receiver = employeeRepository.readByPid(mailDtoCreate.getReceiverPid());
 
         Mail mail = Mail.builder()
