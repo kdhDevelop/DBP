@@ -58,11 +58,11 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
                             }
                         }
                         statement.executeUpdate(setAccountQuery);
-                        findQuery = "SELECT emp.pid as empPid, emp.account as empAccount, emp.password as empPassword, emp.name as empName, emp.gender as empGender, emp.residentRegistrationNumber as empResidentRegistrationNumber, emp.phoneNumber as empPhoneNumber, emp.zipCode as empZipCode, emp.address1 as empAddress1, emp.address2 as empAddress2, emp.role as empRole, emp.rank as empRank, dep.pid as depPid, dep.name as depName FROM employee as emp, department as dep WHERE emp.departmentPid = dep.pid AND emp.residentRegistrationNumber = '|=RESIDENT_REGISTRATION_NUMBER=|';"
+                        findQuery = "SELECT emp.pid as emp_pid, emp.account as emp_account, emp.password as emp_password, emp.name as emp_name, emp.gender as emp_gender, emp.residentRegistrationNumber as emp_residentRegistrationNumber, emp.phoneNumber as emp_phoneNumber, emp.zipCode as emp_zipCode, emp.address1 as emp_address1, emp.address2 as emp_address2, emp.role as emp_role, emp.rank as emp_rank, dep.pid as dep_pid, dep.name as dep_name FROM employee as emp, department as dep WHERE emp.departmentPid = dep.pid AND emp.residentRegistrationNumber = '|=RESIDENT_REGISTRATION_NUMBER=|';"
                                 .replace("|=RESIDENT_REGISTRATION_NUMBER=|", employee.getResidentRegistrationNumber());
                         try (ResultSet resultSet = statement.executeQuery(findQuery)) {
                             if (resultSet.next()) {
-                                return new Employee(resultSet);
+                                return new Employee(resultSet, "emp_", "dep_");
                             } else {
                                 throw new RuntimeException();
                             }
@@ -82,11 +82,11 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
-                    String findQuery = "SELECT emp.pid as empPid, emp.account as empAccount, emp.password as empPassword, emp.name as empName, emp.gender as empGender, emp.residentRegistrationNumber as empResidentRegistrationNumber, emp.phoneNumber as empPhoneNumber, emp.zipCode as empZipCode, emp.address1 as empAddress1, emp.address2 as empAddress2, emp.role as empRole, emp.rank as empRank, dep.pid as depPid, dep.name as depName FROM employee as emp, department as dep WHERE emp.departmentPid = dep.pid AND emp.pid = '|=PID=|';"
+                    String findQuery = "SELECT emp.pid as emp_pid, emp.account as emp_account, emp.password as emp_password, emp.name as emp_name, emp.gender as emp_gender, emp.residentRegistrationNumber as emp_residentRegistrationNumber, emp.phoneNumber as emp_phoneNumber, emp.zipCode as emp_zipCode, emp.address1 as emp_address1, emp.address2 as emp_address2, emp.role as emp_role, emp.rank as emp_rank, dep.pid as dep_pid, dep.name as dep_name FROM employee as emp, department as dep WHERE emp.departmentPid = dep.pid AND emp.pid = '|=PID=|';"
                             .replace("|=PID=|", String.valueOf(pid));
                     try (ResultSet resultSet = statement.executeQuery(findQuery)) {
                         if (resultSet.next()) {
-                            return new Employee(resultSet);
+                            return new Employee(resultSet, "emp_", "dep_");
                         } else {
                             throw new RuntimeException();
                         }
@@ -103,11 +103,11 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
-                    String findQuery = "SELECT emp.pid as empPid, emp.account as empAccount, emp.password as empPassword, emp.name as empName, emp.gender as empGender, emp.residentRegistrationNumber as empResidentRegistrationNumber, emp.phoneNumber as empPhoneNumber, emp.zipCode as empZipCode, emp.address1 as empAddress1, emp.address2 as empAddress2, emp.role as empRole, emp.rank as empRank, dep.pid as depPid, dep.name as depName FROM employee as emp, department as dep WHERE emp.departmentPid = dep.pid AND emp.account = '|=ACCOUNT=|';"
+                    String findQuery = "SELECT emp.pid as emp_pid, emp.account as emp_account, emp.password as emp_password, emp.name as emp_name, emp.gender as emp_gender, emp.residentRegistrationNumber as emp_residentRegistrationNumber, emp.phoneNumber as emp_phoneNumber, emp.zipCode as emp_zipCode, emp.address1 as emp_address1, emp.address2 as emp_address2, emp.role as emp_role, emp.rank as emp_rank, dep.pid as dep_pid, dep.name as dep_name FROM employee as emp, department as dep WHERE emp.departmentPid = dep.pid AND emp.account = '|=ACCOUNT=|';"
                             .replace("|=ACCOUNT=|", account);
                     try (ResultSet resultSet = statement.executeQuery(findQuery)) {
                         if (resultSet.next()) {
-                            return new Employee(resultSet);
+                            return new Employee(resultSet, "emp_", "dep_");
                         } else {
                             throw new RuntimeException();
                         }
@@ -136,11 +136,11 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
                             .replace("|=DEPARTMENT_PID=|", String.valueOf(employee.getDepartment().getPid()))
                             .replace("|=PID=|", String.valueOf(employee.getPid()));
                     statement.executeUpdate(updateQuery);
-                    String readQuery = "SELECT emp.pid as empPid, emp.account as empAccount, emp.password as empPassword, emp.name as empName, emp.gender as empGender, emp.residentRegistrationNumber as empResidentRegistrationNumber, emp.phoneNumber as empPhoneNumber, emp.zipCode as empZipCode, emp.address1 as empAddress1, emp.address2 as empAddress2, emp.role as empRole, emp.rank as empRank, dep.pid as depPid, dep.name as depName FROM employee as emp, department as dep WHERE emp.departmentPid = dep.pid AND emp.pid = '|=PID=|';"
+                    String readQuery = "SELECT emp.pid as emp_pid, emp.account as emp_account, emp.password as emp_password, emp.name as emp_name, emp.gender as emp_gender, emp.residentRegistrationNumber as emp_residentRegistrationNumber, emp.phoneNumber as emp_phoneNumber, emp.zipCode as emp_zipCode, emp.address1 as emp_address1, emp.address2 as emp_address2, emp.role as emp_role, emp.rank as emp_rank, dep.pid as dep_pid, dep.name as dep_name FROM employee as emp, department as dep WHERE emp.departmentPid = dep.pid AND emp.pid = '|=PID=|';"
                             .replace("|=PID=|", String.valueOf(employee.getPid()));
                     try (ResultSet resultSet = statement.executeQuery(readQuery)) {
                         if (resultSet.next()) {
-                            return new Employee(resultSet);
+                            return new Employee(resultSet, "emp_", "dep_");
                         } else {
                             throw new RuntimeException();
                         }
