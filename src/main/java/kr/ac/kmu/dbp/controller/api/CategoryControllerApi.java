@@ -1,12 +1,15 @@
 package kr.ac.kmu.dbp.controller.api;
 
 import kr.ac.kmu.dbp.dto.work.category.CategoryLargeDtoCreate;
+import kr.ac.kmu.dbp.dto.work.category.CategoryLargeDtoRead;
 import kr.ac.kmu.dbp.dto.work.category.CategoryLargeDtoUpdate;
 import kr.ac.kmu.dbp.entity.employee.customUserDetails.CustomUserDetails;
 import kr.ac.kmu.dbp.service.work.category.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -35,5 +38,10 @@ public class CategoryControllerApi {
     @DeleteMapping("/category/large/{pid}")
     public void deleteLarge(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable("pid") String pid) {
         categoryLargeService.delete(customUserDetails.getEmployee(), Integer.parseInt(pid));
+    }
+
+    @GetMapping("/category/large")
+    public List<CategoryLargeDtoRead> readAllLarge() {
+        return categoryLargeService.readAll();
     }
 }
