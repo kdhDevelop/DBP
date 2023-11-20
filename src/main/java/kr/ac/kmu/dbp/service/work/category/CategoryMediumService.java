@@ -8,8 +8,8 @@ import kr.ac.kmu.dbp.entity.employee.Employee;
 import java.util.List;
 
 public interface CategoryMediumService {
-    public void create(Employee employee, CategoryMediumDtoCreate categoryLargeDtoCreate);
-    public void update(Employee employee, CategoryMediumDtoUpdate categoryLargeDtoUpdate);
+    public void create(Employee employee, CategoryMediumDtoCreate categoryMediumDtoCreate);
+    public void update(Employee employee, CategoryMediumDtoUpdate categoryMediumDtoUpdate);
     public void delete(Employee employee, int pid);
     public List<CategoryMediumDtoRead> readAll();
 }
