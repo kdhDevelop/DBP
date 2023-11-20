@@ -50,6 +50,10 @@ public class MailControllerApi {
 
     @GetMapping("/mail/receive/search")
     public List<MailDtoReadReceiveInfo> searchReceive(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestParam String senderPid, @RequestParam String title, @RequestParam String content) {
-        return mailService.searchReceive(customUserDetails.getEmployee(), Integer.parseInt(senderPid), title, content);
+        if (senderPid.isEmpty())
+            return mailService.searchReceive(customUserDetails.getEmployee(), -1, title, content);
+        else
+            return mailService.searchReceive(customUserDetails.getEmployee(), Integer.parseInt(senderPid), title, content);
+
     }
 }
