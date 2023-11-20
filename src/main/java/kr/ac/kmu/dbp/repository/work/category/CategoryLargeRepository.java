@@ -9,4 +9,5 @@ public interface CategoryLargeRepository {
     public void update(CategoryLarge categoryLarge);
     public void delete(CategoryLarge categoryLarge);
     public List<CategoryLarge> readAll();
+    public CategoryLarge readByPid(int pid);
 }
