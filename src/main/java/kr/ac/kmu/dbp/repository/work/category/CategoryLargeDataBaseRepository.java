@@ -53,4 +53,19 @@ public class CategoryLargeDataBaseRepository extends Table implements CategoryLa
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public void delete(CategoryLarge categoryLarge) {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    String deleteQuery = "UPDATE categoryLarge SET disable = 1 WHERE pid = |=PID=|"
+                            .replace("|=PID=|", String.valueOf(categoryLarge.getPid()));
+                    statement.executeUpdate(deleteQuery);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
 }
