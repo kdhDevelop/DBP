@@ -15,6 +15,6 @@ public class CategorySmallDataBaseRepository extends Table implements CategorySm
 
     @Override
     protected String getTableCreateQuery() {
-        return "CREATE TABLE categorySmall ( pid int NOT NULL UNIQUE AUTO_INCREMENT, name varchar(100), mediumCategoryPid int, disable bool, PRIMARY KEY(pid) );";
+        return "CREATE TABLE categorySmall ( pid int NOT NULL UNIQUE AUTO_INCREMENT, name varchar(100), categoryMediumPid int, disable bool, PRIMARY KEY(pid) );";
     }
 }
