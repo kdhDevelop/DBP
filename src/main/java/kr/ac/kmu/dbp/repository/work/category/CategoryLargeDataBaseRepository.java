@@ -37,4 +37,20 @@ public class CategoryLargeDataBaseRepository extends Table implements CategoryLa
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public void update(CategoryLarge categoryLarge) {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    String updateQuery = "UPDATE categoryLarge SET name = '|=NAME=|' WHERE pid = |=PID=| ;"
+                            .replace("|=NAME=|", categoryLarge.getName())
+                            .replace("|=PID=|", String.valueOf(categoryLarge.getPid()));
+                    statement.executeUpdate(updateQuery);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
 }
