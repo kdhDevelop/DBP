@@ -1,6 +1,7 @@
 package kr.ac.kmu.dbp.service.work.category;
 
 import kr.ac.kmu.dbp.dto.work.category.CategoryLargeDtoCreate;
+import kr.ac.kmu.dbp.dto.work.category.CategoryLargeDtoRead;
 import kr.ac.kmu.dbp.dto.work.category.CategoryLargeDtoUpdate;
 import kr.ac.kmu.dbp.entity.employee.Employee;
 import kr.ac.kmu.dbp.entity.employee.Role;
@@ -9,6 +10,9 @@ import kr.ac.kmu.dbp.repository.work.category.CategoryLargeDataBaseRepository;
 import kr.ac.kmu.dbp.repository.work.category.CategoryLargeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CategoryLargeServiceImpl implements CategoryLargeService {
@@ -46,5 +50,16 @@ public class CategoryLargeServiceImpl implements CategoryLargeService {
         }
     }
 
+    @Override
+    public List<CategoryLargeDtoRead> readAll() {
+        List<CategoryLargeDtoRead> result = new ArrayList<>();
 
+        List<CategoryLarge> categoryLargeList = categoryLargeRepository.readAll();
+
+        for (CategoryLarge categoryLarge : categoryLargeList) {
+            result.add(new CategoryLargeDtoRead(categoryLarge));
+        }
+
+        return result;
+    }
 }
