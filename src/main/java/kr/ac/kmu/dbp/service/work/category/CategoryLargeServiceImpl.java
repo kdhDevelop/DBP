@@ -37,5 +37,14 @@ public class CategoryLargeServiceImpl implements CategoryLargeService {
         }
     }
 
+    @Override
+    public void delete(Employee employee, int pid) {
+        if (employee.getRole() == Role.부서장 || employee.getRole() == Role.사장) {
+            categoryLargeRepository.delete(new CategoryLarge(pid));
+        } else {
+            throw new RuntimeException();
+        }
+    }
+
 
 }
