@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class CategoryLargeDataBaseRepository extends Table implements CategoryLargeRepository {
@@ -62,6 +65,26 @@ public class CategoryLargeDataBaseRepository extends Table implements CategoryLa
                     String deleteQuery = "UPDATE categoryLarge SET disable = 1 WHERE pid = |=PID=|"
                             .replace("|=PID=|", String.valueOf(categoryLarge.getPid()));
                     statement.executeUpdate(deleteQuery);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public List<CategoryLarge> readAll() {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    String readQuery = "SELECT cat.pid as cat_pid, cat.name as cat_name FROM categoryLarge as cat WHERE disable = 0;";
+                    List<CategoryLarge> result = new ArrayList<>();
+                    try (ResultSet resultSet = statement.executeQuery(readQuery)) {
+                        while (resultSet.next()) {
+                            result.add(new CategoryLarge(resultSet, "cat_"));
+                        }
+                    }
+                    return result;
                 }
             }
         } catch (SQLException e) {
