@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class EmployeeControllerApi {
@@ -33,5 +35,10 @@ public class EmployeeControllerApi {
     @PutMapping("/employee")
     public void update(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody EmployeeDtoUpdate employeeDtoUpdate) {
         employeeService.update(customUserDetails.getEmployee().getPid(), employeeDtoUpdate);
+    }
+
+    @GetMapping("/employee/all")
+    public List<Integer> readAllAccount() {
+        return employeeService.readAllAccount();
     }
 }
