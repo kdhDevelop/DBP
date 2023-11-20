@@ -9,6 +9,10 @@ public class CategoryLarge {
     private int pid;
     private String name;
 
+    public CategoryLarge(int pid) {
+        this.pid = pid;
+    }
+
     public CategoryLarge(CategoryLargeDtoCreate categoryLargeDtoCreate) {
         this.name = categoryLargeDtoCreate.getName();
     }
