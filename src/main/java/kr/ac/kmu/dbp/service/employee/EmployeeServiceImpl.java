@@ -15,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -95,6 +98,19 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee readByAccount(String account) {
         return employeeRepository.readByAccount(account);
+    }
+
+    @Override
+    public List<Integer> readAllAccount() {
+        List<Integer> result = new ArrayList<>();
+
+        List<Employee> employeeList = employeeRepository.readAll();
+
+        for (Employee employee : employeeList) {
+            result.add(employee.getPid());
+        }
+
+        return result;
     }
 
     @Override
