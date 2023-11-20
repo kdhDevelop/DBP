@@ -1,8 +1,6 @@
 package kr.ac.kmu.dbp.controller.api;
 
-import kr.ac.kmu.dbp.dto.work.category.CategoryLargeDtoCreate;
-import kr.ac.kmu.dbp.dto.work.category.CategoryLargeDtoRead;
-import kr.ac.kmu.dbp.dto.work.category.CategoryLargeDtoUpdate;
+import kr.ac.kmu.dbp.dto.work.category.*;
 import kr.ac.kmu.dbp.entity.employee.customUserDetails.CustomUserDetails;
 import kr.ac.kmu.dbp.service.work.category.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +41,25 @@ public class CategoryControllerApi {
     @GetMapping("/category/large")
     public List<CategoryLargeDtoRead> readAllLarge() {
         return categoryLargeService.readAll();
+    }
+
+    @PostMapping("/category/medium")
+    public void createMedium(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody CategoryMediumDtoCreate categoryMediumDtoCreate) {
+        categoryMediumService.create(customUserDetails.getEmployee(), categoryMediumDtoCreate);
+    }
+
+    @PutMapping("/category/medium")
+    public void updateMedium(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody CategoryMediumDtoUpdate categoryMediumDtoUpdate) {
+        categoryMediumService.update(customUserDetails.getEmployee(), categoryMediumDtoUpdate);
+    }
+
+    @DeleteMapping("/category/medium/{pid}")
+    public void deleteMedium(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable("pid") String pid) {
+        categoryMediumService.delete(customUserDetails.getEmployee(), Integer.parseInt(pid));
+    }
+
+    @GetMapping("/category/medium")
+    public List<CategoryMediumDtoRead> readAllMedium() {
+        return categoryMediumService.readAll();
     }
 }

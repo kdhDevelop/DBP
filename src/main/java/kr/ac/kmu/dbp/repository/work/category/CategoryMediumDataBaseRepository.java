@@ -1,9 +1,17 @@
 package kr.ac.kmu.dbp.repository.work.category;
 
+import kr.ac.kmu.dbp.entity.work.category.CategoryMedium;
 import kr.ac.kmu.dbp.repository.DataBaseConnection;
 import kr.ac.kmu.dbp.repository.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class CategoryMediumDataBaseRepository extends Table implements CategoryMediumRepository {
@@ -15,6 +23,97 @@ public class CategoryMediumDataBaseRepository extends Table implements CategoryM
 
     @Override
     protected String getTableCreateQuery() {
-        return "CREATE TABLE categoryMedium ( pid int NOT NULL UNIQUE AUTO_INCREMENT, name varchar(100), largeCategoryPid int, disable bool, PRIMARY KEY(pid) );";
+        return "CREATE TABLE categoryMedium ( pid int NOT NULL UNIQUE AUTO_INCREMENT, name varchar(100), categoryLargePid int, disable bool, PRIMARY KEY(pid) );";
+    }
+
+    @Override
+    public void create(CategoryMedium categoryMedium) {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    String createQuery = "INSERT INTO categoryMedium (name, categoryLargePid, disable) VALUES ('|=NAME=|', |=CATEGORY_LARGE_PID=|, 0);"
+                            .replace("|=NAME=|", categoryMedium.getName())
+                            .replace("|=CATEGORY_LARGE_PID=|", String.valueOf(categoryMedium.getCategoryLarge().getPid()));
+                    System.out.println("CATEGORY MEDIUM CREATE QUERY : " + createQuery);
+                    statement.executeUpdate(createQuery);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public void update(CategoryMedium categoryMedium) {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    String updateQuery = "UPDATE categoryMedium SET name = '|=NAME=|', categoryLargePid = |=CATEGORY_LARGE_PID=| WHERE pid = '|=PID=|';"
+                            .replace("|=NAME=|", categoryMedium.getName())
+                            .replace("|=CATEGORY_LARGE_PID=|", String.valueOf(categoryMedium.getCategoryLarge().getPid()))
+                            .replace("|=PID=|", String.valueOf(categoryMedium.getPid()));
+                    statement.executeUpdate(updateQuery);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public void delete(CategoryMedium categoryMedium) {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    String deleteQuery = "UPDATE categoryMedium SET disable = 1 WHERE pid = |=PID=|;"
+                            .replace("|=PID=|", String.valueOf(categoryMedium.getPid()));
+                    statement.executeUpdate(deleteQuery);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+
+    }
+
+    @Override
+    public List<CategoryMedium> readAll() {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    List<CategoryMedium> result = new ArrayList<>();
+                    String readQuery = "SELECT catMedium.pid as catMedium_pid, catMedium.name as catMedium_name, catLarge.pid as catLarge_pid, catLarge.name as catLarge_name FROM categoryLarge as catLarge, categoryMedium as catMedium WHERE catMedium.categoryLargePid = catLarge.pid AND catMedium.disable = 0;";
+                    try (ResultSet resultSet = statement.executeQuery(readQuery)) {
+                        while (resultSet.next()) {
+                            result.add(new CategoryMedium(resultSet, "catMedium_", "catLarge_"));
+                        }
+                    }
+                    return result;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public CategoryMedium readByPid(int pid) {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    String readQuery = "SELECT catMedium.pid as catMedium_pid, catMedium.name as catMedium_name, catLarge.pid as catLarge_pid, catLarge.name as catLarge_name FROM categoryLarge as catLarge, categoryMedium as catMedium WHERE catMedium.largeCategoryPid = catLarge.pid AND catMedium.pid = |=PID=|;"
+                            .replace("|=PID=|", String.valueOf(pid));
+                    try (ResultSet resultSet = statement.executeQuery(readQuery)) {
+                        if (resultSet.next()) {
+                            return new CategoryMedium(resultSet, "catMedium_", "catLarge_");
+                        } else {
+                            throw new RuntimeException();
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
     }
 }
