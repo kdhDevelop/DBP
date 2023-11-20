@@ -31,4 +31,9 @@ public class CategoryControllerApi {
     public void updateLarge(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody CategoryLargeDtoUpdate categoryLargeDtoUpdate) {
         categoryLargeService.update(customUserDetails.getEmployee(), categoryLargeDtoUpdate);
     }
+
+    @DeleteMapping("/category/large/{pid}")
+    public void deleteLarge(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable("pid") String pid) {
+        categoryLargeService.delete(customUserDetails.getEmployee(), Integer.parseInt(pid));
+    }
 }
