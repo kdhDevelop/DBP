@@ -1,6 +1,7 @@
 package kr.ac.kmu.dbp.service.work.category;
 
 import kr.ac.kmu.dbp.dto.work.category.CategoryLargeDtoCreate;
+import kr.ac.kmu.dbp.dto.work.category.CategoryLargeDtoUpdate;
 import kr.ac.kmu.dbp.entity.employee.Employee;
 import kr.ac.kmu.dbp.entity.employee.Role;
 import kr.ac.kmu.dbp.entity.work.category.CategoryLarge;
@@ -26,4 +27,15 @@ public class CategoryLargeServiceImpl implements CategoryLargeService {
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public void update(Employee employee, CategoryLargeDtoUpdate categoryLargeDtoUpdate) {
+        if (employee.getRole() == Role.부서장 || employee.getRole() == Role.사장) {
+            categoryLargeRepository.update(new CategoryLarge(categoryLargeDtoUpdate));
+        } else {
+            throw new RuntimeException();
+        }
+    }
+
+
 }
