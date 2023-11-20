@@ -91,4 +91,25 @@ public class CategoryLargeDataBaseRepository extends Table implements CategoryLa
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public CategoryLarge readByPid(int pid) {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    String readQuery = "SELECT cat.pid as cat_pid, cat.name as cat_name FROM categoryLarge as cat WHERE pid = |=PID=|;"
+                            .replace("|=PID=|", String.valueOf(pid));
+                    try (ResultSet resultSet = statement.executeQuery(readQuery)) {
+                        if (resultSet.next()) {
+                            return new CategoryLarge(resultSet, "cat_");
+                        } else {
+                            throw new RuntimeException();
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
 }
