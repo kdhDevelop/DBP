@@ -62,4 +62,24 @@ public class CategoryControllerApi {
     public List<CategoryMediumDtoRead> readAllMedium() {
         return categoryMediumService.readAll();
     }
+
+    @PostMapping("/category/small")
+    public void createSmall(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody CategorySmallDtoCreate categorySmallDtoCreate) {
+        categorySmallService.create(customUserDetails.getEmployee(), categorySmallDtoCreate);
+    }
+
+    @PutMapping("/category/small")
+    public void updateSmall(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody CategorySmallDtoUpdate categorySmallDtoUpdate) {
+        categorySmallService.update(customUserDetails.getEmployee(), categorySmallDtoUpdate);
+    }
+
+    @DeleteMapping("/category/small/{pid}")
+    public void deleteSmall(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable("pid") String pid) {
+        categorySmallService.delete(customUserDetails.getEmployee(), Integer.parseInt(pid));
+    }
+
+    @GetMapping("/category/small")
+    public List<CategorySmallDtoRead> readAllSmall() {
+        return categorySmallService.readAll();
+    }
 }

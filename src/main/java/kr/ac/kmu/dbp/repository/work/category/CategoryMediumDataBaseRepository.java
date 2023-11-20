@@ -101,7 +101,7 @@ public class CategoryMediumDataBaseRepository extends Table implements CategoryM
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
-                    String readQuery = "SELECT catMedium.pid as catMedium_pid, catMedium.name as catMedium_name, catLarge.pid as catLarge_pid, catLarge.name as catLarge_name FROM categoryLarge as catLarge, categoryMedium as catMedium WHERE catMedium.largeCategoryPid = catLarge.pid AND catMedium.pid = |=PID=|;"
+                    String readQuery = "SELECT catMedium.pid as catMedium_pid, catMedium.name as catMedium_name, catLarge.pid as catLarge_pid, catLarge.name as catLarge_name FROM categoryLarge as catLarge, categoryMedium as catMedium WHERE catMedium.categoryLargePid = catLarge.pid AND catMedium.pid = |=PID=|;"
                             .replace("|=PID=|", String.valueOf(pid));
                     try (ResultSet resultSet = statement.executeQuery(readQuery)) {
                         if (resultSet.next()) {
