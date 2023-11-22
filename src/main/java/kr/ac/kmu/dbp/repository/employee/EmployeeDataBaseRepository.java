@@ -1,5 +1,6 @@
 package kr.ac.kmu.dbp.repository.employee;
 
+import kr.ac.kmu.dbp.entity.department.Department;
 import kr.ac.kmu.dbp.entity.employee.Employee;
 import kr.ac.kmu.dbp.repository.DataBaseConnection;
 import kr.ac.kmu.dbp.repository.Table;
@@ -171,6 +172,27 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
                     List<Employee> result = new ArrayList<>();
                     String readQuery = "SELECT emp.pid as emp_pid, emp.account as emp_account, emp.password as emp_password, emp.name as emp_name, emp.gender as emp_gender, emp.birthYear as emp_birthYear, emp.residentRegistrationNumber as emp_residentRegistrationNumber, emp.phoneNumber as emp_phoneNumber, emp.zipCode as emp_zipCode, emp.address1 as emp_address1, emp.address2 as emp_address2, emp.role as emp_role, emp.rank as emp_rank, dep.pid as dep_pid, dep.name as dep_name FROM employee as emp, department as dep WHERE emp.departmentPid = dep.pid AND emp.name LIKE '%|=NAME=|%';"
                             .replace("|=NAME=|", name);
+                    try (ResultSet resultSet = statement.executeQuery(readQuery)) {
+                        while (resultSet.next()) {
+                            result.add(new Employee(resultSet, "emp_", "dep_"));
+                        }
+                    }
+                    return result;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public List<Employee> readByDepartment(Department department) {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    List<Employee> result = new ArrayList<>();
+                    String readQuery = "SELECT emp.pid as emp_pid, emp.account as emp_account, emp.password as emp_password, emp.name as emp_name, emp.gender as emp_gender, emp.birthYear as emp_birthYear, emp.residentRegistrationNumber as emp_residentRegistrationNumber, emp.phoneNumber as emp_phoneNumber, emp.zipCode as emp_zipCode, emp.address1 as emp_address1, emp.address2 as emp_address2, emp.role as emp_role, emp.rank as emp_rank, dep.pid as dep_pid, dep.name as dep_name FROM employee as emp, department as dep WHERE emp.departmentPid = dep.pid AND dep.pid = |=DEPARTMENT_PID=|;"
+                            .replace("|=DEPARTMENT_PID=|", String.valueOf(department.getPid()));
                     try (ResultSet resultSet = statement.executeQuery(readQuery)) {
                         while (resultSet.next()) {
                             result.add(new Employee(resultSet, "emp_", "dep_"));
