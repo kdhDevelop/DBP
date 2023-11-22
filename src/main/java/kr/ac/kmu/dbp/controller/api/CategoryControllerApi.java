@@ -2,6 +2,7 @@ package kr.ac.kmu.dbp.controller.api;
 
 import kr.ac.kmu.dbp.dto.work.category.*;
 import kr.ac.kmu.dbp.entity.employee.customUserDetails.CustomUserDetails;
+import kr.ac.kmu.dbp.entity.work.category.CategorySmall;
 import kr.ac.kmu.dbp.service.work.category.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -38,7 +39,7 @@ public class CategoryControllerApi {
         categoryLargeService.delete(customUserDetails.getEmployee(), Integer.parseInt(pid));
     }
 
-    @GetMapping("/category/large")
+    @GetMapping("/category/large/all")
     public List<CategoryLargeDtoRead> readAllLarge() {
         return categoryLargeService.readAll();
     }
@@ -58,7 +59,7 @@ public class CategoryControllerApi {
         categoryMediumService.delete(customUserDetails.getEmployee(), Integer.parseInt(pid));
     }
 
-    @GetMapping("/category/medium")
+    @GetMapping("/category/medium/all")
     public List<CategoryMediumDtoRead> readAllMedium() {
         return categoryMediumService.readAll();
     }
@@ -78,8 +79,9 @@ public class CategoryControllerApi {
         categorySmallService.delete(customUserDetails.getEmployee(), Integer.parseInt(pid));
     }
 
-    @GetMapping("/category/small")
+    @GetMapping("/category/small/all")
     public List<CategorySmallDtoRead> readAllSmall() {
         return categorySmallService.readAll();
     }
+
 }
