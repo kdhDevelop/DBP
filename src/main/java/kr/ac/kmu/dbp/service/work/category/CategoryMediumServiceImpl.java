@@ -5,6 +5,7 @@ import kr.ac.kmu.dbp.dto.work.category.CategoryMediumDtoRead;
 import kr.ac.kmu.dbp.dto.work.category.CategoryMediumDtoUpdate;
 import kr.ac.kmu.dbp.entity.employee.Employee;
 import kr.ac.kmu.dbp.entity.employee.Role;
+import kr.ac.kmu.dbp.entity.work.category.CategoryLarge;
 import kr.ac.kmu.dbp.entity.work.category.CategoryMedium;
 import kr.ac.kmu.dbp.repository.work.category.CategoryLargeDataBaseRepository;
 import kr.ac.kmu.dbp.repository.work.category.CategoryLargeRepository;
@@ -71,6 +72,21 @@ public class CategoryMediumServiceImpl implements CategoryMediumService {
         List<CategoryMediumDtoRead> result = new ArrayList<>();
 
         List<CategoryMedium> categoryMediumList = categoryMediumRepository.readAll();
+
+        for (CategoryMedium categoryMedium : categoryMediumList) {
+            result.add(new CategoryMediumDtoRead(categoryMedium));
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<CategoryMediumDtoRead> readByCategoryLargePid(int categoryLargePid) {
+        CategoryLarge categoryLarge = categoryLargeRepository.readByPid(categoryLargePid);
+
+        List<CategoryMediumDtoRead> result = new ArrayList<>();
+
+        List<CategoryMedium> categoryMediumList = categoryMediumRepository.readByCategoryLarge(categoryLarge);
 
         for (CategoryMedium categoryMedium : categoryMediumList) {
             result.add(new CategoryMediumDtoRead(categoryMedium));

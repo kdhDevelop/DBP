@@ -1,5 +1,6 @@
 package kr.ac.kmu.dbp.repository.work.category;
 
+import kr.ac.kmu.dbp.entity.work.category.CategoryLarge;
 import kr.ac.kmu.dbp.entity.work.category.CategoryMedium;
 import kr.ac.kmu.dbp.repository.DataBaseConnection;
 import kr.ac.kmu.dbp.repository.Table;
@@ -83,6 +84,27 @@ public class CategoryMediumDataBaseRepository extends Table implements CategoryM
                 try (Statement statement = connection.createStatement()) {
                     List<CategoryMedium> result = new ArrayList<>();
                     String readQuery = "SELECT catMedium.pid as catMedium_pid, catMedium.name as catMedium_name, catLarge.pid as catLarge_pid, catLarge.name as catLarge_name FROM categoryLarge as catLarge, categoryMedium as catMedium WHERE catMedium.categoryLargePid = catLarge.pid AND catMedium.disable = 0;";
+                    try (ResultSet resultSet = statement.executeQuery(readQuery)) {
+                        while (resultSet.next()) {
+                            result.add(new CategoryMedium(resultSet, "catMedium_", "catLarge_"));
+                        }
+                    }
+                    return result;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public List<CategoryMedium> readByCategoryLarge(CategoryLarge categoryLarge) {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    List<CategoryMedium> result = new ArrayList<>();
+                    String readQuery = "SELECT catMedium.pid as catMedium_pid, catMedium.name as catMedium_name, catLarge.pid as catLarge_pid, catLarge.name as catLarge_name FROM categoryLarge as catLarge, categoryMedium as catMedium WHERE catMedium.categoryLargePid = catLarge.pid AND catMedium.disable = 0 AND catLarge.pid = |=CATEGORY_LARGE_PID=|;"
+                            .replace("|=CATEGORY_LARGE_PID=|", String.valueOf(categoryLarge.getPid()));
                     try (ResultSet resultSet = statement.executeQuery(readQuery)) {
                         while (resultSet.next()) {
                             result.add(new CategoryMedium(resultSet, "catMedium_", "catLarge_"));
