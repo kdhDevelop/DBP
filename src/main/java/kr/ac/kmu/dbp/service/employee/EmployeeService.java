@@ -13,7 +13,10 @@ public interface EmployeeService {
     public Employee readByAccount(String account);
 
     public List<Integer> readAllAccount();
+
     public List<EmployeeDtoRead> readByAge(Employee employee, int age);
+
+    public List<EmployeeDtoRead> readByName(Employee employee, String name);
 
     public void create(EmployeeDtoCreate employeeDtoCreate);
 
