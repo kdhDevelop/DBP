@@ -64,6 +64,11 @@ public class CategoryControllerApi {
         return categoryMediumService.readAll();
     }
 
+    @GetMapping("/category/medium")
+    public List<CategoryMediumDtoRead> readByCategoryLargePid(@RequestParam String categoryLargePid) {
+        return categoryMediumService.readByCategoryLargePid(Integer.parseInt(categoryLargePid));
+    }
+
     @PostMapping("/category/small")
     public void createSmall(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody CategorySmallDtoCreate categorySmallDtoCreate) {
         categorySmallService.create(customUserDetails.getEmployee(), categorySmallDtoCreate);
@@ -83,5 +88,4 @@ public class CategoryControllerApi {
     public List<CategorySmallDtoRead> readAllSmall() {
         return categorySmallService.readAll();
     }
-
 }
