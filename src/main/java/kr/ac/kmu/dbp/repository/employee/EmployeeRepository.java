@@ -9,6 +9,7 @@ public interface EmployeeRepository {
     public Employee readByPid(int pid);
     public Employee readByAccount(String account);
     public List<Employee> readAll();
+    public List<Employee> readByBirthYear(int birthYear);
     public Employee update(Employee employee);
     public boolean checkExistByResidentRegistrationNumber(String residentRegistrationNumber);
 }
