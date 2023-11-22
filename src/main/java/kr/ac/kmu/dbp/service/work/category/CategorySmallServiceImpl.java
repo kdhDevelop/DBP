@@ -5,6 +5,7 @@ import kr.ac.kmu.dbp.dto.work.category.CategorySmallDtoRead;
 import kr.ac.kmu.dbp.dto.work.category.CategorySmallDtoUpdate;
 import kr.ac.kmu.dbp.entity.employee.Employee;
 import kr.ac.kmu.dbp.entity.employee.Role;
+import kr.ac.kmu.dbp.entity.work.category.CategoryMedium;
 import kr.ac.kmu.dbp.entity.work.category.CategorySmall;
 import kr.ac.kmu.dbp.repository.work.category.CategoryMediumDataBaseRepository;
 import kr.ac.kmu.dbp.repository.work.category.CategoryMediumRepository;
@@ -71,6 +72,21 @@ public class CategorySmallServiceImpl implements CategorySmallService {
         List<CategorySmallDtoRead> result = new ArrayList<>();
 
         List<CategorySmall> categorySmallList = categorySmallRepository.readAll();
+
+        for (CategorySmall categorySmall : categorySmallList) {
+            result.add(new CategorySmallDtoRead(categorySmall));
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<CategorySmallDtoRead> readByCategoryMediumPid(int categoryMediumPid) {
+        CategoryMedium categoryMedium = categoryMediumRepository.readByPid(categoryMediumPid);
+
+        List<CategorySmallDtoRead> result = new ArrayList<>();
+
+        List<CategorySmall> categorySmallList = categorySmallRepository.readByCategoryMedium(categoryMedium);
 
         for (CategorySmall categorySmall : categorySmallList) {
             result.add(new CategorySmallDtoRead(categorySmall));

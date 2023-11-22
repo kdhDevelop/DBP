@@ -10,4 +10,5 @@ public interface CategorySmallService {
     public void update(Employee employee, CategorySmallDtoUpdate categorySmallDtoUpdate);
     public void delete(Employee employee, int pid);
     public List<CategorySmallDtoRead> readAll();
+    public List<CategorySmallDtoRead> readByCategoryMediumPid(int categoryMediumPid);
 }
