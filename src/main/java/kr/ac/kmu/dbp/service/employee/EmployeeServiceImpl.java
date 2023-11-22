@@ -154,6 +154,24 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public List<EmployeeDtoRead> readByDepartmentPid(Employee employee, int departmentPid) {
+        if (employee.getRole() == Role.부서장 || employee.getRole() == Role.사장) {
+            List<EmployeeDtoRead> result = new ArrayList<>();
+            Department department = departmentRepository.readByPid(departmentPid);
+
+            List<Employee> employeeList = employeeRepository.readByDepartment(department);
+
+            for (Employee temp : employeeList) {
+                result.add(new EmployeeDtoRead(temp));
+            }
+
+            return result;
+        } else {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
     public void create(EmployeeDtoCreate employeeDtoCreate) {
         Employee employee = new Employee(employeeDtoCreate);
         employee.setPassword(passwordEncoder.encode(employee.getPassword()));

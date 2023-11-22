@@ -18,6 +18,8 @@ public interface EmployeeService {
 
     public List<EmployeeDtoRead> readByName(Employee employee, String name);
 
+    public List<EmployeeDtoRead> readByDepartmentPid(Employee employee, int departmentPid);
+
     public void create(EmployeeDtoCreate employeeDtoCreate);
 
     public void update(int pid, EmployeeDtoUpdate employeeDtoUpdate);
