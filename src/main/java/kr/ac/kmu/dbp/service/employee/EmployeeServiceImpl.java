@@ -1,6 +1,7 @@
 package kr.ac.kmu.dbp.service.employee;
 
 import kr.ac.kmu.dbp.dto.employee.EmployeeDtoCreate;
+import kr.ac.kmu.dbp.dto.employee.EmployeeDtoRead;
 import kr.ac.kmu.dbp.dto.employee.EmployeeDtoUpdate;
 import kr.ac.kmu.dbp.entity.department.Department;
 import kr.ac.kmu.dbp.entity.employee.Employee;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +77,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                         .department(new Department(T, departmentNameList[T-1]))
                         .rank(Rank.values()[TI]);
 
-                if (TI == 0)
+                if (TI == 5)
                     employeeBuilder = employeeBuilder.role(Role.부서장);
                 else
                     employeeBuilder = employeeBuilder.role(Role.직원);
@@ -113,6 +115,25 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
         return result;
+    }
+
+    @Override
+    public List<EmployeeDtoRead> readByAge(Employee employee, int age) {
+        if (employee.getRole() == Role.부서장 || employee.getRole() == Role.사장) {
+            List<EmployeeDtoRead> result = new ArrayList<>();
+
+            int targetBirthYear = (new Timestamp(System.currentTimeMillis()).getYear() + 1900) - age;
+
+            List<Employee> employeeList = employeeRepository.readByBirthYear(targetBirthYear);
+
+            for (Employee temp : employeeList) {
+                result.add(new EmployeeDtoRead(temp));
+            }
+
+            return result;
+        } else {
+            throw new RuntimeException();
+        }
     }
 
     @Override
