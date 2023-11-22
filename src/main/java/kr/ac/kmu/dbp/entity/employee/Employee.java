@@ -21,6 +21,7 @@ public class Employee {
 
     private String name;
     private Gender gender;
+    private int birthYear;
 
     private String residentRegistrationNumber;
     private String phoneNumber;
@@ -39,6 +40,7 @@ public class Employee {
 
         this.account = resultSet.getString(employeePreFix + "account");
         this.password = resultSet.getString(employeePreFix + "password");
+        this.birthYear = resultSet.getInt(employeePreFix + "birthYear");
 
         this.name = resultSet.getString(employeePreFix + "name");
         this.gender = Gender.valueOf(resultSet.getString(employeePreFix + "gender"));
@@ -61,6 +63,7 @@ public class Employee {
 
         this.name = employeeDtoCreate.getName();
         this.gender = Gender.valueOf(employeeDtoCreate.getGender());
+        this.birthYear = employeeDtoCreate.getBirthYear();
 
         this.residentRegistrationNumber = employeeDtoCreate.getResidentRegistrationNumber();
         this.phoneNumber = employeeDtoCreate.getPhoneNumber();
@@ -77,6 +80,7 @@ public class Employee {
         this.name = employeeDtoUpdate.getName();
         this.gender = Gender.valueOf(employeeDtoUpdate.getGender());
         this.phoneNumber = employeeDtoUpdate.getPhoneNumber();
+        this.birthYear = employeeDtoUpdate.getBirthYear();
 
         this.zipCode = employeeDtoUpdate.getZipCode();
         this.address1 = employeeDtoUpdate.getAddress1();

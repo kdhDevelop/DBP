@@ -10,6 +10,7 @@ import lombok.Getter;
 public class EmployeeDtoUpdate {
     private String name;
     private String gender;
+    private int birthYear;
 
     private String phoneNumber;
 

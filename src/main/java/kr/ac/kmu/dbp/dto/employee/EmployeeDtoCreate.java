@@ -12,6 +12,7 @@ public class EmployeeDtoCreate {
 
     private String name;
     private String gender;
+    private int birthYear;
 
     private String residentRegistrationNumber;
     private String phoneNumber;

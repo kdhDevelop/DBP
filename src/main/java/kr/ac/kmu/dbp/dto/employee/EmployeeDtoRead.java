@@ -13,6 +13,7 @@ public class EmployeeDtoRead {
     private String account;
     private String name;
     private String gender;
+    private int birthYear;
 
     private String phoneNumber;
 
@@ -31,6 +32,7 @@ public class EmployeeDtoRead {
         this.account = employee.getAccount();
         this.name = employee.getName();
         this.gender = employee.getGender().name();
+        this.birthYear = employee.getBirthYear();
 
         this.phoneNumber = employee.getPhoneNumber();
 
