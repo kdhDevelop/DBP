@@ -41,4 +41,9 @@ public class EmployeeControllerApi {
     public List<Integer> readAllAccount() {
         return employeeService.readAllAccount();
     }
+
+    @GetMapping(value = "/employee", params = "age")
+    public List<EmployeeDtoRead> readByAge(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestParam String age) {
+        return employeeService.readByAge(customUserDetails.getEmployee(), Integer.parseInt(age));
+    }
 }
