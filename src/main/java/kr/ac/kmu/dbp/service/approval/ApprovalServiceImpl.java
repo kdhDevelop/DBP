@@ -2,6 +2,7 @@ package kr.ac.kmu.dbp.service.approval;
 
 import kr.ac.kmu.dbp.dto.approval.ApprovalDtoCreate;
 import kr.ac.kmu.dbp.dto.approval.ApprovalDtoRead;
+import kr.ac.kmu.dbp.dto.approval.ApprovalDtoUpdate;
 import kr.ac.kmu.dbp.entity.approval.Approval;
 import kr.ac.kmu.dbp.entity.employee.Employee;
 import kr.ac.kmu.dbp.repository.approval.ApprovalDataBaseRepository;
@@ -42,6 +43,31 @@ public class ApprovalServiceImpl implements ApprovalService {
                 .secondApprovalEmployee(employeeRepository.readByPid(approvalDtoCreate.getSecondApprovalEmployeePid()))
                 .build();
         approvalRepository.create(approval);
+    }
+
+    @Override
+    public void update(Employee employee, ApprovalDtoUpdate approvalDtoUpdate, String state) {
+        if (state.equals("first")) {
+            Approval approval = Approval.builder()
+                    .pid(approvalDtoUpdate.getPid())
+                    .firstApprovalEmployee(employee)
+                    .firstApproval(approvalDtoUpdate.isApproval())
+                    .firstApprovalDateTime(approvalDtoUpdate.getApprovalTime())
+                    .firstApprovalNote(approvalDtoUpdate.getApprovalNote())
+                    .build();
+            approvalRepository.updateFistApproval(approval);
+        } else if (state.equals("second")) {
+            Approval approval = Approval.builder()
+                    .pid(approvalDtoUpdate.getPid())
+                    .secondApprovalEmployee(employee)
+                    .secondApproval(approvalDtoUpdate.isApproval())
+                    .secondApprovalDateTime(approvalDtoUpdate.getApprovalTime())
+                    .secondApprovalNote(approvalDtoUpdate.getApprovalNote())
+                    .build();
+            approvalRepository.updateSecondApproval(approval);
+        } else {
+            throw new RuntimeException();
+        }
     }
 
     @Override
