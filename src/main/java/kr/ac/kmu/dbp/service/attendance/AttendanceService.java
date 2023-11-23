@@ -4,5 +4,5 @@ import kr.ac.kmu.dbp.dto.attendance.AttendanceDtoCreate;
 import kr.ac.kmu.dbp.entity.employee.Employee;
 
 public interface AttendanceService {
-    public void create(Employee employee, AttendanceDtoCreate attendanceDtoCreate);
+    public void create(Employee creator, Employee target, AttendanceDtoCreate attendanceDtoCreate);
 }
