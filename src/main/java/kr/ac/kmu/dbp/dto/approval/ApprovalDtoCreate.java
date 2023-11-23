@@ -14,11 +14,4 @@ public class ApprovalDtoCreate {
     private String note;
 
     private int departmentHeadPid;
-    private boolean departmentHeadApproval;
-    private Timestamp departmentHeadApprovalDate;
-    private String departmentHeadApprovalNote;
-
-    private boolean bossApproval;
-    private Timestamp boosApprovalDate;
-    private String bossApprovalNote;
 }
