@@ -138,4 +138,23 @@ public class CategoryMediumDataBaseRepository extends Table implements CategoryM
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public boolean checkExistByCategoryLargePidAndName(int categoryLargePid, String name) {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    String readQuery = "SELECT * FROM categoryMedium WHERE disable = 0 AND categoryLargePid = |=CATEGORY_LARGE_PID=| AND name = '|=NAME=|';"
+                            .replace("|=CATEGORY_LARGE_PID=|", String.valueOf(categoryLargePid))
+                            .replace("|=NAME=|", name);
+                    System.out.println("CHECK EXIST CATEGORY MEDIUM BY CATEGORY LARGE PID AND NAME QUERY : " + readQuery);
+                    try (ResultSet resultSet = statement.executeQuery(readQuery)) {
+                        return resultSet.next();
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
 }

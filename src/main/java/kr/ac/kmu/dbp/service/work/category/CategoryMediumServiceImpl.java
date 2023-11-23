@@ -26,6 +26,20 @@ public class CategoryMediumServiceImpl implements CategoryMediumService {
     public CategoryMediumServiceImpl(CategoryMediumDataBaseRepository categoryMediumDataBaseRepository, CategoryLargeDataBaseRepository categoryLargeDataBaseRepository) {
         this.categoryMediumRepository = categoryMediumDataBaseRepository;
         this.categoryLargeRepository = categoryLargeDataBaseRepository;
+
+        init();
+    }
+
+    private void init() {
+        String[] categoryMediumNameList = new String[] {"정기 업무", "단기 업무"};
+        for (int T = 1 ; T < 4 ; T ++) {
+            CategoryLarge categoryLarge = categoryLargeRepository.readByPid(T);
+            for (int TI = 0 ; TI < categoryMediumNameList.length ; TI ++) {
+                if (!categoryMediumRepository.checkExistByCategoryLargePidAndName(T, categoryMediumNameList[TI])) {
+                    categoryMediumRepository.create(CategoryMedium.builder().categoryLarge(categoryLarge).name(categoryMediumNameList[TI]).build());
+                }
+            }
+        }
     }
 
     @Override

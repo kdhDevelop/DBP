@@ -21,6 +21,18 @@ public class CategoryLargeServiceImpl implements CategoryLargeService {
     @Autowired
     public CategoryLargeServiceImpl(CategoryLargeDataBaseRepository categoryLargeDataBaseRepository) {
         this.categoryLargeRepository = categoryLargeDataBaseRepository;
+
+        init();
+    }
+
+    private void init() {
+        String[] departmentNameList = new String[] {"인사", "개발", "영업"};
+
+        for (String departmentName : departmentNameList) {
+            if (!categoryLargeRepository.checkExistByName(departmentName)) {
+                categoryLargeRepository.create(CategoryLarge.builder().name(departmentName).build());
+            }
+        }
     }
 
     @Override

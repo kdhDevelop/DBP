@@ -136,4 +136,23 @@ public class CategorySmallDataBaseRepository extends Table implements CategorySm
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public boolean checkExistByCategoryMediumPidAndName(int categoryMediumPid, String name) {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    String readQuery = "SELECT * FROM categorySmall WHERE disable = 0 AND categoryMediumPid = |=CATEGORY_MEDIUM_PID=| AND name = '|=NAME=|';"
+                            .replace("|=CATEGORY_MEDIUM_PID=|", String.valueOf(categoryMediumPid))
+                            .replace("|=NAME=|", name);
+                    System.out.println("CHECK EXIST CATEGORY SMALL BY CATEGORY MEDIUM PID AND NAME QUERY : " + readQuery);
+                    try (ResultSet resultSet = statement.executeQuery(readQuery)) {
+                        return resultSet.next();
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
 }

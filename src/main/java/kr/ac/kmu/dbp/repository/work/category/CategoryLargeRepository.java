@@ -10,4 +10,5 @@ public interface CategoryLargeRepository {
     public void delete(CategoryLarge categoryLarge);
     public List<CategoryLarge> readAll();
     public CategoryLarge readByPid(int pid);
+    public boolean checkExistByName(String name);
 }

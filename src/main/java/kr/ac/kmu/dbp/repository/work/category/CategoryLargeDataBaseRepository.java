@@ -112,4 +112,22 @@ public class CategoryLargeDataBaseRepository extends Table implements CategoryLa
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public boolean checkExistByName(String name) {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    String readQuery = "SELECT * FROM categoryLarge WHERE disable = 0 AND name = '|=NAME=|';"
+                            .replace("|=NAME=|", name);
+                    System.out.println("CHECK EXIST CATEGORY LARGE BY NAME QUERY : " + readQuery);
+                    try (ResultSet resultSet = statement.executeQuery(readQuery)) {
+                        return resultSet.next();
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
 }

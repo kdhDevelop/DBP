@@ -2,12 +2,15 @@ package kr.ac.kmu.dbp.entity.work.category;
 
 import kr.ac.kmu.dbp.dto.work.category.CategoryLargeDtoCreate;
 import kr.ac.kmu.dbp.dto.work.category.CategoryLargeDtoUpdate;
-import lombok.Getter;
+import lombok.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Getter
+@Builder
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class CategoryLarge {
     private int pid;
     private String name;

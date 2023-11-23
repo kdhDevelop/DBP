@@ -14,4 +14,5 @@ public interface CategoryMediumRepository {
     public List<CategoryMedium> readAll();
     public List<CategoryMedium> readByCategoryLarge(CategoryLarge categoryLarge);
     public CategoryMedium readByPid(int pid);
+    public boolean checkExistByCategoryLargePidAndName(int categoryLargePid, String name);
 }

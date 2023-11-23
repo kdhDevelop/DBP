@@ -26,6 +26,40 @@ public class CategorySmallServiceImpl implements CategorySmallService {
     public CategorySmallServiceImpl(CategorySmallDataBaseRepository categorySmallDataBaseRepository, CategoryMediumDataBaseRepository categoryMediumDataBaseRepository) {
         this.categorySmallRepository = categorySmallDataBaseRepository;
         this.categoryMediumRepository = categoryMediumDataBaseRepository;
+
+        init();
+    }
+
+
+    private void init() {
+
+        String[] 인사_정기 = new String[] {"근퇴 확인", "급여 중간 계산"};
+        String[] 인사_단기 = new String[] {"사무실 청소"};
+        String[] 개발_정기 = new String[] {"일간 회의 진행", "개발"};
+        String[] 개발_단기 = new String[] {"사무실 청소"};
+        String[] 영업_정기 = new String[] {"고객사 방문", "영업 이익 중간 정산"};
+        String[] 영업_단기 = new String[] {"사무실 청소"};
+
+        String[][] 인사 = new String[][] {인사_정기, 인사_단기};
+        String[][] 개발 = new String[][] {개발_정기, 개발_단기};
+        String[][] 영업 = new String[][] {영업_정기, 영업_단기};
+
+        String[][][] categoryMediumList = new String[][][] {인사, 개발, 영업};
+
+        int count = 0;
+        for (int T = 0 ; T < categoryMediumList.length ; T ++) {
+            String[][] tempI = categoryMediumList[T];
+            for (int TI = 0 ; TI < tempI.length ; TI ++) {
+                String[] tempII = tempI[TI];
+                count ++;
+                CategoryMedium categoryMedium = categoryMediumRepository.readByPid(count);
+                for (int TII = 0 ; TII < tempII.length ; TII ++) {
+                    if (!categorySmallRepository.checkExistByCategoryMediumPidAndName(categoryMedium.getPid(), categoryMediumList[T][TI][TII])) {
+                        categorySmallRepository.create(CategorySmall.builder().categoryMedium(categoryMedium).name(categoryMediumList[T][TI][TII]).build());
+                    }
+                }
+            }
+        }
     }
 
     @Override
