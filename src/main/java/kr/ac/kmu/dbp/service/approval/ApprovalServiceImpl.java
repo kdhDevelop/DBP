@@ -1,6 +1,7 @@
 package kr.ac.kmu.dbp.service.approval;
 
 import kr.ac.kmu.dbp.dto.approval.ApprovalDtoCreate;
+import kr.ac.kmu.dbp.dto.approval.ApprovalDtoRead;
 import kr.ac.kmu.dbp.entity.approval.Approval;
 import kr.ac.kmu.dbp.entity.employee.Employee;
 import kr.ac.kmu.dbp.repository.approval.ApprovalDataBaseRepository;
@@ -11,6 +12,9 @@ import kr.ac.kmu.dbp.repository.work.category.CategorySmallDataBaseRepository;
 import kr.ac.kmu.dbp.repository.work.category.CategorySmallRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ApprovalServiceImpl implements ApprovalService {
@@ -38,5 +42,15 @@ public class ApprovalServiceImpl implements ApprovalService {
                 .secondApprovalEmployee(employeeRepository.readByPid(approvalDtoCreate.getSecondApprovalEmployeePid()))
                 .build();
         approvalRepository.create(approval);
+    }
+
+    @Override
+    public List<ApprovalDtoRead> readWaitByEmployee(Employee employee) {
+        List<ApprovalDtoRead> result = new ArrayList<>();
+        List<Approval> approvalList = approvalRepository.readWaitByEmployee(employee);
+        for (Approval approval : approvalList) {
+            result.add(new ApprovalDtoRead(approval));
+        }
+        return result;
     }
 }
