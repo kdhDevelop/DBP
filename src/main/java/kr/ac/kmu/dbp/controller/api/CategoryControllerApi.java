@@ -24,68 +24,73 @@ public class CategoryControllerApi {
         this.categorySmallService = categorySmallServiceImpl;
     }
 
-    @PostMapping("/category/large")
+    @PostMapping(value = "/category/large")
     public void createLarge(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody CategoryLargeDtoCreate categoryLargeDtoCreate) {
         categoryLargeService.create(customUserDetails.getEmployee(), categoryLargeDtoCreate);
     }
 
-    @PutMapping("/category/large")
+    @PutMapping(value = "/category/large")
     public void updateLarge(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody CategoryLargeDtoUpdate categoryLargeDtoUpdate) {
         categoryLargeService.update(customUserDetails.getEmployee(), categoryLargeDtoUpdate);
     }
 
-    @DeleteMapping("/category/large/{pid}")
+    @DeleteMapping(value = "/category/large/{pid}")
     public void deleteLarge(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable("pid") String pid) {
         categoryLargeService.delete(customUserDetails.getEmployee(), Integer.parseInt(pid));
     }
 
-    @GetMapping("/category/large/all")
+    @GetMapping(value = "/category/large/all")
     public List<CategoryLargeDtoRead> readAllLarge() {
         return categoryLargeService.readAll();
     }
 
-    @PostMapping("/category/medium")
+    @PostMapping(value = "/category/medium")
     public void createMedium(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody CategoryMediumDtoCreate categoryMediumDtoCreate) {
         categoryMediumService.create(customUserDetails.getEmployee(), categoryMediumDtoCreate);
     }
 
-    @PutMapping("/category/medium")
+    @PutMapping(value = "/category/medium")
     public void updateMedium(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody CategoryMediumDtoUpdate categoryMediumDtoUpdate) {
         categoryMediumService.update(customUserDetails.getEmployee(), categoryMediumDtoUpdate);
     }
 
-    @DeleteMapping("/category/medium/{pid}")
+    @DeleteMapping(value = "/category/medium/{pid}")
     public void deleteMedium(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable("pid") String pid) {
         categoryMediumService.delete(customUserDetails.getEmployee(), Integer.parseInt(pid));
     }
 
-    @GetMapping("/category/medium/all")
+    @GetMapping(value = "/category/medium")
     public List<CategoryMediumDtoRead> readAllMedium() {
         return categoryMediumService.readAll();
     }
 
-    @GetMapping("/category/medium")
-    public List<CategoryMediumDtoRead> readByCategoryLargePid(@RequestParam String categoryLargePid) {
+    @GetMapping(value = "/category/medium", params = "categoryMediumPid")
+    public List<CategoryMediumDtoRead> readMediumByCategoryLargePid(@RequestParam String categoryLargePid) {
         return categoryMediumService.readByCategoryLargePid(Integer.parseInt(categoryLargePid));
     }
 
-    @PostMapping("/category/small")
+    @PostMapping(value = "/category/small")
     public void createSmall(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody CategorySmallDtoCreate categorySmallDtoCreate) {
         categorySmallService.create(customUserDetails.getEmployee(), categorySmallDtoCreate);
     }
 
-    @PutMapping("/category/small")
+    @PutMapping(value = "/category/small")
     public void updateSmall(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody CategorySmallDtoUpdate categorySmallDtoUpdate) {
         categorySmallService.update(customUserDetails.getEmployee(), categorySmallDtoUpdate);
     }
 
-    @DeleteMapping("/category/small/{pid}")
+    @DeleteMapping(value = "/category/small/{pid}")
     public void deleteSmall(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable("pid") String pid) {
         categorySmallService.delete(customUserDetails.getEmployee(), Integer.parseInt(pid));
     }
 
-    @GetMapping("/category/small/all")
+    @GetMapping(value = "/category/small")
     public List<CategorySmallDtoRead> readAllSmall() {
         return categorySmallService.readAll();
+    }
+
+    @GetMapping(value = "/category/small", params = "categoryMediumPid")
+    public List<CategorySmallDtoRead> readSmallByCategoryMediumPid(@RequestParam String categoryMediumPid) {
+        return categorySmallService.readByCategoryMediumPid(Integer.parseInt(categoryMediumPid));
     }
 }
