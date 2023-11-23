@@ -28,7 +28,7 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
     }
 
     @Override
-    public Employee create(Employee employee) {
+    public void create(Employee employee) {
         String createQuery = "INSERT INTO employee (password, name, gender, birthYear, residentRegistrationNumber, phoneNumber, zipCode, address1, address2, role, departmentPid, rank) VALUES ('|=PASSWORD=|', '|=NAME=|', '|=GENDER=|', |=BIRTH_YEAR=|, '|=RESIDENT_REGISTRATION_NUMBER=|', '|=PHONE_NUMBER=|', |=ZIP_CODE=|, '|=ADDRESS_1=|', '|=ADDRESS_2=|', '|=ROLE=|', |=DEPARTMENT_PID=|, '|=RANK=|');"
                 .replace("|=PASSWORD=|", employee.getPassword())
                 .replace("|=NAME=|", employee.getName())
@@ -62,15 +62,6 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
                             }
                         }
                         statement.executeUpdate(setAccountQuery);
-                        findQuery = "SELECT emp.pid as emp_pid, emp.account as emp_account, emp.password as emp_password, emp.name as emp_name, emp.gender as emp_gender, emp.birthYear as emp_birthYear, emp.residentRegistrationNumber as emp_residentRegistrationNumber, emp.phoneNumber as emp_phoneNumber, emp.zipCode as emp_zipCode, emp.address1 as emp_address1, emp.address2 as emp_address2, emp.role as emp_role, emp.rank as emp_rank, dep.pid as dep_pid, dep.name as dep_name FROM employee as emp, department as dep WHERE emp.departmentPid = dep.pid AND emp.residentRegistrationNumber = '|=RESIDENT_REGISTRATION_NUMBER=|';"
-                                .replace("|=RESIDENT_REGISTRATION_NUMBER=|", employee.getResidentRegistrationNumber());
-                        try (ResultSet resultSet = statement.executeQuery(findQuery)) {
-                            if (resultSet.next()) {
-                                return new Employee(resultSet, "emp_", "dep_");
-                            } else {
-                                throw new RuntimeException();
-                            }
-                        }
                     } else {
                         throw new RuntimeException();
                     }
@@ -207,7 +198,7 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
     }
 
     @Override
-    public Employee update(Employee employee) {
+    public void update(Employee employee) {
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
@@ -224,15 +215,6 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
                             .replace("|=DEPARTMENT_PID=|", String.valueOf(employee.getDepartment().getPid()))
                             .replace("|=PID=|", String.valueOf(employee.getPid()));
                     statement.executeUpdate(updateQuery);
-                    String readQuery = "SELECT emp.pid as emp_pid, emp.account as emp_account, emp.password as emp_password, emp.name as emp_name, emp.gender as emp_gender, emp.birthYear as emp_birthYear, emp.residentRegistrationNumber as emp_residentRegistrationNumber, emp.phoneNumber as emp_phoneNumber, emp.zipCode as emp_zipCode, emp.address1 as emp_address1, emp.address2 as emp_address2, emp.role as emp_role, emp.rank as emp_rank, dep.pid as dep_pid, dep.name as dep_name FROM employee as emp, department as dep WHERE emp.departmentPid = dep.pid AND emp.pid = '|=PID=|';"
-                            .replace("|=PID=|", String.valueOf(employee.getPid()));
-                    try (ResultSet resultSet = statement.executeQuery(readQuery)) {
-                        if (resultSet.next()) {
-                            return new Employee(resultSet, "emp_", "dep_");
-                        } else {
-                            throw new RuntimeException();
-                        }
-                    }
                 }
             }
         } catch (SQLException e) {
