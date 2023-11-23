@@ -39,7 +39,7 @@ public class CategoryControllerApi {
         categoryLargeService.delete(customUserDetails.getEmployee(), Integer.parseInt(pid));
     }
 
-    @GetMapping(value = "/category/large/all")
+    @GetMapping(value = "/category/large")
     public List<CategoryLargeDtoRead> readAllLarge() {
         return categoryLargeService.readAll();
     }
