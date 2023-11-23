@@ -51,6 +51,54 @@ public class ApprovalDataBaseRepository extends Table implements ApprovalReposit
     }
 
     @Override
+    public void updateFistApproval(Approval approval) {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    String updateQuery = "UPDATE approval SET firstApproval = |=APPROVAL=|, firstApprovalDateTime = '|=APPROVAL_DATE_TIME=|', firstApprovalNote = '|=APPROVAL_NOTE=|' WHERE pid = |=PID=| AND firstApprovalEmployeePid = |=EMPLOYEE_PID=| AND firstApproval IS NULL;"
+                            .replace("|=APPROVAL_DATE_TIME=|", approval.getFirstApprovalDateTime().toString())
+                            .replace("|=APPROVAL_NOTE=|", approval.getFirstApprovalNote())
+                            .replace("|=PID=|", String.valueOf(approval.getPid()))
+                            .replace("|=EMPLOYEE_PID=|", String.valueOf(approval.getFirstApprovalEmployee().getPid()));
+                    if (approval.isFirstApproval())
+                        updateQuery = updateQuery.replace("|=APPROVAL=|", "1");
+                    else
+                        updateQuery = updateQuery.replace("|=APPROVAL=|", "0");
+
+                    System.out.println("UPDATE FIRST APPROVAL QUERY : " + updateQuery);
+                    statement.executeUpdate(updateQuery);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public void updateSecondApproval(Approval approval) {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    String updateQuery = "UPDATE approval SET secondApproval = |=APPROVAL=|, secondApprovalDateTime = '|=APPROVAL_DATE_TIME=|', secondApprovalNote = '|=APPROVAL_NOTE=|' WHERE pid = |=PID=| AND secondApprovalEmployeePid = |=EMPLOYEE_PID=| AND firstApproval = 1;"
+                            .replace("|=APPROVAL_DATE_TIME=|", approval.getSecondApprovalDateTime().toString())
+                            .replace("|=APPROVAL_NOTE=|", approval.getSecondApprovalNote())
+                            .replace("|=PID=|", String.valueOf(approval.getPid()))
+                            .replace("|=EMPLOYEE_PID=|", String.valueOf(approval.getSecondApprovalEmployee().getPid()));
+                    if (approval.isSecondApproval())
+                        updateQuery = updateQuery.replace("|=APPROVAL=|", "1");
+                    else
+                        updateQuery = updateQuery.replace("|=APPROVAL=|", "0");
+
+                    System.out.println("UPDATE SECOND APPROVAL QUERY : " + updateQuery);
+                    statement.executeUpdate(updateQuery);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
     public List<Approval> readWaitByEmployee(Employee employee) {
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
