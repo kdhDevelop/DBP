@@ -35,6 +35,7 @@ public class AttendanceDataBaseRepository extends Table implements AttendanceRep
                             .replace("|=START_TIME=|", attendance.getStartTime().toString())
                             .replace("|=END_TIME=|", attendance.getEndTime().toString())
                             .replace("|=WAGE=|", String.valueOf(attendance.getWage()));
+                    System.out.println("CREATE ATTENDANCE QUERY : " + createQuery);
                     statement.executeUpdate(createQuery);
                 }
             }
