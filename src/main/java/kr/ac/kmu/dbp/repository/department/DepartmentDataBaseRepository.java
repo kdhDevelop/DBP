@@ -28,7 +28,7 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
     }
 
     @Override
-    public Department create(Department department) {
+    public void create(Department department) {
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
@@ -36,16 +36,6 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
                             .replace("|=TABLE=|", tableName)
                             .replace("|=NAME=|", department.getName());
                     statement.executeUpdate(createQuery);
-
-                    String findQuery = "SELECT dep.pid as dep_pid, dep.name as dep_name FROM department as dep WHERE name = '|=NAME=|';"
-                            .replace("|=NAME=|", department.getName());
-                    try (ResultSet resultSet = statement.executeQuery(findQuery)) {
-                        if (resultSet.next()) {
-                            return new Department(resultSet, "dep_");
-                        } else {
-                            throw new RuntimeException();
-                        }
-                    }
                 }
             }
         } catch (SQLException e) {
