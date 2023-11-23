@@ -64,7 +64,7 @@ public class CategoryControllerApi {
         return categoryMediumService.readAll();
     }
 
-    @GetMapping(value = "/category/medium", params = "categoryMediumPid")
+    @GetMapping(value = "/category/medium", params = "categoryLargePid")
     public List<CategoryMediumDtoRead> readMediumByCategoryLargePid(@RequestParam String categoryLargePid) {
         return categoryMediumService.readByCategoryLargePid(Integer.parseInt(categoryLargePid));
     }
