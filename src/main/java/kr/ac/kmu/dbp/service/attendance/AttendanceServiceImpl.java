@@ -1,6 +1,7 @@
 package kr.ac.kmu.dbp.service.attendance;
 
 import kr.ac.kmu.dbp.dto.attendance.AttendanceDtoCreate;
+import kr.ac.kmu.dbp.dto.attendance.AttendanceDtoRead;
 import kr.ac.kmu.dbp.entity.attendance.Attendance;
 import kr.ac.kmu.dbp.entity.employee.Employee;
 import kr.ac.kmu.dbp.entity.employee.Role;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
@@ -32,6 +35,20 @@ public class AttendanceServiceImpl implements AttendanceService {
                     .wage(target.getWage())
                     .build();
             attendanceRepository.create(attendance);
+        }
+    }
+
+    @Override
+    public List<AttendanceDtoRead> readByEmployee(Employee reader, Employee target) {
+        if (reader.getRole() == Role.부서장 || reader.getRole() == Role.사장 || reader.getPid() == target.getPid()) {
+            List<AttendanceDtoRead> result = new ArrayList<>();
+            List<Attendance> attendanceList = attendanceRepository.readByEmployee(target);
+            for (Attendance attendance : attendanceList) {
+                result.add(new AttendanceDtoRead(attendance));
+            }
+            return result;
+        } else {
+            throw new RuntimeException();
         }
     }
 }
