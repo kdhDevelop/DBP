@@ -2,6 +2,7 @@ package kr.ac.kmu.dbp.controller.api;
 
 import kr.ac.kmu.dbp.dto.approval.ApprovalDtoCreate;
 import kr.ac.kmu.dbp.dto.approval.ApprovalDtoRead;
+import kr.ac.kmu.dbp.dto.approval.ApprovalDtoUpdate;
 import kr.ac.kmu.dbp.entity.employee.customUserDetails.CustomUserDetails;
 import kr.ac.kmu.dbp.service.approval.ApprovalService;
 import kr.ac.kmu.dbp.service.approval.ApprovalServiceImpl;
@@ -29,5 +30,10 @@ public class ApprovalControllerApi {
     @GetMapping("/approval/wait")
     public List<ApprovalDtoRead> readWait(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         return approvalService.readWaitByEmployee(customUserDetails.getEmployee());
+    }
+
+    @PutMapping("/approval/{state}")
+    public void update(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody ApprovalDtoUpdate approvalDtoUpdate, @PathVariable String state) {
+        approvalService.update(customUserDetails.getEmployee(), approvalDtoUpdate, state);
     }
 }
