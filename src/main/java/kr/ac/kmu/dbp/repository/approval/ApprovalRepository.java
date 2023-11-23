@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface ApprovalRepository {
     public void create(Approval approval);
+    public void updateFistApproval(Approval approval);
+    public void updateSecondApproval(Approval approval);
     public List<Approval> readWaitByEmployee(Employee employee);
 }
