@@ -9,6 +9,8 @@ import kr.ac.kmu.dbp.repository.attendance.AttendanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
+
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
     private final AttendanceRepository attendanceRepository;
@@ -24,6 +26,7 @@ public class AttendanceServiceImpl implements AttendanceService {
             Attendance attendance = Attendance.builder()
                     .employee(target)
                     .attendanceDate(attendanceDtoCreate.getAttendanceDate())
+                    .dayOfWeek(DayOfWeek.valueOf(attendanceDtoCreate.getDayOfWeek()))
                     .startTime(attendanceDtoCreate.getStartTime())
                     .endTime(attendanceDtoCreate.getEndTime())
                     .wage(target.getWage())
