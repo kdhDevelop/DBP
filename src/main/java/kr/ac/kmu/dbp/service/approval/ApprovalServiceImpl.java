@@ -29,12 +29,13 @@ public class ApprovalServiceImpl implements ApprovalService {
     @Override
     public void create(Employee employee, ApprovalDtoCreate approvalDtoCreate) {
         Approval approval = Approval.builder()
-                .drafter(employee)
                 .title(approvalDtoCreate.getTitle())
-                .note(approvalDtoCreate.getNote())
                 .content(approvalDtoCreate.getContent())
                 .categorySmall(categorySmallRepository.readByPid(approvalDtoCreate.getCategorySmallPid()))
-                .departmentHead(employeeRepository.readByPid(approvalDtoCreate.getDepartmentHeadPid()))
+                .drafterEmployee(employee)
+                .drafterNote(approvalDtoCreate.getDrafterNote())
+                .firstApprovalEmployee(employeeRepository.readByPid(approvalDtoCreate.getFirstApprovalEmployeePid()))
+                .secondApprovalEmployee(employeeRepository.readByPid(approvalDtoCreate.getSecondApprovalEmployeePid()))
                 .build();
         approvalRepository.create(approval);
     }

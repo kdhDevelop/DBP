@@ -15,18 +15,19 @@ public class Approval {
     private int pid;
 
     private String title;
-    private CategorySmall categorySmall;
     private String content;
+    private CategorySmall categorySmall;
 
-    private Employee drafter;
-    private String note;
+    private Employee drafterEmployee;
+    private String drafterNote;
 
-    private Employee departmentHead;
-    private boolean departmentHeadApproval;
-    private Timestamp departmentHeadApprovalDate;
-    private String departmentHeadApprovalNote;
+    private Employee firstApprovalEmployee;
+    private boolean firstApproval;
+    private Timestamp firstApprovalDateTime;
+    private String firstApprovalNote;
 
-    private boolean bossApproval;
-    private Timestamp boosApprovalDate;
-    private String bossApprovalNote;
+    private Employee secondApprovalEmployee;
+    private boolean secondApproval;
+    private Timestamp secondApprovalDateTime;
+    private String secondApprovalNote;
 }

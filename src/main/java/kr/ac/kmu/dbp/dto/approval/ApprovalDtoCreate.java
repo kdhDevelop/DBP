@@ -2,16 +2,14 @@ package kr.ac.kmu.dbp.dto.approval;
 
 import lombok.Getter;
 
-import java.sql.Timestamp;
-
 @Getter
 public class ApprovalDtoCreate {
     private String title;
-    private int categorySmallPid;
     private String content;
+    private int categorySmallPid;
 
-    private int drafterPid;
-    private String note;
+    private String drafterNote;
 
-    private int departmentHeadPid;
+    private int firstApprovalEmployeePid;
+    private int secondApprovalEmployeePid;
 }
