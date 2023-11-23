@@ -13,6 +13,7 @@ public class EmployeeDtoCreate {
     private String name;
     private String gender;
     private int birthYear;
+    private int wage;
 
     private String residentRegistrationNumber;
     private String phoneNumber;
