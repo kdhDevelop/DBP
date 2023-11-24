@@ -9,5 +9,6 @@ public interface ApprovalRepository {
     public void create(Approval approval);
     public void updateFistApproval(Approval approval);
     public void updateSecondApproval(Approval approval);
+    public List<Approval> readByEmployee(Employee employee);
     public List<Approval> readWaitByEmployee(Employee employee);
 }
