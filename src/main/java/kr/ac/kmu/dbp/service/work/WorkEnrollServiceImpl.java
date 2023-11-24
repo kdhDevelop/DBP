@@ -70,6 +70,14 @@ public class WorkEnrollServiceImpl implements WorkEnrollService {
 
     @Override
     public void create(Employee employee, WorkEnrollDtoCreate workEnrollDtoCreate) {
+
+        System.out.println("EMPLOYEE : " + employee.getPid());
+        System.out.println("DATE : " + workEnrollDtoCreate.getWorkDate().toString());
+        System.out.println("CATEGORY : " + workEnrollDtoCreate.getCategorySmallPid());
+        System.out.println("START : " + workEnrollDtoCreate.getStartWork());
+        System.out.println("END : " + workEnrollDtoCreate.getEndWork());
+
+
         WorkEnroll workEnroll = WorkEnroll.builder()
                 .employee(employee)
                 .workDate(workEnrollDtoCreate.getWorkDate())
