@@ -1,12 +1,14 @@
 package kr.ac.kmu.dbp.service.chat.chatRoom;
 
 import kr.ac.kmu.dbp.dto.chat.chatRoom.ChatRoomDtoCreate;
+import kr.ac.kmu.dbp.dto.chat.chatRoom.ChatRoomDtoRead;
 import kr.ac.kmu.dbp.entity.chat.chatRoom.ChatRoom;
 import kr.ac.kmu.dbp.repository.chat.chatRoom.ChatRoomInMemoryRepository;
 import kr.ac.kmu.dbp.repository.chat.chatRoom.ChatRoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,7 +32,14 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     }
 
     @Override
-    public List<ChatRoom> readAll() {
-        return chatRoomRepository.readAll();
+    public List<ChatRoomDtoRead> readAll() {
+        List<ChatRoomDtoRead> result = new ArrayList<>();
+
+        List<ChatRoom> chatRoomList = chatRoomRepository.readAll();
+        for (ChatRoom chatRoom : chatRoomList) {
+            result.add(new ChatRoomDtoRead(chatRoom));
+        }
+
+        return result;
     }
 }

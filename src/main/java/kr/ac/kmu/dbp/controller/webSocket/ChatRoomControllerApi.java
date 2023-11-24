@@ -1,7 +1,7 @@
 package kr.ac.kmu.dbp.controller.webSocket;
 
 import kr.ac.kmu.dbp.dto.chat.chatRoom.ChatRoomDtoCreate;
-import kr.ac.kmu.dbp.entity.chat.chatRoom.ChatRoom;
+import kr.ac.kmu.dbp.dto.chat.chatRoom.ChatRoomDtoRead;
 import kr.ac.kmu.dbp.service.chat.chatRoom.ChatRoomService;
 import kr.ac.kmu.dbp.service.chat.chatRoom.ChatRoomServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class ChatRoomControllerApi {
     }
 
     @GetMapping("/chat/list")
-    public List<ChatRoom> readAll() {
+    public List<ChatRoomDtoRead> readAll() {
         return chatRoomService.readAll();
     }
 }
