@@ -36,11 +36,14 @@ public class WorkEnrollServiceImpl implements WorkEnrollService {
         //startTimeNewWork 보다 endTimeNewWork 가 뒤에 있는 경우 true
         if (startTimeNewWork.after(endTimeNewWork)) {
             throw new RuntimeException();
+        } else {
+            System.out.println("CHECK. END TIME > START TIME");
         }
 
         List<WorkEnroll> workEnrollList = workEnrollRepository.readByEmployeeAndDateOrderByStartWork(workEnroll.getEmployee(), workEnroll.getWorkDate());
 
         if (!workEnrollList.isEmpty()) {
+            System.out.println("WORK ENROLL LIST IS NOT EMPTY");
             for (int T = workEnrollList.size() - 1 ; T >= 0 ; T --) {
                 WorkEnroll beforeWorkEnroll = workEnrollList.get(T);
                 if (beforeWorkEnroll.getEndWork().before(startTimeNewWork) || beforeWorkEnroll.getEndWork().equals(startTimeNewWork)) {
@@ -58,6 +61,7 @@ public class WorkEnrollServiceImpl implements WorkEnrollService {
                 return true;
             }
         } else {
+            System.out.println("WORK ENROLL LIST IS EMPTY RETURN TRUE.");
             return true;
         }
 
