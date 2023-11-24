@@ -99,6 +99,28 @@ public class ApprovalDataBaseRepository extends Table implements ApprovalReposit
     }
 
     @Override
+    public List<Approval> readByEmployee(Employee employee) {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    List<Approval> result = new ArrayList<>();
+                    String readQuery = "SELECT appr.pid as appr_pid, appr.title as appr_title, appr.content as appr_content, catSmall.pid as catSmall_pid, catSmall.name as catSmall_name, catMedium.pid as catMedium_pid, catMedium.name as catMedium_name, catLarge.pid as catLarge_pid, catLarge.name as catLarge_name, drafterEmp.pid as drafterEmp_pid, drafterEmp.account as drafterEmp_account, drafterEmp.password as drafterEmp_password, drafterEmp.name as drafterEmp_name, drafterEmp.gender as drafterEmp_gender, drafterEmp.birthYear as drafterEmp_birthYear, drafterEmp.wage as drafterEmp_wage, drafterEmp.residentRegistrationNumber as drafterEmp_residentRegistrationNumber, drafterEmp.phoneNumber as drafterEmp_phoneNumber, drafterEmp.zipCode as drafterEmp_zipCode, drafterEmp.address1 as drafterEmp_address1, drafterEmp.address2 as drafterEmp_address2, drafterEmp.role as drafterEmp_role, drafterEmp.rank as drafterEmp_rank, drafterDep.pid as drafterDep_pid, drafterDep.name as drafterDep_name, appr.drafterNote as appr_drafterNote, firstEmp.pid as firstEmp_pid, firstEmp.account as firstEmp_account, firstEmp.password as firstEmp_password, firstEmp.name as firstEmp_name, firstEmp.gender as firstEmp_gender, firstEmp.birthYear as firstEmp_birthYear, firstEmp.wage as firstEmp_wage, firstEmp.residentRegistrationNumber as firstEmp_residentRegistrationNumber, firstEmp.phoneNumber as firstEmp_phoneNumber, firstEmp.zipCode as firstEmp_zipCode, firstEmp.address1 as firstEmp_address1, firstEmp.address2 as firstEmp_address2, firstEmp.role as firstEmp_role, firstEmp.rank as firstEmp_rank, firstDep.pid as firstDep_pid, firstDep.name as firstDep_name, appr.firstApproval as appr_firstApproval, appr.firstApprovalDateTime as appr_firstApprovalDateTime, appr.firstApprovalNote as appr_firstApprovalNote, secondEmp.pid as secondEmp_pid, secondEmp.account as secondEmp_account, secondEmp.password as secondEmp_password, secondEmp.name as secondEmp_name, secondEmp.gender as secondEmp_gender, secondEmp.birthYear as secondEmp_birthYear, secondEmp.wage as secondEmp_wage, secondEmp.residentRegistrationNumber as secondEmp_residentRegistrationNumber, secondEmp.phoneNumber as secondEmp_phoneNumber, secondEmp.zipCode as secondEmp_zipCode, secondEmp.address1 as secondEmp_address1, secondEmp.address2 as secondEmp_address2, secondEmp.role as secondEmp_role, secondEmp.rank as secondEmp_rank, secondDep.pid as secondDep_pid, secondDep.name as secondDep_name, appr.secondApproval as appr_secondApproval, appr.secondApprovalDateTime as appr_secondApprovalDateTime, appr.secondApprovalNote as appr_secondApprovalNote FROM  categorySmall as catSmall, categoryMedium as catMedium, categoryLarge as catLarge, approval as appr,  employee as drafterEmp,  department as drafterDep,  employee as firstEmp,  department as firstDep,  employee secondEmp,  department as secondDep WHERE appr.drafterEmployeePid = drafterEmp.pid AND drafterEmp.departmentPid = drafterDep.pid AND appr.firstApprovalEmployeePid = firstEmp.pid AND firstEmp.departmentPid = firstDep.pid AND appr.secondApprovalEmployeePid = secondEmp.pid AND secondEmp.departmentPid = secondDep.pid AND appr.categorySmallPid = catSmall.pid AND catSmall.categoryMediumPid = catMedium.pid AND catMedium.categoryLargePid = catLarge.pid AND appr.drafterEmployeePid = |=EMPLOYEE_PID=|;"
+                            .replace("|=EMPLOYEE_PID=|", String.valueOf(employee.getPid()));
+                    System.out.println("READ BY EMPLOYEE QUERY : " + readQuery);
+                    try (ResultSet resultSet = statement.executeQuery(readQuery)) {
+                        while (resultSet.next()) {
+                            result.add(new Approval(resultSet, "appr_", "catSmall_", "catMedium_", "catLarge_", "drafterEmp_", "drafterDep_", "firstEmp_", "firstDep_", "secondEmp_", "secondDep_"));
+                        }
+                    }
+                    return result;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
     public List<Approval> readWaitByEmployee(Employee employee) {
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
