@@ -27,6 +27,11 @@ public class ApprovalControllerApi {
         approvalService.create(customUserDetails.getEmployee(), approvalDtoCreate);
     }
 
+    @GetMapping("/approval")
+    public List<ApprovalDtoRead> readByEmployee(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        return approvalService.readByEmployee(customUserDetails.getEmployee());
+    }
+
     @GetMapping("/approval/wait")
     public List<ApprovalDtoRead> readWait(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         return approvalService.readWaitByEmployee(customUserDetails.getEmployee());
