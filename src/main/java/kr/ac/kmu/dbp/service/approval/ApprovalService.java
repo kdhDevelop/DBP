@@ -10,5 +10,6 @@ import java.util.List;
 public interface ApprovalService {
     public void create(Employee employee, ApprovalDtoCreate approvalDtoCreate);
     public void update(Employee employee, ApprovalDtoUpdate approvalDtoUpdate, String state);
+    public List<ApprovalDtoRead> readByEmployee(Employee employee);
     public List<ApprovalDtoRead> readWaitByEmployee(Employee employee);
 }
