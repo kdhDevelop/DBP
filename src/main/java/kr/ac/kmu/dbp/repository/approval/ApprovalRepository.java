@@ -11,4 +11,6 @@ public interface ApprovalRepository {
     public void updateSecondApproval(Approval approval);
     public List<Approval> readByEmployee(Employee employee);
     public List<Approval> readWaitByEmployee(Employee employee);
+    public List<Approval> readByFirstApprovalEmployee(Employee employee);
+    public List<Approval> readBySecondApprovalEmployee(Employee employee);
 }

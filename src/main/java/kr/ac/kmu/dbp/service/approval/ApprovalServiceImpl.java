@@ -83,9 +83,17 @@ public class ApprovalServiceImpl implements ApprovalService {
     @Override
     public List<ApprovalDtoRead> readWaitByEmployee(Employee employee) {
         List<ApprovalDtoRead> result = new ArrayList<>();
-        List<Approval> approvalList = approvalRepository.readWaitByEmployee(employee);
-        for (Approval approval : approvalList) {
-            result.add(new ApprovalDtoRead(approval));
+        List<Approval> approvalFirstList = approvalRepository.readByFirstApprovalEmployee(employee);
+        for (Approval approval : approvalFirstList) {
+            if (approval.getFirstApprovalDateTime() == null) {
+                result.add(new ApprovalDtoRead(approval));
+            }
+        }
+        List<Approval> approvalSecondList = approvalRepository.readBySecondApprovalEmployee(employee);
+        for (Approval approval : approvalSecondList) {
+            if (approval.isFirstApproval() && approval.getSecondApprovalDateTime() == null) {
+                result.add(new ApprovalDtoRead(approval));
+            }
         }
         return result;
     }
