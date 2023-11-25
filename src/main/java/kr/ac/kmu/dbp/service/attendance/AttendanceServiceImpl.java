@@ -24,18 +24,16 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public void create(Employee creator, Employee target, AttendanceDtoCreate attendanceDtoCreate) {
-        if (creator.getRole() == Role.부서장 || creator.getRole() == Role.사장 || creator.getPid() == target.getPid()) {
-            Attendance attendance = Attendance.builder()
-                    .employee(target)
-                    .attendanceDate(attendanceDtoCreate.getAttendanceDate())
-                    .dayOfWeek(DayOfWeek.valueOf(attendanceDtoCreate.getDayOfWeek()))
-                    .startTime(attendanceDtoCreate.getStartTime())
-                    .endTime(attendanceDtoCreate.getEndTime())
-                    .wage(target.getWage())
-                    .build();
-            attendanceRepository.create(attendance);
-        }
+    public void create(Employee employee, AttendanceDtoCreate attendanceDtoCreate) {
+        Attendance attendance = Attendance.builder()
+                .employee(employee)
+                .attendanceDate(attendanceDtoCreate.getAttendanceDate())
+                .dayOfWeek(DayOfWeek.valueOf(attendanceDtoCreate.getDayOfWeek()))
+                .startTime(attendanceDtoCreate.getStartTime())
+                .endTime(attendanceDtoCreate.getEndTime())
+                .wage(employee.getWage())
+                .build();
+        attendanceRepository.create(attendance);
     }
 
     @Override

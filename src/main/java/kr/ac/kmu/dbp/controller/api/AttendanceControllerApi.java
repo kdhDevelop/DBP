@@ -24,7 +24,7 @@ public class AttendanceControllerApi {
 
     @PostMapping("/attendance")
     public void create(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody AttendanceDtoCreate attendanceDtoCreate) {
-        attendanceService.create(customUserDetails.getEmployee(), customUserDetails.getEmployee(), attendanceDtoCreate);
+        attendanceService.create(customUserDetails.getEmployee(), attendanceDtoCreate);
     }
 
     @GetMapping("/attendance")

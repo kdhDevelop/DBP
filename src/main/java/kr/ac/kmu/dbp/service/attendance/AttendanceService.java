@@ -7,6 +7,6 @@ import kr.ac.kmu.dbp.entity.employee.Employee;
 import java.util.List;
 
 public interface AttendanceService {
-    public void create(Employee creator, Employee target, AttendanceDtoCreate attendanceDtoCreate);
+    public void create(Employee employee, AttendanceDtoCreate attendanceDtoCreate);
     public List<AttendanceDtoRead> readByEmployee(Employee reader, Employee target);
 }

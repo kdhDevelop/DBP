@@ -7,7 +7,6 @@ import java.sql.Time;
 
 @Getter
 public class AttendanceDtoCreate {
-    private int employeePid;
     private Date attendanceDate;
     private String dayOfWeek;
     private Time startTime;
