@@ -128,4 +128,9 @@ public class CategorySmallServiceImpl implements CategorySmallService {
 
         return result;
     }
+
+    @Override
+    public CategorySmallDtoRead readByPid(int pid) {
+        return new CategorySmallDtoRead(categorySmallRepository.readByPid(pid));
+    }
 }
