@@ -23,4 +23,5 @@ public interface EmployeeService {
     public void create(EmployeeDtoCreate employeeDtoCreate);
 
     public void update(int pid, EmployeeDtoUpdate employeeDtoUpdate);
+    public void updateOthers(Employee employee, int targetEmployeePid, EmployeeDtoUpdate employeeDtoUpdate);
 }

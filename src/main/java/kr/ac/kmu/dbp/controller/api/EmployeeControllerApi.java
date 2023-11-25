@@ -37,6 +37,11 @@ public class EmployeeControllerApi {
         employeeService.update(customUserDetails.getEmployee().getPid(), employeeDtoUpdate);
     }
 
+    @PutMapping(value = "/employee", params = "employeePid")
+    public void updateOthers(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestParam String employeePid, @RequestBody EmployeeDtoUpdate employeeDtoUpdate) {
+        employeeService.updateOthers(customUserDetails.getEmployee(), Integer.parseInt(employeePid), employeeDtoUpdate);
+    }
+
     @GetMapping("/employee/all")
     public List<Integer> readAllAccount() {
         return employeeService.readAllAccount();

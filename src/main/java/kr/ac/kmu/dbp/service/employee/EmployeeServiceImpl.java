@@ -190,4 +190,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         employeeRepository.update(employee);
     }
+
+    @Override
+    public void updateOthers(Employee manager, int targetEmployeePid, EmployeeDtoUpdate employeeDtoUpdate) {
+        if (manager.getRole() == Role.부서장 || manager.getRole() == Role.사장) {
+            Employee employee = new Employee(employeeDtoUpdate);
+            employee.setPid(targetEmployeePid);
+            employee.setDepartment(departmentRepository.readByPid(employeeDtoUpdate.getDepartmentPid()));
+
+            employeeRepository.update(employee);
+        } else {
+            throw new RuntimeException();
+        }
+    }
 }
