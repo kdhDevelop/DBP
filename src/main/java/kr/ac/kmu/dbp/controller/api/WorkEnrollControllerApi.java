@@ -43,4 +43,14 @@ public class WorkEnrollControllerApi {
     public List<WorkEnrollDtoRead> readAll(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable String date) throws ParseException {
         return workEnrollService.readAll(customUserDetails.getEmployee(), Date.valueOf(date));
     }
+
+    @GetMapping(value = "/work/search", params = {"date", "categorySmallPid"})
+    public List<WorkEnrollDtoRead> searchByDateAndCategorySmallPid(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestParam String date, @RequestParam String categorySmallPid) {
+        return workEnrollService.searchByDateAndCategorySmallPid(customUserDetails.getEmployee(), Date.valueOf(date), Integer.parseInt(categorySmallPid));
+    }
+
+    @GetMapping(value = "/work/search", params = "employeePid")
+    public List<WorkEnrollDtoRead> searchByEmployeePid(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestParam String employeePid) {
+        return workEnrollService.searchByEmployeePid(customUserDetails.getEmployee(), Integer.parseInt(employeePid));
+    }
 }

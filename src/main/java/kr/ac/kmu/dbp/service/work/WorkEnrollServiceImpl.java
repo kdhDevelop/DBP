@@ -4,7 +4,10 @@ import kr.ac.kmu.dbp.dto.work.WorkEnrollDtoCreate;
 import kr.ac.kmu.dbp.dto.work.WorkEnrollDtoRead;
 import kr.ac.kmu.dbp.dto.work.WorkEnrollDtoUpdate;
 import kr.ac.kmu.dbp.entity.employee.Employee;
+import kr.ac.kmu.dbp.entity.employee.Role;
 import kr.ac.kmu.dbp.entity.work.WorkEnroll;
+import kr.ac.kmu.dbp.repository.employee.EmployeeDataBaseRepository;
+import kr.ac.kmu.dbp.repository.employee.EmployeeRepository;
 import kr.ac.kmu.dbp.repository.work.WorkEnrollDataBaseRepository;
 import kr.ac.kmu.dbp.repository.work.WorkEnrollRepository;
 import kr.ac.kmu.dbp.repository.work.category.CategorySmallDataBaseRepository;
@@ -21,11 +24,13 @@ import java.util.List;
 public class WorkEnrollServiceImpl implements WorkEnrollService {
     private final WorkEnrollRepository workEnrollRepository;
     private final CategorySmallRepository categorySmallRepository;
+    private final EmployeeRepository employeeRepository;
 
     @Autowired
-    public WorkEnrollServiceImpl(WorkEnrollDataBaseRepository workEnrollDataBaseRepository, CategorySmallDataBaseRepository categorySmallDataBaseRepository) {
+    public WorkEnrollServiceImpl(WorkEnrollDataBaseRepository workEnrollDataBaseRepository, CategorySmallDataBaseRepository categorySmallDataBaseRepository, EmployeeDataBaseRepository employeeDataBaseRepository) {
         this.workEnrollRepository = workEnrollDataBaseRepository;
         this.categorySmallRepository = categorySmallDataBaseRepository;
+        this.employeeRepository = employeeDataBaseRepository;
     }
 
 
@@ -127,5 +132,33 @@ public class WorkEnrollServiceImpl implements WorkEnrollService {
         }
 
         return result;
+    }
+
+    @Override
+    public List<WorkEnrollDtoRead> searchByDateAndCategorySmallPid(Employee lookUpEmployee, Date date, int categorySmallPid) {
+        if (lookUpEmployee.getRole() == Role.부서장 || lookUpEmployee.getRole() == Role.사장) {
+            List<WorkEnrollDtoRead> result = new ArrayList<>();
+            List<WorkEnroll> workEnrollList = workEnrollRepository.readByDateAndCategorySmall(date, categorySmallRepository.readByPid(categorySmallPid));
+            for (WorkEnroll workEnroll : workEnrollList) {
+                result.add(new WorkEnrollDtoRead(workEnroll));
+            }
+            return result;
+        } else {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public List<WorkEnrollDtoRead> searchByEmployeePid(Employee lookUpEmployee, int employeePid) {
+        if (lookUpEmployee.getRole() == Role.부서장 || lookUpEmployee.getRole() == Role.사장) {
+            List<WorkEnrollDtoRead> result = new ArrayList<>();
+            List<WorkEnroll> workEnrollList = workEnrollRepository.readByEmployee(employeeRepository.readByPid(employeePid));
+            for (WorkEnroll workEnroll : workEnrollList) {
+                result.add(new WorkEnrollDtoRead(workEnroll));
+            }
+            return result;
+        } else {
+            throw new RuntimeException();
+        }
     }
 }
