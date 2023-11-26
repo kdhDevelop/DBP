@@ -8,4 +8,5 @@ import java.util.List;
 public interface AttendanceRepository {
     public void create(Attendance attendance);
     public List<Attendance> readByEmployee(Employee employee);
+    public boolean checkExistByEmployeeAndAttendanceDate(Attendance attendance);
 }
