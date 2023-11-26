@@ -102,4 +102,19 @@ public class AttendanceServiceImpl implements AttendanceService {
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public List<AttendanceDtoRead> readByEmployeeAndYearAndMonth(Employee employee, int year, int month) {
+        List<AttendanceDtoRead> result = new ArrayList<>();
+
+        LocalDate startDate = LocalDate.of(year, month, 15);
+        LocalDate endDate = startDate.plusMonths(1).minusDays(1);
+        List<Attendance> attendanceList = attendanceRepository.readByEmployeeAndBetweenAttendanceDate(employee, Date.valueOf(startDate), Date.valueOf(endDate));
+
+        for (Attendance attendance : attendanceList) {
+            result.add(new AttendanceDtoRead(attendance));
+        }
+
+        return result;
+    }
 }
