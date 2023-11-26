@@ -68,4 +68,24 @@ public class AttendanceDataBaseRepository extends Table implements AttendanceRep
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public boolean checkExistByEmployeeAndAttendanceDate(Attendance attendance) {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    String checkQuery = "SELECT * FROM attendance WHERE employeePid = |=EMPLOYEE_PID=| AND attendanceDate = '|=ATTENDANCE_DATE=|';"
+                            .replace("|=EMPLOYEE_PID=|", String.valueOf(attendance.getEmployee().getPid()))
+                            .replace("|=ATTENDANCE_DATE=|", attendance.getAttendanceDate().toString());
+
+                    System.out.println("CHECK EXIST ATTENDANCE QUERY : " + checkQuery);
+                    try (ResultSet resultSet = statement.executeQuery(checkQuery)) {
+                        return resultSet.next();
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
 }
