@@ -28,7 +28,7 @@ public class AttendanceControllerApi {
     }
 
     @GetMapping("/attendance")
-    public List<AttendanceDtoRead> readAll(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        return attendanceService.readByEmployee(customUserDetails.getEmployee(), customUserDetails.getEmployee());
+    public List<AttendanceDtoRead> readByYearAndMonth(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestParam String year, @RequestParam String month) {
+        return attendanceService.readByEmployeeAndYearAndMonth(customUserDetails.getEmployee(), Integer.parseInt(year), Integer.parseInt(month));
     }
 }
