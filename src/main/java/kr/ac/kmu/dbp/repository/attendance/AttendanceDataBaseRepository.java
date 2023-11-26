@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -82,6 +83,30 @@ public class AttendanceDataBaseRepository extends Table implements AttendanceRep
                     try (ResultSet resultSet = statement.executeQuery(checkQuery)) {
                         return resultSet.next();
                     }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public List<Attendance> readByEmployeeAndBetweenAttendanceDate(Employee employee, Date startDate, Date endDate) {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    List<Attendance> result = new ArrayList<>();
+                    String readQuery = "SELECT atte.attendanceDate as atte_attendanceDate, atte.dayOfWeek as atte_dayOfWeek, atte.startTime as atte_startTime, atte.endTime as atte_endTime,  atte.wage as atte_wage, emp.pid as emp_pid, emp.account as emp_account, emp.password as emp_password, emp.name as emp_name, emp.gender as emp_gender, emp.birthYear as emp_birthYear, emp.wage as emp_wage, emp.residentRegistrationNumber as emp_residentRegistrationNumber, emp.phoneNumber as emp_phoneNumber, emp.zipCode as emp_zipCode, emp.address1 as emp_address1, emp.address2 as emp_address2, emp.role as emp_role, emp.rank as emp_rank, dep.pid as dep_pid, dep.name as dep_name FROM  attendance as atte, employee as emp, department as dep WHERE atte.employeePid = emp.pid AND emp.departmentPid = dep.pid AND emp.pid = |=EMPLOYEE_PID=| AND attendanceDate BETWEEN '|=START_DATE=|' AND '|=END_DATE=|';"
+                            .replace("|=EMPLOYEE_PID=|", String.valueOf(employee.getPid()))
+                            .replace("|=START_DATE=|", startDate.toString())
+                            .replace("|=END_DATE=|", endDate.toString());
+                    System.out.println("READ QUERY : " + readQuery);
+                    try (ResultSet resultSet = statement.executeQuery(readQuery)) {
+                        while (resultSet.next()) {
+                            result.add(new Attendance(resultSet, "atte_", "emp_", "dep_"));
+                        }
+                    }
+                    return result;
                 }
             }
         } catch (SQLException e) {
