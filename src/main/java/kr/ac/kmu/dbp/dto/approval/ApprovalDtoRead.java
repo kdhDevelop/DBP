@@ -45,7 +45,7 @@ public class ApprovalDtoRead {
         this.firstApprovalDateTime = approval.getFirstApprovalDateTime();
         this.firstApprovalNote = approval.getFirstApprovalNote();
 
-        this.secondApprovalEmployeePid = approval.getFirstApprovalEmployee().getPid();
+        this.secondApprovalEmployeePid = approval.getSecondApprovalEmployee().getPid();
         this.secondApproval = approval.isSecondApproval();
         this.secondApprovalDateTime = approval.getSecondApprovalDateTime();
         this.secondApprovalNote = approval.getSecondApprovalNote();
