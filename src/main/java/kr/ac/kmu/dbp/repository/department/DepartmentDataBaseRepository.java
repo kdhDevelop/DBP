@@ -48,8 +48,9 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
-                    String findQuery = "SELECT dep.pid as dep_pid, dep.name as dep_name FROM department as dep WHERE pid = '|=PID=|';"
+                    String findQuery = "SELECT dep.pid as dep_pid, dep.name as dep_name FROM department as dep WHERE pid = |=PID=|;"
                             .replace("|=PID=|", String.valueOf(pid));
+                    System.out.println("READ BY PID QUERY : " + findQuery);
                     try (ResultSet resultSet = statement.executeQuery(findQuery)) {
                         if (resultSet.next()) {
                             return new Department(resultSet, "dep_");
