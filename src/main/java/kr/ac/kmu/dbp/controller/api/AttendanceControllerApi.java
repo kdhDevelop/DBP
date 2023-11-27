@@ -39,4 +39,9 @@ public class AttendanceControllerApi {
         return attendanceService.calculateWorkSalaryByEmployeeAndYearAndMonth(customUserDetails.getEmployee(), Integer.parseInt(year), Integer.parseInt(month), new AttendanceWageMultiple(Double.parseDouble(overWorkMultiple), Double.parseDouble(nightWorkMultiple), Double.parseDouble(holidayWorkMultiple)));
     }
 
+    @GetMapping("/attendance/salary/all")
+    public List<AttendanceWorkSalaryDtoRead> calculateAllByYearAndMonthAndMultiple(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestParam String year, @RequestParam String month, @RequestParam String overWorkMultiple, @RequestParam String nightWorkMultiple, @RequestParam String holidayWorkMultiple) {
+        return attendanceService.calculateAllWorkSalaryByYearAndMonth(customUserDetails.getEmployee(), Integer.parseInt(year), Integer.parseInt(month), new AttendanceWageMultiple(Double.parseDouble(overWorkMultiple), Double.parseDouble(nightWorkMultiple), Double.parseDouble(holidayWorkMultiple)));
+    }
+
 }
