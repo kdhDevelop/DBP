@@ -10,4 +10,5 @@ public interface AttendanceService {
     public List<AttendanceDtoRead> readByEmployee(Employee reader, Employee target);
     public List<AttendanceDtoRead> readByEmployeeAndYearAndMonth(Employee employee, int year, int month);
     public AttendanceWorkSalaryDtoRead calculateWorkSalaryByEmployeeAndYearAndMonth(Employee employee, int year, int month, AttendanceWageMultiple attendanceWageMultiple);
+    public List<AttendanceWorkSalaryDtoRead> calculateAllWorkSalaryByYearAndMonth(Employee employee, int year, int month, AttendanceWageMultiple attendanceWageMultiple);
 }
