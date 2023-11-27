@@ -45,10 +45,6 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
 
     @Override
     public Department readByPid(int pid) {
-        if (pid < 3) {
-            throw new RuntimeException();
-        }
-
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
