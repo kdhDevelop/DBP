@@ -48,7 +48,7 @@ public class Approval {
         this.firstApprovalDateTime = resultSet.getTimestamp(approvalPrefix + "firstApprovalDateTime");
         this.firstApprovalNote = resultSet.getString(approvalPrefix + "firstApprovalNote");
 
-        this.firstApprovalEmployee = new Employee(resultSet, secondApprovalEmployeePrefix, secondDepartmentPrefix);
+        this.secondApprovalEmployee = new Employee(resultSet, secondApprovalEmployeePrefix, secondDepartmentPrefix);
         this.secondApproval = resultSet.getBoolean(approvalPrefix + "secondApproval");
         this.secondApprovalDateTime = resultSet.getTimestamp(approvalPrefix + "secondApprovalDateTime");
         this.secondApprovalNote = resultSet.getString(approvalPrefix + "secondApprovalNote");
