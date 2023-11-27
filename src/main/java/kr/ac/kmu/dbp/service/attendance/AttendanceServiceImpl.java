@@ -212,6 +212,22 @@ public class AttendanceServiceImpl implements AttendanceService {
                 .attendanceSalaryPeeDtoRead(taxCalculator(totalSalary))
                 .build();
     }
+
+    @Override
+    public List<AttendanceWorkSalaryDtoRead> calculateAllWorkSalaryByYearAndMonth(Employee employee, int year, int month, AttendanceWageMultiple attendanceWageMultiple) {
+        if (employee.getRole() == Role.부서장 || employee.getRole() == Role.사장) {
+            List<Employee> employeeList = employeeRepository.readAll();
+
+            List<AttendanceWorkSalaryDtoRead> result = new ArrayList<>();
+            for (Employee currEmployee : employeeList) {
+                result.add(calculateWorkSalaryByEmployeeAndYearAndMonth(currEmployee, year, month, attendanceWageMultiple));
+            }
+            return result;
+        } else {
+            throw new RuntimeException();
+        }
+    }
+
     public static AttendanceSalaryPeeDtoRead taxCalculator(int input_Tax) {
         //1. 국민 연금 공제
         //총 월급의 9%
