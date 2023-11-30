@@ -203,4 +203,13 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public void deleteOthers(Employee manager, int targetEmployeePid) {
+        if (manager.getRole() == Role.부서장 || manager.getRole() == Role.사장) {
+            employeeRepository.delete(employeeRepository.readByPid(targetEmployeePid));
+        } else {
+            throw new RuntimeException();
+        }
+    }
 }
