@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CustomWebSocketHandler extends TextWebSocketHandler {
 
     enum FunctionType {
-        INIT, JOIN, LEAVE, CHAT
+        INIT, JOIN, LEAVE, CHAT, REFRESH
     }
 
     private final EmployeeService employeeService;
@@ -65,6 +65,8 @@ public class CustomWebSocketHandler extends TextWebSocketHandler {
                 break;
             case CHAT : chatFunction(session, message);
                 break;
+            case REFRESH : refreshFunction(session, message);
+                break;
         }
     }
 
@@ -108,5 +110,9 @@ public class CustomWebSocketHandler extends TextWebSocketHandler {
             WebSocketSession session = employeeSessionList.get(employee);
             session.sendMessage(textMessage);
         }
+    }
+
+    private void refreshFunction(WebSocketSession webSocketSession, TextMessage textMessage) throws IOException {
+        webSocketSession.sendMessage(textMessage);
     }
 }
