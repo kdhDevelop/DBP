@@ -80,6 +80,7 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
                 try (Statement statement = connection.createStatement()) {
                     String findQuery = "SELECT emp.pid as emp_pid, emp.account as emp_account, emp.password as emp_password, emp.name as emp_name, emp.gender as emp_gender, emp.birthYear as emp_birthYear, emp.wage as emp_wage, emp.residentRegistrationNumber as emp_residentRegistrationNumber, emp.phoneNumber as emp_phoneNumber, emp.zipCode as emp_zipCode, emp.address1 as emp_address1, emp.address2 as emp_address2, emp.role as emp_role, emp.rank as emp_rank, dep.pid as dep_pid, dep.name as dep_name FROM employee as emp, department as dep WHERE emp.departmentPid = dep.pid AND emp.pid = '|=PID=|';"
                             .replace("|=PID=|", String.valueOf(pid));
+                    System.out.println("READ EMPLOYEE QUERY : " + findQuery);
                     try (ResultSet resultSet = statement.executeQuery(findQuery)) {
                         if (resultSet.next()) {
                             return new Employee(resultSet, "emp_", "dep_");
@@ -217,6 +218,38 @@ public class EmployeeDataBaseRepository extends Table implements EmployeeReposit
                             .replace("|=DEPARTMENT_PID=|", String.valueOf(employee.getDepartment().getPid()))
                             .replace("|=PID=|", String.valueOf(employee.getPid()));
                     statement.executeUpdate(updateQuery);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public void delete(Employee employee) {
+        try {
+            try (Connection connection = dataBaseConnection.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    String deleteEmployeeQuery = "DELETE FROM employee WHERE pid = |=PID=|;"
+                            .replace("|=PID=|", String.valueOf(employee.getPid()));
+                    System.out.println("DELETE EMPLOYEE QUERY : " + deleteEmployeeQuery);
+                    statement.executeUpdate(deleteEmployeeQuery);
+                    String deleteApprovalQuery = "DELETE FROM approval WHERE drafterEmployeePid = |=PID=| OR firstApprovalEmployeePid = |=PID=| OR secondApprovalEmployeePid = |=PID=|;"
+                            .replace("|=PID=|", String.valueOf(employee.getPid()));
+                    System.out.println("DELETE APPROVAL QUERY : " + deleteApprovalQuery);
+                    statement.executeUpdate(deleteApprovalQuery);
+                    String attendanceDeleteQuery = "DELETE FROM attendance WHERE employeePid = |=PID=|;"
+                            .replace("|=PID=|", String.valueOf(employee.getPid()));
+                    System.out.println("DELETE ATTENDANCE QUERY : " + deleteApprovalQuery);
+                    statement.executeUpdate(attendanceDeleteQuery);
+                    String deleteMailQuery = "DELETE FROM mail WHERE senderPid = |=PID=| OR receiverPid = |=PID=|;"
+                            .replace("|=PID=|", String.valueOf(employee.getPid()));
+                    System.out.println("DELETE MAIL QUERY : " + deleteMailQuery);
+                    statement.executeUpdate(deleteMailQuery);
+                    String deleteWorkEnrollQuery = "DELETE FROM workEnroll WHERE employeePid = |=PID=|;"
+                            .replace("|=PID=|", String.valueOf(employee.getPid()));
+                    System.out.println("DELETE WORK ENROLL QUERY : " + deleteWorkEnrollQuery);
+                    statement.executeUpdate(deleteWorkEnrollQuery);
                 }
             }
         } catch (SQLException e) {
