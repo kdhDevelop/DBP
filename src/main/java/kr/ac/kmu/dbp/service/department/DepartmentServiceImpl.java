@@ -19,7 +19,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     public DepartmentServiceImpl(DepartmentDataBaseRepository departmentDataBaseRepository) {
         this.departmentRepository = departmentDataBaseRepository;
 
-        init();
+        //init();
     }
 
     private void init() {

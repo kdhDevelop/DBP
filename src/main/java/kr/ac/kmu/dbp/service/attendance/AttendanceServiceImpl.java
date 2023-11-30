@@ -30,7 +30,7 @@ public class AttendanceServiceImpl implements AttendanceService {
         this.attendanceRepository = attendanceDataBaseRepository;
         this.employeeRepository = employeeDataBaseRepository;
 
-        init();
+        //init();
     }
 
     private void init() {

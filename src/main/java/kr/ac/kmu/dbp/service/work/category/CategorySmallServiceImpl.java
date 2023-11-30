@@ -27,7 +27,7 @@ public class CategorySmallServiceImpl implements CategorySmallService {
         this.categorySmallRepository = categorySmallDataBaseRepository;
         this.categoryMediumRepository = categoryMediumDataBaseRepository;
 
-        init();
+        //init();
     }
 
 

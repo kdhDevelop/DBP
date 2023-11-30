@@ -27,7 +27,7 @@ public class CategoryMediumServiceImpl implements CategoryMediumService {
         this.categoryMediumRepository = categoryMediumDataBaseRepository;
         this.categoryLargeRepository = categoryLargeDataBaseRepository;
 
-        init();
+        //init();
     }
 
     private void init() {

@@ -32,7 +32,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.departmentRepository = departmentDataBaseRepository;
         this.passwordEncoder = passwordEncoder;
 
-        init();
+        //init();
     }
 
     private void init() {

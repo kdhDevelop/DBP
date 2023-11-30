@@ -22,7 +22,7 @@ public class CategoryLargeServiceImpl implements CategoryLargeService {
     public CategoryLargeServiceImpl(CategoryLargeDataBaseRepository categoryLargeDataBaseRepository) {
         this.categoryLargeRepository = categoryLargeDataBaseRepository;
 
-        init();
+        //init();
     }
 
     private void init() {

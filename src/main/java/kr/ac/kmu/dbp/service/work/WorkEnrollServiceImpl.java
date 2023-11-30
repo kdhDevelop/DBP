@@ -6,6 +6,7 @@ import kr.ac.kmu.dbp.dto.work.WorkEnrollDtoUpdate;
 import kr.ac.kmu.dbp.entity.employee.Employee;
 import kr.ac.kmu.dbp.entity.employee.Role;
 import kr.ac.kmu.dbp.entity.work.WorkEnroll;
+import kr.ac.kmu.dbp.entity.work.category.CategorySmall;
 import kr.ac.kmu.dbp.repository.employee.EmployeeDataBaseRepository;
 import kr.ac.kmu.dbp.repository.employee.EmployeeRepository;
 import kr.ac.kmu.dbp.repository.work.WorkEnrollDataBaseRepository;
@@ -17,6 +18,9 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +35,31 @@ public class WorkEnrollServiceImpl implements WorkEnrollService {
         this.workEnrollRepository = workEnrollDataBaseRepository;
         this.categorySmallRepository = categorySmallDataBaseRepository;
         this.employeeRepository = employeeDataBaseRepository;
+
+        //init();
     }
 
+    private void init() {
+        int date = 0;
+        LocalDate startDate = LocalDate.of(2023, 10 ,15);
+        for (int T = 1 ; T < 11 ; T ++) {
+            LocalDate localDate = startDate.plusDays(date);
+            if (localDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
+                date++;
+                continue;
+            }
+
+            WorkEnroll workEnroll = WorkEnroll.builder()
+                    .employee(Employee.builder().pid(1).build())
+                    .workDate(Date.valueOf(localDate))
+                    .startWork(Time.valueOf(LocalTime.of(9, 0, 0)))
+                    .endWork(Time.valueOf(LocalTime.of(12, 0, 0)))
+                    .categorySmall(CategorySmall.builder().pid(T).build())
+                    .build();
+
+            workEnrollRepository.create(workEnroll);
+        }
+    }
 
     private boolean validationTime(WorkEnroll workEnroll) {
         Time startTimeNewWork = workEnroll.getStartWork();
