@@ -33,9 +33,9 @@ public class CategorySmallServiceImpl implements CategorySmallService {
 
     private void init() {
 
-        String[] 인사_정기 = new String[] {"근퇴 확인", "급여 중간 계산"};
+        String[] 인사_정기 = new String[] {"근퇴 확인", "급여 중간 계산", "급여 계산"};
         String[] 인사_단기 = new String[] {"사무실 청소"};
-        String[] 개발_정기 = new String[] {"일간 회의 진행", "개발"};
+        String[] 개발_정기 = new String[] {"일간 회의 진행", "개발", "점검"};
         String[] 개발_단기 = new String[] {"사무실 청소"};
         String[] 영업_정기 = new String[] {"고객사 방문", "영업 이익 중간 정산"};
         String[] 영업_단기 = new String[] {"사무실 청소"};
