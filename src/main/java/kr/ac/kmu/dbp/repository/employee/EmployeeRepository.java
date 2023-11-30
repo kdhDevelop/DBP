@@ -14,5 +14,6 @@ public interface EmployeeRepository {
     public List<Employee> readByName(String name);
     public List<Employee> readByDepartment(Department department);
     public void update(Employee employee);
+    public void delete(Employee employee);
     public boolean checkExistByResidentRegistrationNumber(String residentRegistrationNumber);
 }
