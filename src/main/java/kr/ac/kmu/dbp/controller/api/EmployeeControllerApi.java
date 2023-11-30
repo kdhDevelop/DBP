@@ -42,6 +42,11 @@ public class EmployeeControllerApi {
         employeeService.updateOthers(customUserDetails.getEmployee(), Integer.parseInt(employeePid), employeeDtoUpdate);
     }
 
+    @DeleteMapping(value = "/employee", params = "employeePid")
+    public void deleteOthers(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestParam String employeePid) {
+        employeeService.deleteOthers(customUserDetails.getEmployee(), Integer.parseInt(employeePid));
+    }
+
     @GetMapping("/employee/all")
     public List<Integer> readAllAccount() {
         return employeeService.readAllAccount();
