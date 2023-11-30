@@ -37,7 +37,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 
         Employee[] employees = new Employee[14];
         for (int T = 0 ; T < 13 ; T ++) {
-            employees[T] = employeeRepository.readByPid(T+1);
+            employees[T] = Employee.builder().pid(T).build();
         }
 
         LocalDate startDate = LocalDate.of(2023, 10, 15);
