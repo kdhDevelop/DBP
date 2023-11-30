@@ -99,27 +99,35 @@ public class WorkEnrollServiceImpl implements WorkEnrollService {
 
     @Override
     public void update(Employee employee, WorkEnrollDtoUpdate workEnrollDtoUpdate) {
-        WorkEnroll workEnroll = WorkEnroll.builder()
-                .pid(workEnrollDtoUpdate.getPid())
-                .employee(employee)
-                .workDate(workEnrollDtoUpdate.getWorkDate())
-                .categorySmall(categorySmallRepository.readByPid(workEnrollDtoUpdate.getPid()))
-                .startWork(workEnrollDtoUpdate.getStartWork())
-                .endWork(workEnrollDtoUpdate.getEndWork())
-                .build();
+        if (employee.getRole() == Role.사장 || employee.getRole() == Role.부서장) {
+            WorkEnroll workEnroll = WorkEnroll.builder()
+                    .pid(workEnrollDtoUpdate.getPid())
+                    .employee(employee)
+                    .workDate(workEnrollDtoUpdate.getWorkDate())
+                    .categorySmall(categorySmallRepository.readByPid(workEnrollDtoUpdate.getPid()))
+                    .startWork(workEnrollDtoUpdate.getStartWork())
+                    .endWork(workEnrollDtoUpdate.getEndWork())
+                    .build();
 
-        if (validationTime(workEnroll))
-            workEnrollRepository.update(workEnroll);
-        else
+            if (validationTime(workEnroll))
+                workEnrollRepository.update(workEnroll);
+            else
+                throw new RuntimeException();
+        } else {
             throw new RuntimeException();
+        }
     }
 
     @Override
     public void delete(Employee employee, int pid) {
-        WorkEnroll workEnroll = WorkEnroll.builder()
-                .pid(pid)
-                .build();
-        workEnrollRepository.delete(workEnroll);
+        if (employee.getRole() == Role.사장 || employee.getRole() == Role.부서장) {
+            WorkEnroll workEnroll = WorkEnroll.builder()
+                    .pid(pid)
+                    .build();
+            workEnrollRepository.delete(workEnroll);
+        } else {
+            throw new RuntimeException();
+        }
     }
 
     @Override
