@@ -196,6 +196,17 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (manager.getRole() == Role.부서장 || manager.getRole() == Role.사장) {
             Employee employee = new Employee(employeeDtoUpdate);
             employee.setPid(targetEmployeePid);
+
+            employee.setName(employeeDtoUpdate.getName());
+            employee.setGender(Gender.valueOf(employeeDtoUpdate.getGender()));
+            employee.setBirthYear(employeeDtoUpdate.getBirthYear());
+            employee.setWage(employeeDtoUpdate.getWage());
+            employee.setPhoneNumber(employeeDtoUpdate.getPhoneNumber());
+            employee.setZipCode(employeeDtoUpdate.getZipCode());
+            employee.setAddress1(employeeDtoUpdate.getAddress1());
+            employee.setAddress2(employeeDtoUpdate.getAddress2());
+            employee.setRole(Role.valueOf(employeeDtoUpdate.getRole()));
+            employee.setRank(Rank.valueOf(employeeDtoUpdate.getRank()));
             employee.setDepartment(departmentRepository.readByPid(employeeDtoUpdate.getDepartmentPid()));
 
             employeeRepository.update(employee);
