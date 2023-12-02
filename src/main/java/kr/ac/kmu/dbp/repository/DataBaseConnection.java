@@ -10,7 +10,7 @@ import java.sql.Connection;
 public class DataBaseConnection {
 
     private final String DB_IP = "192.168.11.194";
-    private final String DB_PORT = "13307";
+    private final String DB_PORT = "13306";
     private final String DB_ID = "root";
     private final String DB_PW = "s5532440";
     private final String DB_NAME = "WorkerManager";
