@@ -123,6 +123,7 @@ public class CategorySmallDataBaseRepository extends Table implements CategorySm
                 try (Statement statement = connection.createStatement()) {
                     String readQuery = "SELECT catSmall.pid as catSmall_pid, catSmall.name as catSmall_name, catMedium.pid as catMedium_pid, catMedium.name as catMedium_name, catLarge.pid as catLarge_pid, catLarge.name as catLarge_name FROM categorySmall as catSmall, categoryMedium as catMedium, categoryLarge as catLarge WHERE catSmall.categoryMediumPid = catMedium.pid AND catMedium.categoryLargePid  = catLarge.pid AND catSmall.pid = |=PID=|;"
                             .replace("|=PID=|", String.valueOf(pid));
+                    System.out.println("READ QUERY : " + readQuery);
                     try (ResultSet resultSet = statement.executeQuery(readQuery)) {
                         if (resultSet.next()) {
                             return new CategorySmall(resultSet, "catSmall_", "catMedium_", "catLarge_");

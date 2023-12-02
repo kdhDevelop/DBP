@@ -131,7 +131,7 @@ public class WorkEnrollServiceImpl implements WorkEnrollService {
                     .pid(workEnrollDtoUpdate.getPid())
                     .employee(employee)
                     .workDate(workEnrollDtoUpdate.getWorkDate())
-                    .categorySmall(categorySmallRepository.readByPid(workEnrollDtoUpdate.getPid()))
+                    .categorySmall(categorySmallRepository.readByPid(workEnrollDtoUpdate.getCategorySmallPid()))
                     .startWork(workEnrollDtoUpdate.getStartWork())
                     .endWork(workEnrollDtoUpdate.getEndWork())
                     .build();

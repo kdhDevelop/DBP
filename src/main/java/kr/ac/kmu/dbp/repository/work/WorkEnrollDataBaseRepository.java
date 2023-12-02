@@ -51,13 +51,14 @@ public class WorkEnrollDataBaseRepository extends Table implements WorkEnrollRep
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
-                    String createQuery = "UPDATE workEnroll SET workDate = '|=WORK_DATE=|' categorySmallPid = |=CATEGORY_SMALL_PID=|, startWork = '|=START_WORK=|', endWork = '|=END_WORK=|' WHERE pid = |=PID=|;"
+                    String updateQuery = "UPDATE workEnroll SET workDate = '|=WORK_DATE=|', categorySmallPid = |=CATEGORY_SMALL_PID=|, startWork = '|=START_WORK=|', endWork = '|=END_WORK=|' WHERE pid = |=PID=|;"
                             .replace("|=WORK_DATE=|", workEnroll.getWorkDate().toString())
                             .replace("|=CATEGORY_SMALL_PID=|", String.valueOf(workEnroll.getCategorySmall().getPid()))
                             .replace("|=START_WORK=|", workEnroll.getStartWork().toString())
                             .replace("|=END_WORK=|", workEnroll.getEndWork().toString())
                             .replace("|=PID=|", String.valueOf(workEnroll.getPid()));
-                    statement.executeUpdate(createQuery);
+                    System.out.println("UPDATE QUERY : " + updateQuery);
+                    statement.executeUpdate(updateQuery);
                 }
             }
         } catch (SQLException e) {
