@@ -21,7 +21,7 @@ public class MailDataBaseRepository extends Table implements MailRepository {
 
     @Override
     protected String getTableCreateQuery() {
-        return "CREATE TABLE mail ( pid int NOT NULL AUTO_INCREMENT, senderPid int, sendDate datetime, receiverPid int, receipt bool DEFAULT(0), receiptDate datetime, title varchar(100), content varchar(1000), PRIMARY KEY(pid) );";
+        return "CREATE TABLE mail ( pid int NOT NULL AUTO_INCREMENT, senderPid int, sendDate datetime, receiverPid int, receipt bool DEFAULT '0', receiptDate datetime, title varchar(100), content varchar(1000), PRIMARY KEY(pid) );";
     }
 
     @Override
