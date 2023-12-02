@@ -33,6 +33,7 @@ public class CategoryLargeDataBaseRepository extends Table implements CategoryLa
                 try (Statement statement = connection.createStatement()) {
                     String createQuery = "INSERT INTO categoryLarge (name, disable) VALUES ('|=NAME=|', 0);"
                             .replace("|=NAME=|", categoryLarge.getName());
+                    System.out.println("CREATE QUERY : " + createQuery);
                     statement.executeUpdate(createQuery);
                 }
             }
@@ -49,6 +50,7 @@ public class CategoryLargeDataBaseRepository extends Table implements CategoryLa
                     String updateQuery = "UPDATE categoryLarge SET name = '|=NAME=|' WHERE pid = |=PID=| ;"
                             .replace("|=NAME=|", categoryLarge.getName())
                             .replace("|=PID=|", String.valueOf(categoryLarge.getPid()));
+                    System.out.println("UPDATE QUERY : " + updateQuery);
                     statement.executeUpdate(updateQuery);
                 }
             }
@@ -64,6 +66,7 @@ public class CategoryLargeDataBaseRepository extends Table implements CategoryLa
                 try (Statement statement = connection.createStatement()) {
                     String deleteQuery = "UPDATE categoryLarge SET disable = 1 WHERE pid = |=PID=|"
                             .replace("|=PID=|", String.valueOf(categoryLarge.getPid()));
+                    System.out.println("DELETE QUERY : " + deleteQuery);
                     statement.executeUpdate(deleteQuery);
                 }
             }
@@ -78,6 +81,7 @@ public class CategoryLargeDataBaseRepository extends Table implements CategoryLa
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {
                     String readQuery = "SELECT cat.pid as cat_pid, cat.name as cat_name FROM categoryLarge as cat WHERE disable = 0;";
+                    System.out.println("READ QUERY : " + readQuery);
                     List<CategoryLarge> result = new ArrayList<>();
                     try (ResultSet resultSet = statement.executeQuery(readQuery)) {
                         while (resultSet.next()) {
@@ -99,6 +103,7 @@ public class CategoryLargeDataBaseRepository extends Table implements CategoryLa
                 try (Statement statement = connection.createStatement()) {
                     String readQuery = "SELECT cat.pid as cat_pid, cat.name as cat_name FROM categoryLarge as cat WHERE pid = |=PID=|;"
                             .replace("|=PID=|", String.valueOf(pid));
+                    System.out.println("READ QUERY : " + readQuery);
                     try (ResultSet resultSet = statement.executeQuery(readQuery)) {
                         if (resultSet.next()) {
                             return new CategoryLarge(resultSet, "cat_");

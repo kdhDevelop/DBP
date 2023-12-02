@@ -35,6 +35,7 @@ public class CategorySmallDataBaseRepository extends Table implements CategorySm
                     String createQuery = "INSERT INTO categorySmall (name, categoryMediumPid, disable) VALUES ('|=NAME=|', |=CATEGORY_MEDIUM_PID=|, 0);"
                             .replace("|=NAME=|", categorySmall.getName())
                             .replace("|=CATEGORY_MEDIUM_PID=|", String.valueOf(categorySmall.getCategoryMedium().getPid()));
+                    System.out.println("CREATE QUERY : " + createQuery);
                     statement.executeUpdate(createQuery);
                 }
             }
@@ -52,6 +53,7 @@ public class CategorySmallDataBaseRepository extends Table implements CategorySm
                             .replace("|=NAME=|", categorySmall.getName())
                             .replace("|=CATEGORY_MEDIUM_PID=|", String.valueOf(categorySmall.getCategoryMedium().getPid()))
                             .replace("|=PID=|", String.valueOf(categorySmall.getPid()));
+                    System.out.println("UPDATE QUERY : " + updateQuery);
                     statement.executeUpdate(updateQuery);
                 }
             }
@@ -67,6 +69,7 @@ public class CategorySmallDataBaseRepository extends Table implements CategorySm
                 try (Statement statement = connection.createStatement()) {
                     String deleteQuery = "UPDATE categorySmall SET disable = 1 WHERE pid = |=PID=|;"
                             .replace("|=PID=|", String.valueOf(categorySmall.getPid()));
+                    System.out.println("DELETE QUERY : " + deleteQuery);
                     statement.executeUpdate(deleteQuery);
                 }
             }
@@ -82,6 +85,7 @@ public class CategorySmallDataBaseRepository extends Table implements CategorySm
                 try (Statement statement = connection.createStatement()) {
                     List<CategorySmall> result = new ArrayList<>();
                     String readQuery = "SELECT catSmall.pid as catSmall_pid, catSmall.name as catSmall_name, catMedium.pid as catMedium_pid, catMedium.name as catMedium_name, catLarge.pid as catLarge_pid, catLarge.name as catLarge_name FROM categorySmall as catSmall, categoryMedium as catMedium, categoryLarge as catLarge WHERE catSmall.categoryMediumPid = catMedium.pid AND catMedium.categoryLargePid  = catLarge.pid AND catSmall.disable = 0;";
+                    System.out.println("READ QUERY : " + readQuery);
                     try (ResultSet resultSet = statement.executeQuery(readQuery)) {
                         while (resultSet.next()) {
                             result.add(new CategorySmall(resultSet, "catSmall_", "catMedium_", "catLarge_"));
@@ -103,6 +107,7 @@ public class CategorySmallDataBaseRepository extends Table implements CategorySm
                     List<CategorySmall> result = new ArrayList<>();
                     String readQuery = "SELECT catSmall.pid as catSmall_pid, catSmall.name as catSmall_name, catMedium.pid as catMedium_pid, catMedium.name as catMedium_name, catLarge.pid as catLarge_pid, catLarge.name as catLarge_name FROM categorySmall as catSmall, categoryMedium as catMedium, categoryLarge as catLarge WHERE catSmall.categoryMediumPid = catMedium.pid AND catMedium.categoryLargePid  = catLarge.pid AND catSmall.disable = 0 AND catMedium.pid = |=CATEGORY_MEDIUM_PID=|;"
                             .replace("|=CATEGORY_MEDIUM_PID=|", String.valueOf(categoryMedium.getPid()));
+                    System.out.println("READ QUERY : " + readQuery);
                     try (ResultSet resultSet = statement.executeQuery(readQuery)) {
                         while (resultSet.next()) {
                             result.add(new CategorySmall(resultSet, "catSmall_", "catMedium_", "catLarge_"));

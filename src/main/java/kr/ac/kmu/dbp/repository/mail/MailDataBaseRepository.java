@@ -36,7 +36,7 @@ public class MailDataBaseRepository extends Table implements MailRepository {
                             .replace("|=RECEIPT=|", "0")
                             .replace("|=TITLE=|", mail.getTitle())
                             .replace("|=CONTENT=|", mail.getContent());
-
+                    System.out.println("CREATE QUERY : " + createQuery);
                     statement.executeUpdate(createQuery);
                 }
             }
@@ -96,6 +96,7 @@ public class MailDataBaseRepository extends Table implements MailRepository {
                 try (Statement statement = connection.createStatement()) {
                     String readQuery = "SELECT  mail.pid as mail_pid, mail.sendDate as mail_sendDate, mail.receipt as mail_receipt, mail.receiptDate as mail_receiptDate, mail.title as mail_title, mail.content as mail_content, senderEmp.pid as senderEmp_pid, senderEmp.account as senderEmp_account, senderEmp.password as senderEmp_password, senderEmp.name as senderEmp_name, senderEmp.gender as senderEmp_gender, senderEmp.birthYear as senderEmp_birthYear, senderEmp.wage as senderEmp_wage, senderEmp.residentRegistrationNumber as senderEmp_residentRegistrationNumber, senderEmp.phoneNumber as senderEmp_phoneNumber, senderEmp.zipCode as senderEmp_zipCode, senderEmp.address1 as senderEmp_address1, senderEmp.address2 as senderEmp_address2, senderEmp.role as senderEmp_role, senderEmp.rank as senderEmp_rank, senderDep.pid as senderDep_pid, senderDep.name as senderDep_name, receiverEmp.pid as receiverEmp_pid, receiverEmp.account as receiverEmp_account, receiverEmp.password as receiverEmp_password, receiverEmp.name as receiverEmp_name, receiverEmp.gender as receiverEmp_gender, receiverEmp.birthYear as receiverEmp_birthYear, receiverEmp.wage as receiverEmp_wage, receiverEmp.residentRegistrationNumber as receiverEmp_residentRegistrationNumber, receiverEmp.phoneNumber as receiverEmp_phoneNumber, receiverEmp.zipCode as receiverEmp_zipCode, receiverEmp.address1 as receiverEmp_address1, receiverEmp.address2 as receiverEmp_address2, receiverEmp.role as receiverEmp_role, receiverEmp.rank as receiverEmp_rank, receiverDep.pid as receiverDep_pid, receiverDep.name as receiverDep_name FROM  employee as senderEmp, employee as receiverEmp, department as senderDep, department as receiverDep, mail as mail WHERE senderEmp.departmentPid = senderDep.pid AND senderEmp.pid = mail.senderPid AND receiverEmp.departmentPid = receiverDep.pid AND receiverEmp.pid = mail.receiverPid AND mail.pid = |=MAIL_PID=|;"
                             .replace("|=MAIL_PID=|", String.valueOf(pid));
+                    System.out.println("READ QUERY : " + readQuery);
                     try (ResultSet resultSet = statement.executeQuery(readQuery)) {
                         if (resultSet.next()) {
                             return new Mail(resultSet, "mail_", "senderEmp_", "senderDep_", "receiverEmp_", "receiverDep_");
@@ -118,6 +119,7 @@ public class MailDataBaseRepository extends Table implements MailRepository {
                     String updateQuery = "UPDATE mail SET receipt = 1, receiptDate = '|=DATE=|' WHERE pid = |=PID=|;"
                             .replace("|=DATE=|", new Timestamp(System.currentTimeMillis()).toString())
                             .replace("|=PID=|", String.valueOf(pid));
+                    System.out.println("UPDATE QUERY : " + updateQuery);
                     statement.executeUpdate(updateQuery);
                 }
             }
@@ -133,6 +135,7 @@ public class MailDataBaseRepository extends Table implements MailRepository {
                 try (Statement statement = connection.createStatement()) {
                     String readQuery = "SELECT COUNT(*) as count FROM mail WHERE receiverPid = |=PID=| AND receipt = 0;"
                             .replace("|=PID=|", String.valueOf(employee.getPid()));
+                    System.out.println("READ QUERY : " + readQuery);
                     try (ResultSet resultSet = statement.executeQuery(readQuery)) {
                         if (resultSet.next()) {
                             return resultSet.getInt("count") > 0;
@@ -166,6 +169,7 @@ public class MailDataBaseRepository extends Table implements MailRepository {
                                 .replace("|=SENDER_PID=|", String.valueOf(senderPid))
                                 .replace("|=TITLE=|", title)
                                 .replace("|=CONTENT=|", content);
+                    System.out.println("READ QUERY : " + readQuery);
                     try (ResultSet resultSet = statement.executeQuery(readQuery)) {
                         while (resultSet.next()) {
                             result.add(new Mail(resultSet, "mail_", "senderEmp_", "senderDep_", "receiverEmp_", "receiverDep_"));

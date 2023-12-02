@@ -35,6 +35,7 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
                     String createQuery = "INSERT INTO |=TABLE=| (name) VALUE ('|=NAME=|');"
                             .replace("|=TABLE=|", tableName)
                             .replace("|=NAME=|", department.getName());
+                    System.out.println("CREATE QUERY : " + createQuery);
                     statement.executeUpdate(createQuery);
                 }
             }
@@ -72,6 +73,7 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
                try (Statement statement = connection.createStatement()) {
                    String checkExistQuery = "SELECT * FROM department WHERE name = '|=NAME=|';"
                            .replace("|=NAME=|", name);
+                   System.out.println("CHECK EXIST QUERY : " + checkExistQuery);
                    try (ResultSet resultSet = statement.executeQuery(checkExistQuery)) {
                        return resultSet.next();
                    }
@@ -94,9 +96,11 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
                     String deleteQuery = "DELETE FROM department WHERE pid = |=DEPARTMENT_PID=|;"
                             .replace("|=DEPARTMENT_PID=|", String.valueOf(department.getPid()));
                     statement.executeUpdate(deleteQuery);
+                    System.out.println("DELETE QUERY : " + deleteQuery);
                     String updateQuery = "UPDATE employee SET departmentPid = 2 WHERE departmentPid = |=DEPARTMENT_PID=|;"
                             .replace("|=DEPARTMENT_PID=|", String.valueOf(department.getPid()));
                     statement.executeUpdate(updateQuery);
+                    System.out.println("UPDATE QUERY : " + updateQuery);
                 }
             }
         } catch (SQLException e) {
@@ -116,6 +120,7 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
                     String updateQuery = "UPDATE department SET name = '|=NAME=|' WHERE pid = |=PID=|"
                             .replace("|=NAME=|", department.getName())
                             .replace("|=PID=|", String.valueOf(department.getPid()));
+                    System.out.println("UPDATE QUERY : " + updateQuery);
                     statement.executeUpdate(updateQuery);
                 }
             }
@@ -131,6 +136,7 @@ public class DepartmentDataBaseRepository extends Table implements DepartmentRep
                 try (Statement statement = connection.createStatement()) {
                     List<Department> result = new ArrayList<>();
                     String readQuery = "SELECT dep.pid as dep_pid, dep.name as dep_name FROM department as dep WHERE pid > 2;";
+                    System.out.println("READ QUERY : " + readQuery);
                     try (ResultSet resultSet = statement.executeQuery(readQuery)) {
                         while (resultSet.next()) {
                             result.add(new Department(resultSet, "dep_"));

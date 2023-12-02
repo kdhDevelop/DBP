@@ -10,7 +10,6 @@ public abstract class Table {
     protected final String tableName;
     protected final DataBaseConnection dataBaseConnection;
 
-
     public Table(DataBaseConnection dataBaseConnection, String tableName) {
         this.tableName = tableName;
         this.dataBaseConnection = dataBaseConnection;
@@ -22,6 +21,7 @@ public abstract class Table {
         String existCheckQuery = "SHOW TABLES LIKE '|=TABLE=|'"
                 .replace("|=TABLE=|", tableName);
         String createQuery = getTableCreateQuery();
+        System.out.println("CREATE TABLE QUERY : " + createQuery);
         try {
             try (Connection connection = dataBaseConnection.getConnection()) {
                 try (Statement statement = connection.createStatement()) {

@@ -53,6 +53,7 @@ public class CategoryMediumDataBaseRepository extends Table implements CategoryM
                             .replace("|=NAME=|", categoryMedium.getName())
                             .replace("|=CATEGORY_LARGE_PID=|", String.valueOf(categoryMedium.getCategoryLarge().getPid()))
                             .replace("|=PID=|", String.valueOf(categoryMedium.getPid()));
+                    System.out.println("UPDATE QUERY : " + updateQuery);
                     statement.executeUpdate(updateQuery);
                 }
             }
@@ -68,6 +69,7 @@ public class CategoryMediumDataBaseRepository extends Table implements CategoryM
                 try (Statement statement = connection.createStatement()) {
                     String deleteQuery = "UPDATE categoryMedium SET disable = 1 WHERE pid = |=PID=|;"
                             .replace("|=PID=|", String.valueOf(categoryMedium.getPid()));
+                    System.out.println("DELETE QUERY : " + deleteQuery);
                     statement.executeUpdate(deleteQuery);
                 }
             }
@@ -84,6 +86,7 @@ public class CategoryMediumDataBaseRepository extends Table implements CategoryM
                 try (Statement statement = connection.createStatement()) {
                     List<CategoryMedium> result = new ArrayList<>();
                     String readQuery = "SELECT catMedium.pid as catMedium_pid, catMedium.name as catMedium_name, catLarge.pid as catLarge_pid, catLarge.name as catLarge_name FROM categoryLarge as catLarge, categoryMedium as catMedium WHERE catMedium.categoryLargePid = catLarge.pid AND catMedium.disable = 0;";
+                    System.out.println("READ QUERY : " + readQuery);
                     try (ResultSet resultSet = statement.executeQuery(readQuery)) {
                         while (resultSet.next()) {
                             result.add(new CategoryMedium(resultSet, "catMedium_", "catLarge_"));
@@ -105,6 +108,7 @@ public class CategoryMediumDataBaseRepository extends Table implements CategoryM
                     List<CategoryMedium> result = new ArrayList<>();
                     String readQuery = "SELECT catMedium.pid as catMedium_pid, catMedium.name as catMedium_name, catLarge.pid as catLarge_pid, catLarge.name as catLarge_name FROM categoryLarge as catLarge, categoryMedium as catMedium WHERE catMedium.categoryLargePid = catLarge.pid AND catMedium.disable = 0 AND catLarge.pid = |=CATEGORY_LARGE_PID=|;"
                             .replace("|=CATEGORY_LARGE_PID=|", String.valueOf(categoryLarge.getPid()));
+                    System.out.println("READ QUERY : " + readQuery);
                     try (ResultSet resultSet = statement.executeQuery(readQuery)) {
                         while (resultSet.next()) {
                             result.add(new CategoryMedium(resultSet, "catMedium_", "catLarge_"));
@@ -125,6 +129,7 @@ public class CategoryMediumDataBaseRepository extends Table implements CategoryM
                 try (Statement statement = connection.createStatement()) {
                     String readQuery = "SELECT catMedium.pid as catMedium_pid, catMedium.name as catMedium_name, catLarge.pid as catLarge_pid, catLarge.name as catLarge_name FROM categoryLarge as catLarge, categoryMedium as catMedium WHERE catMedium.categoryLargePid = catLarge.pid AND catMedium.pid = |=PID=|;"
                             .replace("|=PID=|", String.valueOf(pid));
+                    System.out.println("READ QUERY : " + readQuery);
                     try (ResultSet resultSet = statement.executeQuery(readQuery)) {
                         if (resultSet.next()) {
                             return new CategoryMedium(resultSet, "catMedium_", "catLarge_");
