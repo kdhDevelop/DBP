@@ -69,7 +69,7 @@ public class MailServiceImpl implements MailService {
     @Override
     public MailDtoRead readByPid(Employee employee, int pid) {
         Mail mail = mailRepository.readByPid(pid);
-        if (mail.getReceiver().getPid() == employee.getPid()) {
+        if (mail.getReceiver().getPid() == employee.getPid() || mail.getSender().getPid() == employee.getPid()) {
             if (!mail.isReceipt()) {
                 mailRepository.updateReceipt(pid);
             }
