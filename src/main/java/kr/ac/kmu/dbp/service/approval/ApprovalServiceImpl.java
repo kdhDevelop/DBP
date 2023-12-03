@@ -14,6 +14,7 @@ import kr.ac.kmu.dbp.repository.work.category.CategorySmallRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class ApprovalServiceImpl implements ApprovalService {
                     .pid(approvalDtoUpdate.getPid())
                     .firstApprovalEmployee(employee)
                     .firstApproval(approvalDtoUpdate.isApproval())
-                    .firstApprovalDateTime(approvalDtoUpdate.getApprovalTime())
+                    .firstApprovalDateTime(Timestamp.valueOf(approvalDtoUpdate.getApprovalTime()))
                     .firstApprovalNote(approvalDtoUpdate.getApprovalNote())
                     .build();
             approvalRepository.updateFistApproval(approval);
@@ -61,7 +62,7 @@ public class ApprovalServiceImpl implements ApprovalService {
                     .pid(approvalDtoUpdate.getPid())
                     .secondApprovalEmployee(employee)
                     .secondApproval(approvalDtoUpdate.isApproval())
-                    .secondApprovalDateTime(approvalDtoUpdate.getApprovalTime())
+                    .secondApprovalDateTime(Timestamp.valueOf(approvalDtoUpdate.getApprovalTime()))
                     .secondApprovalNote(approvalDtoUpdate.getApprovalNote())
                     .build();
             approvalRepository.updateSecondApproval(approval);
