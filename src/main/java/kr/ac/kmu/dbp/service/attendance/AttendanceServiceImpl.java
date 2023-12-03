@@ -149,6 +149,8 @@ public class AttendanceServiceImpl implements AttendanceService {
             LocalTime endTime = attendance.getEndTime().toLocalTime();
             DayOfWeek dayOfWeek = attendance.getDayOfWeek();
 
+            System.out.println("ATTENDANCE : " + attendance.getAttendanceDate() + " || " + attendance.getDayOfWeek());
+
             //System.out.println("DATE : " + attendance.getAttendanceDate() + " DAY OF WEEK " + dayOfWeek);
 
             if (dayOfWeek == DayOfWeek.SUNDAY || dayOfWeek == DayOfWeek.SATURDAY) {
