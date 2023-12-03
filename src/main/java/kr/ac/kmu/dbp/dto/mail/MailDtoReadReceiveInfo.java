@@ -5,13 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 public class MailDtoReadReceiveInfo {
     private int pid;
     private int senderPid;
-    private Timestamp sendDate;
+    private LocalDateTime sendDate;
     private String title;
 
     public MailDtoReadReceiveInfo(Mail mail) {

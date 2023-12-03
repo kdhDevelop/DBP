@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -13,11 +14,11 @@ public class MailDtoReadSendInfo {
     private int pid;
 
     private int sender;
-    private Timestamp sendDate;
+    private LocalDateTime sendDate;
 
     private int receiver;
     private boolean receipt;
-    private Timestamp receiptDate;
+    private LocalDateTime receiptDate;
 
     private String title;
 
