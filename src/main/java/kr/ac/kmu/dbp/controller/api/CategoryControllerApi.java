@@ -104,8 +104,8 @@ public class CategoryControllerApi {
         return categorySmallService.readByCategoryMediumPid(Integer.parseInt(categoryMediumPid));
     }
 
-    @GetMapping(value = "/category/small", params = "pid")
-    public CategorySmallDtoRead readSmallByPid(@RequestParam String pid) {
+    @GetMapping(value = "/category/small/{pid}")
+    public CategorySmallDtoRead readSmallByPid(@PathVariable("pid") String pid) {
         return categorySmallService.readByPid(Integer.parseInt(pid));
     }
 }
