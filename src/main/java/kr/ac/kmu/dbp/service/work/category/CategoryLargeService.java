@@ -12,4 +12,5 @@ public interface CategoryLargeService {
     public void update(Employee employee, CategoryLargeDtoUpdate categoryLargeDtoUpdate);
     public void delete(Employee employee, int pid);
     public List<CategoryLargeDtoRead> readAll();
+    public CategoryLargeDtoRead readByPid(int pid);
 }

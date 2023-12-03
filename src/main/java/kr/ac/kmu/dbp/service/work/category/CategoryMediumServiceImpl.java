@@ -108,4 +108,9 @@ public class CategoryMediumServiceImpl implements CategoryMediumService {
 
         return result;
     }
+
+    @Override
+    public CategoryMediumDtoRead readByPid(int pid) {
+        return new CategoryMediumDtoRead(categoryMediumRepository.readByPid(pid));
+    }
 }

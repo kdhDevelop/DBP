@@ -74,4 +74,8 @@ public class CategoryLargeServiceImpl implements CategoryLargeService {
 
         return result;
     }
+    @Override
+    public CategoryLargeDtoRead readByPid(int pid) {
+        return new CategoryLargeDtoRead(categoryLargeRepository.readByPid(pid));
+    }
 }

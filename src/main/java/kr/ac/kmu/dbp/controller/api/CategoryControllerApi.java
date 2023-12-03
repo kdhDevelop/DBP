@@ -44,6 +44,11 @@ public class CategoryControllerApi {
         return categoryLargeService.readAll();
     }
 
+    @GetMapping(value = "/category/large/{pid}")
+    public CategoryLargeDtoRead readLargeByPid(@PathVariable("pid") String pid) {
+        return categoryLargeService.readByPid(Integer.parseInt(pid));
+    }
+
     @PostMapping(value = "/category/medium")
     public void createMedium(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody CategoryMediumDtoCreate categoryMediumDtoCreate) {
         categoryMediumService.create(customUserDetails.getEmployee(), categoryMediumDtoCreate);
@@ -67,6 +72,11 @@ public class CategoryControllerApi {
     @GetMapping(value = "/category/medium", params = "categoryLargePid")
     public List<CategoryMediumDtoRead> readMediumByCategoryLargePid(@RequestParam String categoryLargePid) {
         return categoryMediumService.readByCategoryLargePid(Integer.parseInt(categoryLargePid));
+    }
+
+    @GetMapping(value = "/category/medium/{pid}")
+    public CategoryMediumDtoRead readMediumByPid(@PathVariable("pid") String pid) {
+        return categoryMediumService.readByPid(Integer.parseInt(pid));
     }
 
     @PostMapping(value = "/category/small")
