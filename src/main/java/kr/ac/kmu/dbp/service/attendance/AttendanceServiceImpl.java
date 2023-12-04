@@ -149,15 +149,17 @@ public class AttendanceServiceImpl implements AttendanceService {
             LocalTime endTime = attendance.getEndTime().toLocalTime();
             DayOfWeek dayOfWeek = attendance.getDayOfWeek();
 
-            System.out.println("ATTENDANCE : " + attendance.getAttendanceDate() + " || " + attendance.getDayOfWeek());
+            System.out.print("ATTENDANCE : " + attendance.getAttendanceDate() + " || " + attendance.getDayOfWeek() + " || ");
 
             //System.out.println("DATE : " + attendance.getAttendanceDate() + " DAY OF WEEK " + dayOfWeek);
 
             if (dayOfWeek == DayOfWeek.SUNDAY || dayOfWeek == DayOfWeek.SATURDAY) {
+                System.out.print("WEEKEND! HOLIDAY!");
                 //System.out.print("WEEKEND!");
                 int diffTime = (int) ChronoUnit.HOURS.between(startTime, endTime);
                 holidayWorkTime += diffTime;
                 holidayWorkWage += diffTime * attendance.getWage() * holidayWorkMultiple;
+                System.out.println("TIME : " + diffTime);
                 //System.out.println("  ADD " + diffTime);
 
                 continue;
@@ -168,6 +170,7 @@ public class AttendanceServiceImpl implements AttendanceService {
                 int diffTime = (int) ChronoUnit.HOURS.between(startTime, endWorkTime);
                 workTime += diffTime;
                 workWage += diffTime * attendance.getWage();
+                System.out.print("TIME : " + diffTime + " || ");
                 //System.out.println("  ADD " + diffTime);
             }
 
@@ -176,11 +179,13 @@ public class AttendanceServiceImpl implements AttendanceService {
                 int diffTime = (int) ChronoUnit.HOURS.between(endWorkTime, endTime);
                 overWorkTime += diffTime;
                 overWorkWage += diffTime * attendance.getWage() * overWorkMultiple;
+                System.out.print("OVER WORK TIME : " + diffTime + " || ");
                 //System.out.println(" ADD " + diffTime);
             } else {
                 int diffTime = 3;
                 overWorkTime += diffTime;
                 overWorkWage += diffTime * attendance.getWage() * overWorkMultiple;
+                System.out.print("OVER WORK TIME : " + diffTime + " || ");
                 //System.out.println(" ADD " + diffTime);
             }
 
@@ -189,9 +194,12 @@ public class AttendanceServiceImpl implements AttendanceService {
                 int diffTime = (int) ChronoUnit.HOURS.between(endOverWorkTime, endTime);
                 nightWorkTime += diffTime;
                 nightWorkWage += diffTime * attendance.getWage() * nightWorkMultiple;
+                System.out.print("NIGHT TIME : " + diffTime + " || ");
                 //System.out.println(" ADD " + diffTime);
             }
+            System.out.println("");
         }
+
 
         totalSalary = workWage + overWorkWage + nightWorkWage + holidayWorkWage;
 
