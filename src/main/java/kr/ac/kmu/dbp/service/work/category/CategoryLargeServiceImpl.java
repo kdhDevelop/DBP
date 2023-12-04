@@ -7,10 +7,8 @@ import kr.ac.kmu.dbp.entity.employee.Employee;
 import kr.ac.kmu.dbp.entity.employee.Role;
 import kr.ac.kmu.dbp.entity.work.category.CategoryLarge;
 import kr.ac.kmu.dbp.entity.work.category.CategoryMedium;
-import kr.ac.kmu.dbp.repository.work.category.CategoryLargeDataBaseRepository;
-import kr.ac.kmu.dbp.repository.work.category.CategoryLargeRepository;
-import kr.ac.kmu.dbp.repository.work.category.CategoryMediumDataBaseRepository;
-import kr.ac.kmu.dbp.repository.work.category.CategoryMediumRepository;
+import kr.ac.kmu.dbp.entity.work.category.CategorySmall;
+import kr.ac.kmu.dbp.repository.work.category.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +19,13 @@ import java.util.List;
 public class CategoryLargeServiceImpl implements CategoryLargeService {
     private final CategoryLargeRepository categoryLargeRepository;
     private final CategoryMediumRepository categoryMediumRepository;
+    private final CategorySmallRepository categorySmallRepository;
 
     @Autowired
-    public CategoryLargeServiceImpl(CategoryLargeDataBaseRepository categoryLargeDataBaseRepository, CategoryMediumDataBaseRepository categoryMediumDataBaseRepository) {
+    public CategoryLargeServiceImpl(CategoryLargeDataBaseRepository categoryLargeDataBaseRepository, CategoryMediumDataBaseRepository categoryMediumDataBaseRepository, CategorySmallDataBaseRepository categorySmallDataBaseRepository) {
         this.categoryLargeRepository = categoryLargeDataBaseRepository;
         this.categoryMediumRepository = categoryMediumDataBaseRepository;
+        this.categorySmallRepository = categorySmallDataBaseRepository;
 
         //init();
     }
@@ -66,6 +66,10 @@ public class CategoryLargeServiceImpl implements CategoryLargeService {
             List<CategoryMedium> categoryMediumList = categoryMediumRepository.readByCategoryLarge(categoryLarge);
             for (CategoryMedium categoryMedium : categoryMediumList) {
                 categoryMediumRepository.delete(categoryMedium);
+                List<CategorySmall> categorySmallList = categorySmallRepository.readByCategoryMedium(categoryMedium);
+                for (CategorySmall categorySmall : categorySmallList) {
+                    categorySmallRepository.delete(categorySmall);
+                }
             }
         } else {
             throw new RuntimeException();
