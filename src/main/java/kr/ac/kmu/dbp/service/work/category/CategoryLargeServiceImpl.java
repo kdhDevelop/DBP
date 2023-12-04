@@ -6,8 +6,11 @@ import kr.ac.kmu.dbp.dto.work.category.CategoryLargeDtoUpdate;
 import kr.ac.kmu.dbp.entity.employee.Employee;
 import kr.ac.kmu.dbp.entity.employee.Role;
 import kr.ac.kmu.dbp.entity.work.category.CategoryLarge;
+import kr.ac.kmu.dbp.entity.work.category.CategoryMedium;
 import kr.ac.kmu.dbp.repository.work.category.CategoryLargeDataBaseRepository;
 import kr.ac.kmu.dbp.repository.work.category.CategoryLargeRepository;
+import kr.ac.kmu.dbp.repository.work.category.CategoryMediumDataBaseRepository;
+import kr.ac.kmu.dbp.repository.work.category.CategoryMediumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +20,12 @@ import java.util.List;
 @Service
 public class CategoryLargeServiceImpl implements CategoryLargeService {
     private final CategoryLargeRepository categoryLargeRepository;
+    private final CategoryMediumRepository categoryMediumRepository;
 
     @Autowired
-    public CategoryLargeServiceImpl(CategoryLargeDataBaseRepository categoryLargeDataBaseRepository) {
+    public CategoryLargeServiceImpl(CategoryLargeDataBaseRepository categoryLargeDataBaseRepository, CategoryMediumDataBaseRepository categoryMediumDataBaseRepository) {
         this.categoryLargeRepository = categoryLargeDataBaseRepository;
+        this.categoryMediumRepository = categoryMediumDataBaseRepository;
 
         //init();
     }
@@ -56,7 +61,12 @@ public class CategoryLargeServiceImpl implements CategoryLargeService {
     @Override
     public void delete(Employee employee, int pid) {
         if (employee.getRole() == Role.부서장 || employee.getRole() == Role.사장) {
-            categoryLargeRepository.delete(new CategoryLarge(pid));
+            CategoryLarge categoryLarge = categoryLargeRepository.readByPid(pid);
+            categoryLargeRepository.delete(categoryLarge);
+            List<CategoryMedium> categoryMediumList = categoryMediumRepository.readByCategoryLarge(categoryLarge);
+            for (CategoryMedium categoryMedium : categoryMediumList) {
+                categoryMediumRepository.delete(categoryMedium);
+            }
         } else {
             throw new RuntimeException();
         }
